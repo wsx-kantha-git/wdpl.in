@@ -2,7 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom"; // <-- Use HashRouter
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import About from "./pages/About";
@@ -30,7 +30,7 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <BrowserRouter>
+      <HashRouter>
         <Routes>
           {/* Public Pages */}
           <Route path="/" element={<Index />} />
@@ -40,61 +40,25 @@ const App = () => (
           <Route path="/careers" element={<Careers />} />
           <Route path="/careers/apply/:jobId" element={<ApplyJob />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path="/gallery" element={<Gallery />} /> {/* New Gallery Main Page */} 
-          
+          <Route path="/gallery" element={<Gallery />} /> 
           
           {/* Gallery Routes */}
-          <Route path="/gallery-main" element={<GalleryPreviewPage />} />{" "}
-          {/* Shows all categories */}
-          <Route
-            path="/gallery/:categoryId"
-            element={<EventGalleryPage />}
-          />{" "}
-          {/* Shows events of that category */}
-          <Route
-            path="/gallery/event/:eventId"
-            element={<EventPreviewPage />}
-          />{" "}
-          {/* Shows images in that event with lightbox */}
+          <Route path="/gallery-main" element={<GalleryPreviewPage />} />
+          <Route path="/gallery/:categoryId" element={<EventGalleryPage />} />
+          <Route path="/gallery/event/:eventId" element={<EventPreviewPage />} />
+
           {/* Admin & Auth */}
           <Route path="/admin/login" element={<AdminLogin />} />
-          <Route
-            path="/admin/dashboard"
-            element={
-              <ProtectedRoute>
-                <AdminDashboard />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/admin/testimonials"
-            element={
-              <ProtectedRoute>
-                <AdminTestimonialsDashboard />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/admin/contacts"
-            element={
-              <ProtectedRoute>
-                <AdminContactDashboard />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/admin/gallery"
-            element={
-              <ProtectedRoute>
-                <AdminGalleryDashboard />
-              </ProtectedRoute>
-            }
-          />
+          <Route path="/admin/dashboard" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
+          <Route path="/admin/testimonials" element={<ProtectedRoute><AdminTestimonialsDashboard /></ProtectedRoute>} />
+          <Route path="/admin/contacts" element={<ProtectedRoute><AdminContactDashboard /></ProtectedRoute>} />
+          <Route path="/admin/gallery" element={<ProtectedRoute><AdminGalleryDashboard /></ProtectedRoute>} />
           <Route path="/reset-password" element={<ResetPassword />} />
+
           {/* 404 */}
           <Route path="*" element={<NotFound />} />
         </Routes>
-      </BrowserRouter>
+      </HashRouter>
     </TooltipProvider>
   </QueryClientProvider>
 );
