@@ -73,7 +73,7 @@ const AdminContactDashboard = () => {
   );
 
   return (
-    <Layout>
+
       <section className="py-12 container mx-auto px-4">
         <h1 className="text-3xl font-bold mb-6">Contact Form Submissions</h1>
 
@@ -138,7 +138,6 @@ const AdminContactDashboard = () => {
           </CardContent>
         </Card>
       </section>
-    </Layout>
   );
 };
 

@@ -245,34 +245,37 @@ export type Database = {
       };
       gallery_images: {
         Row: {
-          category_id: string | null;
-          created_at: string | null;
-          description: string | null;
           id: string;
-          image_name: string | null;
-          image_url: string;
           title: string | null;
+          description: string | null;
+          category_id: string | null;
+          image_url: string;
           uploaded_by: string | null;
+          created_at: string | null;
+          image_name: string | null;
+          event_id: string | null;
         };
         Insert: {
-          category_id?: string | null;
-          created_at?: string | null;
-          description?: string | null;
           id?: string;
-          image_name?: string | null;
-          image_url: string;
           title?: string | null;
+          description?: string | null;
+          category_id?: string | null;
+          image_url: string;
           uploaded_by?: string | null;
+          created_at?: string | null;
+          image_name?: string | null;
+          event_id?: string | null;
         };
         Update: {
-          category_id?: string | null;
-          created_at?: string | null;
-          description?: string | null;
           id?: string;
-          image_name?: string | null;
-          image_url?: string;
           title?: string | null;
+          description?: string | null;
+          category_id?: string | null;
+          image_url?: string;
           uploaded_by?: string | null;
+          created_at?: string | null;
+          image_name?: string | null;
+          event_id?: string | null;
         };
         Relationships: [
           {
@@ -281,9 +284,57 @@ export type Database = {
             isOneToOne: false;
             referencedRelation: "gallery_categories";
             referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "gallery_images_event_id_fkey";
+            columns: ["event_id"];
+            isOneToOne: false;
+            referencedRelation: "gallery_events";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "gallery_images_uploaded_by_fkey";
+            columns: ["uploaded_by"];
+            isOneToOne: false;
+            referencedRelation: "users";
+            referencedColumns: ["id"];
           }
         ];
       };
+
+      gallery_events: {
+        Row: {
+          id: string;
+          name: string;
+          category_id: string;
+          cover_image?: string | null;
+          created_at?: string | null;
+        };
+        Insert: {
+          id?: string;
+          name: string;
+          category_id: string;
+          cover_image?: string | null;
+          created_at?: string | null;
+        };
+        Update: {
+          id?: string;
+          name?: string;
+          category_id?: string;
+          cover_image?: string | null;
+          created_at?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "gallery_events_category_id_fkey";
+            columns: ["category_id"];
+            isOneToOne: false;
+            referencedRelation: "gallery_categories";
+            referencedColumns: ["id"];
+          }
+        ];
+      };
+
       job_fields: {
         Row: {
           field_name: string;
@@ -367,6 +418,37 @@ export type Database = {
         };
         Relationships: [];
       };
+      testimonials: {
+        Row: {
+          id: number; // bigint
+          name: string; // text not null
+          role: string; // text not null
+          content: string; // text not null
+          rating: 1 | 2 | 3 | 4 | 5; // integer with check constraint
+          image_url: string; // text not null
+          created_at: string | null; // timestamp with default now()
+        };
+        Insert: {
+          id?: number;
+          name: string;
+          role: string;
+          content: string;
+          rating: 1 | 2 | 3 | 4 | 5;
+          image_url: string;
+          created_at?: string | null;
+        };
+        Update: {
+          id?: number;
+          name?: string;
+          role?: string;
+          content?: string;
+          rating?: 1 | 2 | 3 | 4 | 5;
+          image_url?: string;
+          created_at?: string | null;
+        };
+        Relationships: [];
+      };
+
       skills: {
         Row: {
           created_at: string | null;

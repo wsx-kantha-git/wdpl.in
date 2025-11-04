@@ -23,6 +23,9 @@ import {
 } from "@/components/ui/select";
 import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
+import AdminTestimonialsDashboard from "./AdminTestimonialsDashboard";
+import AdminContactDashboard from "./AdminContactDashboard";
+import GalleryAdminPage from "./GalleryAdminPage";
 
 // TYPES
 interface Skill {
@@ -93,9 +96,6 @@ export default function AdminDashboard() {
   const [loading, setLoading] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
 
-  //contactstates
-  const [contactEntries, setContactEntries] = useState<ContactEntry[]>([]);
-  const [loadingContacts, setLoadingContacts] = useState(false);
 
   // Job states
   const [jobs, setJobs] = useState<Job[]>([]);
@@ -120,6 +120,10 @@ export default function AdminDashboard() {
     image_url: "",
     skills: [],
   });
+
+  // transient inputs for adding skills
+  const [newSkillName, setNewSkillName] = useState("");
+  const [newSkillPercentage, setNewSkillPercentage] = useState<number | "">("");
 
   const [jobForm, setJobForm] = useState<JobForm>({
     title: "",
@@ -164,31 +168,9 @@ export default function AdminDashboard() {
       fetchJobs();
       fetchDepartments();
       fetchTeamMembers();
-      fetchContactEntries();
     };
-
     checkAdminAccess();
   }, [navigate]);
-  // Add this function inside AdminDashboard
-  const fetchContactEntries = async () => {
-    setLoadingContacts(true);
-    const { data, error } = await supabase
-      .from("contact_submissions")
-      .select("*")
-      .order("created_at", { ascending: false });
-
-    if (error) {
-      toast({
-        title: "Error",
-        description: "Failed to fetch contact submissions",
-        variant: "destructive",
-      });
-    } else {
-      setContactEntries(data as ContactEntry[]);
-    }
-    setLoadingContacts(false);
-  };
-
   //  Fetch departments
   const fetchDepartments = async () => {
     const { data, error } = await supabase
@@ -206,7 +188,7 @@ export default function AdminDashboard() {
     const { data, error } = await supabase
       .from("team_members")
       .select("*")
-      .order("id", { ascending: false });
+      .order("id", { ascending: true });
 
     if (error) {
       toast({
@@ -306,6 +288,42 @@ export default function AdminDashboard() {
     }
   };
 
+  // Add skill to teamForm.skills
+  const addSkillToForm = () => {
+    const name = newSkillName.trim();
+    const percentage =
+      typeof newSkillPercentage === "number"
+        ? newSkillPercentage
+        : Number(newSkillPercentage);
+    if (!name || isNaN(percentage)) {
+      toast({
+        title: "Skill name and percentage required",
+        variant: "destructive",
+      });
+      return;
+    }
+    if (percentage < 0 || percentage > 100) {
+      toast({
+        title: "Percentage must be between 0 and 100",
+        variant: "destructive",
+      });
+      return;
+    }
+    setTeamForm({
+      ...teamForm,
+      skills: [...teamForm.skills, { name, percentage }],
+    });
+    setNewSkillName("");
+    setNewSkillPercentage("");
+  };
+
+  const removeSkillFromForm = (index: number) => {
+    setTeamForm({
+      ...teamForm,
+      skills: teamForm.skills.filter((_, i) => i !== index),
+    });
+  };
+
   //  Add / Update Team Member
   const handleTeamSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -323,6 +341,7 @@ export default function AdminDashboard() {
 
     try {
       if (editingTeamId) {
+        // Update member
         const { error } = await supabase
           .from("team_members")
           .update({
@@ -337,8 +356,30 @@ export default function AdminDashboard() {
           .eq("id", editingTeamId);
 
         if (error) throw error;
+
+        // Replace skills: delete existing then insert new
+        const { error: delErr } = await supabase
+          .from("skills")
+          .delete()
+          .eq("team_member_id", editingTeamId);
+
+        if (delErr) throw delErr;
+
+        if (skills.length) {
+          const skillsInsert = skills.map((skill) => ({
+            team_member_id: editingTeamId,
+            name: skill.name,
+            percentage: skill.percentage,
+          }));
+          const { error: insertErr } = await supabase
+            .from("skills")
+            .insert(skillsInsert);
+          if (insertErr) throw insertErr;
+        }
+
         toast({ title: "Team member updated successfully!" });
       } else {
+        // Create member
         const { data, error } = await supabase
           .from("team_members")
           .insert({
@@ -362,7 +403,10 @@ export default function AdminDashboard() {
             name: skill.name,
             percentage: skill.percentage,
           }));
-          await supabase.from("skills").insert(skillsInsert);
+          const { error: insertErr } = await supabase
+            .from("skills")
+            .insert(skillsInsert);
+          if (insertErr) throw insertErr;
         }
 
         toast({ title: "Team member added successfully!" });
@@ -379,6 +423,8 @@ export default function AdminDashboard() {
         skills: [],
       });
       setEditingTeamId(null);
+      setNewSkillName("");
+      setNewSkillPercentage("");
       fetchTeamMembers();
     } catch (error) {
       const message =
@@ -393,9 +439,10 @@ export default function AdminDashboard() {
     }
   };
 
-  //  Edit Team Member
-  const handleEditTeamMember = (member: TeamMember) => {
+  //  Edit Team Member (fetch skills too)
+  const handleEditTeamMember = async (member: TeamMember) => {
     setEditingTeamId(member.id);
+    // populate basic fields
     setTeamForm({
       name: member.name,
       role: member.role,
@@ -406,6 +453,30 @@ export default function AdminDashboard() {
       image_url: member.image_url,
       skills: [],
     });
+
+    // fetch skills for this member
+    const { data, error } = await supabase
+      .from("skills")
+      .select("*")
+      .eq("team_member_id", member.id)
+      .order("id", { ascending: true });
+
+    if (error) {
+      toast({
+        title: "Error loading skills",
+        description: error.message,
+        variant: "destructive",
+      });
+      return;
+    }
+
+    const fetchedSkills: Skill[] = (data || []).map(
+      (s: { name: string; percentage?: number }) => ({
+        name: s.name,
+        percentage: s.percentage ?? 0,
+      })
+    );
+    setTeamForm((prev) => ({ ...prev, skills: fetchedSkills }));
   };
 
   //  Toggle Team Member Active/Inactive
@@ -436,23 +507,36 @@ export default function AdminDashboard() {
     }
   };
 
-  //  Delete Team Member
+  //  Delete Team Member (also delete skills)
   const handleDeleteTeamMember = async (id: number) => {
     if (!window.confirm("Are you sure you want to delete this team member?"))
       return;
-    const { error } = await supabase.from("team_members").delete().eq("id", id);
-    if (error)
-      toast({
-        title: "Error deleting team member",
-        description: error.message,
-        variant: "destructive",
-      });
-    else {
+
+    try {
+      const { error: delSkillsErr } = await supabase
+        .from("skills")
+        .delete()
+        .eq("team_member_id", id);
+      if (delSkillsErr) throw delSkillsErr;
+
+      const { error } = await supabase
+        .from("team_members")
+        .delete()
+        .eq("id", id);
+      if (error) throw error;
+
       toast({
         title: "Deleted",
         description: "Team member removed successfully.",
       });
       setTeamMembers((prev) => prev.filter((member) => member.id !== id));
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : String(err);
+      toast({
+        title: "Error deleting",
+        description: message,
+        variant: "destructive",
+      });
     }
   };
 
@@ -627,7 +711,10 @@ export default function AdminDashboard() {
           </div>
 
           <Tabs defaultValue="team" className="animate-fade-in-up">
-            <TabsList className="grid w-full grid-cols-3 mb-8">
+            <TabsList className="flex flex-wrap md:grid md:grid-cols-5 gap-2 mb-4 overflow-x-auto scrollbar-hide">
+
+              {" "}
+              {/* 5 columns */}
               <TabsTrigger value="team" className="gap-2 font-raleway">
                 <Users className="h-4 w-4" /> Team Management
               </TabsTrigger>
@@ -637,11 +724,17 @@ export default function AdminDashboard() {
               <TabsTrigger value="contacts" className="gap-2 font-raleway">
                 <Users className="h-4 w-4" /> Contact Submissions
               </TabsTrigger>
+              <TabsTrigger value="testimonials" className="gap-2 font-raleway">
+                <Users className="h-4 w-4" /> Testimonials
+              </TabsTrigger>
+              <TabsTrigger value="gallery" className="gap-2 font-raleway">
+                <Users className="h-4 w-4" /> Gallery
+              </TabsTrigger>
             </TabsList>
 
             {/* ---------------- TEAM MANAGEMENT ---------------- */}
             <TabsContent value="team">
-              <Card className="border-primary/20 shadow-lg animate-slide-in-left">
+              <Card className="border-primary/20 shadow-lg animate-slide-in-up">
                 <CardHeader>
                   <CardTitle className="font-raleway flex items-center gap-2">
                     <Plus className="h-5 w-5" />{" "}
@@ -758,6 +851,57 @@ export default function AdminDashboard() {
                       </div>
                     </div>
 
+                    {/* SKILLS SECTION (inside same form) */}
+                    <div>
+                      <Label>Skills</Label>
+                      <div className="flex gap-2 items-center mt-2">
+                        <Input
+                          placeholder="Skill name (e.g. React)"
+                          value={newSkillName}
+                          onChange={(e) => setNewSkillName(e.target.value)}
+                          className="flex-1"
+                        />
+                        <Input
+                          type="number"
+                          placeholder="%"
+                          value={newSkillPercentage}
+                          onChange={(e) =>
+                            setNewSkillPercentage(
+                              e.target.value === ""
+                                ? ""
+                                : Number(e.target.value)
+                            )
+                          }
+                          className="w-28"
+                          min={0}
+                          max={100}
+                        />
+                        <Button type="button" onClick={addSkillToForm}>
+                          + Add Skill
+                        </Button>
+                      </div>
+
+                      <div className="flex flex-wrap gap-2 mt-3">
+                        {teamForm.skills.map((skill, idx) => (
+                          <div
+                            key={idx}
+                            className="flex items-center gap-2 bg-primary/10 px-3 py-1 rounded-full"
+                          >
+                            <span className="font-medium">
+                              {skill.name} ({skill.percentage}%)
+                            </span>
+                            <button
+                              type="button"
+                              onClick={() => removeSkillFromForm(idx)}
+                              className="text-red-600 hover:text-red-800"
+                            >
+                              ✕
+                            </button>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
                     <div>
                       <Label>Bio</Label>
                       <Textarea
@@ -804,6 +948,10 @@ export default function AdminDashboard() {
                               <p className="text-sm text-muted-foreground">
                                 {member.role} • {member.location}
                               </p>
+                              {/* show skills preview */}
+                              <div className="mt-1 text-sm">
+                                {/* fetch skills from DB when rendering? we fetch on edit; show nothing if not loaded */}
+                              </div>
                             </div>
                           </div>
                           <div className="flex items-center gap-3">
@@ -1031,77 +1179,47 @@ export default function AdminDashboard() {
                 </CardContent>
               </Card>
             </TabsContent>
+           
+            {/* CONTACT SUBMISSIONS */}
 
             <TabsContent value="contacts">
               <Card className="border-primary/20 shadow-lg animate-slide-in-up">
+                <AdminContactDashboard />
+              </Card>
+            </TabsContent>
+
+            {/* TESTIMONIALS */}
+            <TabsContent value="testimonials">
+              <Card className="border-primary/20 shadow-lg animate-slide-in-up">
                 <CardHeader>
                   <CardTitle className="font-raleway">
-                    Contact Form Submissions
+                    Testimonials Management
                   </CardTitle>
                   <CardDescription className="font-source">
-                    View and manage messages from your website visitors
+                    Add, edit, and manage client testimonials
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  {loadingContacts ? (
-                    <p>Loading...</p>
-                  ) : contactEntries.length === 0 ? (
-                    <p>No submissions found.</p>
-                  ) : (
-                    <div className="space-y-4">
-                      {contactEntries.map((entry) => (
-                        <Card
-                          key={entry.id}
-                          className="p-4 flex justify-between items-center border"
-                        >
-                          <div>
-                            <h3 className="font-semibold">
-                              {entry.name} ({entry.email})
-                            </h3>
-                            <p>{entry.phone || "-"}</p>
-                            <p>{entry.message}</p>
-                            <p className="text-sm text-muted-foreground">
-                              {entry.status || "new"} •{" "}
-                              {entry.created_at
-                                ? new Date(entry.created_at).toLocaleString()
-                                : ""}
-                            </p>
-                          </div>
-                          <div>
-                            <Button
-                              size="sm"
-                              variant="destructive"
-                              onClick={async () => {
-                                if (!confirm("Delete this contact submission?"))
-                                  return;
-                                const { error } = await supabase
-                                  .from("contact_submissions")
-                                  .delete()
-                                  .eq("id", entry.id);
-                                if (error)
-                                  toast({
-                                    title: "Error",
-                                    description: error.message,
-                                    variant: "destructive",
-                                  });
-                                else {
-                                  toast({
-                                    title: "Deleted",
-                                    description: "Submission removed.",
-                                  });
-                                  setContactEntries((prev) =>
-                                    prev.filter((e) => e.id !== entry.id)
-                                  );
-                                }
-                              }}
-                            >
-                              <Trash2 className="w-4 h-4 mr-1" /> Delete
-                            </Button>
-                          </div>
-                        </Card>
-                      ))}
-                    </div>
-                  )}
+                  {/* Add form to create testimonial, list existing testimonials, edit/delete */}
+                  <AdminTestimonialsDashboard />
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            {/* GALLERY */}
+            <TabsContent value="gallery">
+              <Card className="border-primary/20 shadow-lg animate-slide-in-up">
+                <CardHeader>
+                  <CardTitle className="font-raleway">
+                    Gallery Management
+                  </CardTitle>
+                  <CardDescription className="font-source">
+                    Upload, edit, and manage gallery images
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  {/* Add form to upload images, list existing images, delete/edit */}
+                  <GalleryAdminPage />
                 </CardContent>
               </Card>
             </TabsContent>

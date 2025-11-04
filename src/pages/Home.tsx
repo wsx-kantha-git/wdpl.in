@@ -49,7 +49,7 @@ const Home = () => {
       >
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-3xl">
-            <h1 className="text-[42px] md:text-7xl lg:text-8xl font-raleway font-bold text-background mb-8">
+            <h1 className="text-[96px] md:text-7xl lg:text-8xl font-raleway font-bold text-background mb-8">
               Design, Build & Grow
             </h1>
             <p
@@ -69,8 +69,8 @@ const Home = () => {
                 size="lg"
                 className="text-lg px-8 py-6 hover:scale-110 hover:shadow-2xl transition-all duration-300"
               >
-                <Link to="/careers">
-                  See Open Roles{" "}
+                <Link to="/team">
+                  See Our Team{" "}
                   <ArrowRight
                     className="ml-2 group-hover:translate-x-1 transition-transform"
                     size={24}
@@ -103,7 +103,7 @@ const Home = () => {
           </div>
           <div className="grid md:grid-cols-2 gap-10">
             <Card
-              className="overflow-hidden group cursor-pointer hover:shadow-[0_25px_70px_-15px_rgba(0,0,0,0.4)] transition-all duration-700 hover:-translate-y-3 hover:rotate-1 border-2 hover:border-primary/50 animate-fade-in"
+              className="overflow-hidden group cursor-pointer hover:shadow-[0_25px_70px_-15px_rgba(0,0,0,0.4)] transition-all duration-700 hover:-translate-y-3  border-2 hover:border-primary/50 animate-fade-in"
               style={{ animationDelay: "0.1s" }}
             >
               <div className="relative h-80 overflow-hidden">
@@ -136,7 +136,7 @@ const Home = () => {
             </Card>
 
             <Card
-              className="overflow-hidden group cursor-pointer hover:shadow-[0_25px_70px_-15px_rgba(0,0,0,0.4)] transition-all duration-700 hover:-translate-y-3 hover:-rotate-1 border-2 hover:border-primary/50 animate-fade-in"
+              className="overflow-hidden group cursor-pointer hover:shadow-[0_25px_70px_-15px_rgba(0,0,0,0.4)] transition-all duration-700 hover:-translate-y-3 border-2 hover:border-primary/50 animate-fade-in"
               style={{ animationDelay: "0.2s" }}
             >
               <div className="relative h-80 overflow-hidden">
@@ -205,8 +205,8 @@ const Home = () => {
               </Card>
             ))}
           </div>
-          <div className="text-center mt-12">
-            <Button asChild variant="default" size="lg">
+          <div className="text-center mt-12 rounded-full">
+            <Button asChild variant="brand" size="lg" className="rounded-full">
               <Link to="/culture">Learn More About Our Culture</Link>
             </Button>
           </div>

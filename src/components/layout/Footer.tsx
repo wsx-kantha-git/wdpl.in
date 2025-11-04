@@ -37,39 +37,25 @@ const Footer = () => {
           {/* Quick Links */}
           <div>
             <h3 className="font-semibold text-background mb-4">Quick Links</h3>
-            <ul className="space-y-2">
-              <li>
-                <Link
-                  to="/about"
-                  className="text-background/80 hover:text-primary text-sm transition-all duration-300 hover:translate-x-1 inline-block"
-                >
-                  About Us
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/team"
-                  className="text-background/80 hover:text-primary text-sm transition-all duration-300 hover:translate-x-1 inline-block"
-                >
-                  Our Team
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/culture"
-                  className="text-background/80 hover:text-primary text-sm transition-all duration-300 hover:translate-x-1 inline-block"
-                >
-                  Work Culture
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/careers"
-                  className="text-background/80 hover:text-primary text-sm transition-all duration-300 hover:translate-x-1 inline-block"
-                >
-                  Careers
-                </Link>
-              </li>
+            <ul className="grid grid-flow-col grid-rows-4 gap-x-8 gap-y-2">
+              {[
+                { name: "Home", to: "/" },
+                { name: "About Us", to: "/about" },
+                { name: "Our Team", to: "/team" },
+                { name: "Work Culture", to: "/culture" },
+                { name: "Careers", to: "/careers" },
+                { name: "Gallery", to: "/gallery" },
+                { name: "Contact", to: "/contact" },
+              ].map((link, index) => (
+                <li key={index}>
+                  <Link
+                    to={link.to}
+                    className="text-background/80 hover:text-primary text-sm transition-all duration-300 hover:translate-x-1 inline-block"
+                  >
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
@@ -143,7 +129,7 @@ const Footer = () => {
               <Link
                 to="/terms&conditions"
                 className="text-background/60 hover:text-primary text-sm transition-all duration-300 hover:translate-y-[-2px]"
-              > 
+              >
                 Terms & Conditions
               </Link>
               <Link

@@ -35,7 +35,7 @@ const Team = () => {
     else setDepartments(["all", ...(data?.map((d) => d.name) || [])]);
   };
 
-  // Fetch team members + their skills + department name
+  // Fetch team members + their skills + department name (ordered by id ascending)
   const fetchTeamMembers = async () => {
     const { data, error } = await supabase
       .from("team_members")
@@ -44,7 +44,8 @@ const Team = () => {
         skills (*),
         departments!inner(name)
       `)
-      .eq("active", true);
+      .eq("active", true)
+      .order("id", { ascending: true }); // Order by id ascending (oldest first)
 
     if (error) {
       console.error(error);
@@ -56,7 +57,6 @@ const Team = () => {
         ...member,
         department_name: member.departments?.name ?? null,
         skills: member.skills ?? [],
-        // Use the full URL directly from the table
         photo_url: member.image_url ?? null,
       })
     );
@@ -91,7 +91,7 @@ const Team = () => {
       </section>
 
       {/* Department Filter */}
-      <section className="py-8 bg-background/50 backdrop-blur-sm border-b sticky top-20 z-40">
+      <section className="py-8 bg-background/70 backdrop-blur-sm border-b sticky top-20 z-40">
         <div className="container mx-auto px-4">
           <div className="flex flex-wrap justify-center gap-2">
             {departments.map((dept) => (
@@ -122,7 +122,7 @@ const Team = () => {
               {filteredMembers.map((member, index) => (
                 <Card
                   key={member.id}
-                  className="overflow-hidden group hover:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)] transition-all duration-700 hover:-translate-y-3 hover:rotate-1 animate-fade-in border-2 hover:border-primary/50"
+                  className="overflow-hidden group hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.3)] transition-all duration-700 hover:-translate-y-3 hover:rotate-0 animate-fade-in border-2 hover:border-primary/50"
                   style={{ animationDelay: `${index * 0.08}s` }}
                 >
                   {/* Image */}
@@ -131,7 +131,7 @@ const Team = () => {
                       <img
                         src={member.photo_url}
                         alt={member.name}
-                        className="w-full h-full object-cover group-hover:scale-125 group-hover:rotate-3 transition-all duration-700"
+                        className="w-full h-full object-cover group-hover:scale-100 group-hover:rotate-0 transition-all duration-700"
                       />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-primary/20 via-accent/10 to-primary/5">
@@ -142,7 +142,7 @@ const Team = () => {
 
                   {/* Info */}
                   <div className="p-6">
-                    <h3 className="text-xl font-semibold text-foreground mb-1">{member.name}</h3>
+                    <h3 className="text-lg font-semibold text-foreground mb-1">{member.name}</h3>
                     <p className="text-primary text-sm font-medium mb-2">{member.role}</p>
                     <div className="flex items-center gap-2 mb-3">
                       <Badge variant="secondary" className="capitalize">
@@ -179,7 +179,6 @@ const Team = () => {
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-2 text-primary hover:underline text-sm"
                       >
-                        
                         LinkedIn
                       </a>
                     )}
