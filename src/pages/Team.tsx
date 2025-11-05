@@ -207,7 +207,7 @@ const Team = () => {
                         <img
                           src={LinkedIn}
                           alt="LinkedIn"
-                          className="w-4 h-4"
+                          className="w-6 h-6"
                         />
                       </a>
                     )}

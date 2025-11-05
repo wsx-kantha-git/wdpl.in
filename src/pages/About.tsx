@@ -120,7 +120,7 @@ const About = () => {
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold text-primary-foreground mb-4">Global Reach, Local Values</h2>
           <p className="text-xl text-primary-foreground/90 max-w-3xl mx-auto">
-            Proudly partnered with a family-owned US Mid-West-Family Company, we combine international standards with Indian
+            Proudly partnered with US Mid-West-Family Company, we combine international standards with Indian
             warmth and hospitality. This collaboration brings global opportunities while maintaining our core values of
             trust, respect, and family-first culture.
           </p>
