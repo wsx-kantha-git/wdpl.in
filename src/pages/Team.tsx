@@ -3,7 +3,8 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
-import { Linkedin, MapPin } from "lucide-react";
+import { MapPin } from "lucide-react";
+import LinkedIn from "@/assets/linkedin.svg";
 import Layout from "@/components/layout/Layout";
 import { supabase } from "@/integrations/supabase/client";
 import { Tables } from "@/integrations/supabase/types";
@@ -39,11 +40,13 @@ const Team = () => {
   const fetchTeamMembers = async () => {
     const { data, error } = await supabase
       .from("team_members")
-      .select(`
+      .select(
+        `
         *,
         skills (*),
         departments!inner(name)
-      `)
+      `
+      )
       .eq("active", true)
       .order("id", { ascending: true }); // Order by id ascending (oldest first)
 
@@ -53,7 +56,12 @@ const Team = () => {
     }
 
     const members: TeamMember[] = (data ?? []).map(
-      (member: TeamMemberRow & { skills: SkillRow[]; departments: DepartmentRow }) => ({
+      (
+        member: TeamMemberRow & {
+          skills: SkillRow[];
+          departments: DepartmentRow;
+        }
+      ) => ({
         ...member,
         department_name: member.departments?.name ?? null,
         skills: member.skills ?? [],
@@ -73,7 +81,9 @@ const Team = () => {
     selectedDepartment === "all"
       ? teamMembers
       : teamMembers.filter(
-          (m) => m.department_name?.toLowerCase() === selectedDepartment.toLowerCase()
+          (m) =>
+            m.department_name?.toLowerCase() ===
+            selectedDepartment.toLowerCase()
         );
 
   return (
@@ -135,15 +145,21 @@ const Team = () => {
                       />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-primary/20 via-accent/10 to-primary/5">
-                        <span className="text-7xl font-bold text-primary">{member.name.charAt(0)}</span>
+                        <span className="text-7xl font-bold text-primary">
+                          {member.name.charAt(0)}
+                        </span>
                       </div>
                     )}
                   </div>
 
                   {/* Info */}
                   <div className="p-6">
-                    <h3 className="text-lg font-semibold text-foreground mb-1">{member.name}</h3>
-                    <p className="text-primary text-sm font-medium mb-2">{member.role}</p>
+                    <h3 className="text-lg font-semibold text-foreground mb-1">
+                      {member.name}
+                    </h3>
+                    <p className="text-primary text-sm font-medium mb-2">
+                      {member.role}
+                    </p>
                     <div className="flex items-center gap-2 mb-3">
                       <Badge variant="secondary" className="capitalize">
                         {member.department_name}
@@ -155,7 +171,9 @@ const Team = () => {
                     </div>
 
                     {member.description && (
-                      <p className="text-muted-foreground text-sm mb-4 line-clamp-2">{member.description}</p>
+                      <p className="text-muted-foreground text-sm mb-4 line-clamp-2">
+                        {member.description}
+                      </p>
                     )}
 
                     {member.skills && member.skills.length > 0 && (
@@ -163,10 +181,17 @@ const Team = () => {
                         {member.skills.slice(0, 3).map((skill) => (
                           <div key={skill.id}>
                             <div className="flex justify-between text-xs mb-1">
-                              <span className="text-foreground">{skill.name}</span>
-                              <span className="text-muted-foreground">{skill.percentage}%</span>
+                              <span className="text-foreground">
+                                {skill.name}
+                              </span>
+                              <span className="text-muted-foreground">
+                                {skill.percentage}%
+                              </span>
                             </div>
-                            <Progress value={skill.percentage ?? 0} className="h-1" />
+                            <Progress
+                              value={skill.percentage ?? 0}
+                              className="h-1"
+                            />
                           </div>
                         ))}
                       </div>
@@ -179,7 +204,11 @@ const Team = () => {
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-2 text-primary hover:underline text-sm"
                       >
-                        LinkedIn
+                        <img
+                          src={LinkedIn}
+                          alt="LinkedIn"
+                          className="w-4 h-4"
+                        />
                       </a>
                     )}
                   </div>

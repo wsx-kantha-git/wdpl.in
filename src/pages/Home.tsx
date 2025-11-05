@@ -25,7 +25,7 @@ const Home = () => {
     },
     {
       icon: Coffee,
-      title: "Free Food & Drinks",
+      title: "Inclusive Food & Beverages",
       description: "Complimentary meals & beverages",
     },
     {
@@ -86,6 +86,51 @@ const Home = () => {
                 <Link to="/culture">Explore Our Culture</Link>
               </Button>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Work Culture Carousel */}
+      <WorkCultureCarousel />
+
+      {/* Culture Highlights */}
+      <section className="py-24 bg-gradient-to-b from-background via-primary/5 to-background">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16 animate-fade-in">
+            <h2 className="text-5xl md:text-6xl font-raleway font-bold mb-6 md:leading-[1.2] bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
+              Why Join WDPL?
+            </h2>
+            <p className="text-xl font-source text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+              More than just a workplace a family that grows together
+            </p>
+          </div>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            {perks.map((perk, index) => (
+              <Card
+                key={index}
+                className="p-8 text-center hover:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)] hover:scale-110 hover:-translate-y-2 transition-all duration-500 group border-2 hover:border-primary/50 animate-fade-in bg-gradient-to-br from-background to-secondary/20"
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
+                <div className="w-20 h-20 bg-gradient-to-br from-primary/20 to-accent/10 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-gradient-to-br group-hover:from-primary group-hover:to-accent group-hover:scale-125 group-hover:rotate-12 transition-all duration-500 shadow-lg">
+                  <perk.icon
+                    className="text-primary group-hover:text-primary-foreground transition-colors duration-300"
+                    size={36}
+                  />
+                </div>
+                <h3 className="text-xl font-semibold text-foreground mb-2">
+                  {perk.title}
+                </h3>
+                <p className="text-muted-foreground text-sm">
+                  {perk.description}
+                </p>
+              </Card>
+            ))}
+          </div>
+          <div className="text-center mt-12 rounded-full">
+            <Button asChild variant="brand" size="lg" className="rounded-full">
+              <Link to="/culture">Learn More About Our Culture</Link>
+            </Button>
           </div>
         </div>
       </section>
@@ -171,53 +216,8 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Culture Highlights */}
-      <section className="py-24 bg-gradient-to-b from-background via-primary/5 to-background">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-16 animate-fade-in">
-            <h2 className="text-5xl md:text-6xl font-raleway font-bold mb-6 md:leading-[1.2] bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
-              Why Join WDPL?
-            </h2>
-            <p className="text-xl font-source text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-              More than just a workplace a family that grows together
-            </p>
-          </div>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {perks.map((perk, index) => (
-              <Card
-                key={index}
-                className="p-8 text-center hover:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)] hover:scale-110 hover:-translate-y-2 transition-all duration-500 group border-2 hover:border-primary/50 animate-fade-in bg-gradient-to-br from-background to-secondary/20"
-                style={{ animationDelay: `${index * 0.1}s` }}
-              >
-                <div className="w-20 h-20 bg-gradient-to-br from-primary/20 to-accent/10 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-gradient-to-br group-hover:from-primary group-hover:to-accent group-hover:scale-125 group-hover:rotate-12 transition-all duration-500 shadow-lg">
-                  <perk.icon
-                    className="text-primary group-hover:text-primary-foreground transition-colors duration-300"
-                    size={36}
-                  />
-                </div>
-                <h3 className="text-xl font-semibold text-foreground mb-2">
-                  {perk.title}
-                </h3>
-                <p className="text-muted-foreground text-sm">
-                  {perk.description}
-                </p>
-              </Card>
-            ))}
-          </div>
-          <div className="text-center mt-12 rounded-full">
-            <Button asChild variant="brand" size="lg" className="rounded-full">
-              <Link to="/culture">Learn More About Our Culture</Link>
-            </Button>
-          </div>
-        </div>
-      </section>
-
       {/* Testimonials Carousel */}
       <TestimonialsCarousel />
-
-      {/* Work Culture Carousel */}
-      <WorkCultureCarousel />
 
       {/* CTA Section */}
       <section className="py-20 bg-gradient-to-r from-primary to-primary/90">

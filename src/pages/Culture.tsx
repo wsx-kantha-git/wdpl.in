@@ -15,7 +15,7 @@ const Culture = () => {
     },
     {
       icon: <Coffee className="w-8 h-8" />,
-      title: "Free Food & Beverages",
+      title: "Inclusive Food & Beverages",
       description: "Complimentary meals, snacks, and beverages throughout the day to keep you energized.",
     },
     {

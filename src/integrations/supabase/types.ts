@@ -370,6 +370,7 @@ export type Database = {
           department: string | null;
           description: string | null;
           id: number;
+          application_link?: string | null;
           is_active: boolean | null;
           job_type: string | null;
           location: string | null;
@@ -387,6 +388,7 @@ export type Database = {
           department?: string | null;
           description?: string | null;
           id?: number;
+          application_link?: string | null;
           is_active?: boolean | null;
           job_type?: string | null;
           location?: string | null;
@@ -415,6 +417,7 @@ export type Database = {
           status?: string | null;
           title?: string;
           updated_at?: string | null;
+          application_link?: string | null;
         };
         Relationships: [];
       };

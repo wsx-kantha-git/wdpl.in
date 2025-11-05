@@ -75,6 +75,7 @@ interface JobForm {
   responsibilities: string;
   requirements: string;
   perks: string;
+  application_link?: string | null;
 }
 
 interface Job {
@@ -89,6 +90,7 @@ interface Job {
   requirements: string[];
   perks: string[];
   status: "open" | "closed";
+  application_link?: string | null;
 }
 
 export default function AdminDashboard() {
@@ -560,6 +562,8 @@ export default function AdminDashboard() {
           job_type: jobForm.jobType,
           seniority_level: jobForm.seniority_level,
           description: jobForm.description,
+          application_link: jobForm.application_link,
+          
           responsibilities,
           requirements,
           perks,
@@ -586,6 +590,7 @@ export default function AdminDashboard() {
         job_type: jobForm.jobType,
         seniority_level: jobForm.seniority_level,
         description: jobForm.description,
+        application_link: jobForm.application_link,
         responsibilities,
         requirements,
         perks,
@@ -614,6 +619,7 @@ export default function AdminDashboard() {
       responsibilities: "",
       requirements: "",
       perks: "",
+      application_link: "",
     });
     fetchJobs();
     setLoading(false);
@@ -629,6 +635,7 @@ export default function AdminDashboard() {
       jobType: job.job_type,
       seniority_level: job.seniority_level,
       description: job.description,
+      application_link: job.application_link,
       responsibilities: job.responsibilities.join("\n"),
       requirements: job.requirements.join("\n"),
       perks: job.perks.join("\n"),
@@ -1068,6 +1075,19 @@ export default function AdminDashboard() {
                         />
                       </div>
                     </div>
+                    <div>
+                        <Label>Linked Job Url</Label>
+                        <Input
+                          required
+                          value={jobForm.application_link}
+                          onChange={(e) =>
+                            setJobForm({
+                              ...jobForm,
+                              application_link: e.target.value,
+                            })
+                          }
+                        />
+                      </div>
 
                     <div>
                       <Label>Description</Label>

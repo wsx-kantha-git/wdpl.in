@@ -21,6 +21,7 @@ interface JobPosting {
   status: "open" | "closed"; // matches AdminDashboard
   created_at: string;
   updated_at: string;
+  application_link?: string | null;
 }
 
 const Careers = () => {
@@ -28,34 +29,33 @@ const Careers = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-  const fetchJobs = async () => {
-    setLoading(true);
+    const fetchJobs = async () => {
+      setLoading(true);
 
-    const { data, error } = await supabase
-      .from("job_postings")
-      .select("*")
-      .eq("status", "open")
-      .order("created_at", { ascending: false });
+      const { data, error } = await supabase
+        .from("job_postings")
+        .select("*")
+        .eq("status", "open")
+        .order("created_at", { ascending: false });
 
-    if (error) {
-      console.error("Error fetching jobs:", error);
+      if (error) {
+        console.error("Error fetching jobs:", error);
+        setLoading(false);
+        return;
+      }
+
+      // ✅ Map status to correct union type
+      const mappedJobs: JobPosting[] = (data || []).map((job) => ({
+        ...job,
+        status: job.status === "open" ? "open" : "closed",
+      }));
+
+      setJobs(mappedJobs);
       setLoading(false);
-      return;
-    }
+    };
 
-    // ✅ Map status to correct union type
-    const mappedJobs: JobPosting[] = (data || []).map(job => ({
-      ...job,
-      status: job.status === "open" ? "open" : "closed",
-    }));
-
-    setJobs(mappedJobs);
-    setLoading(false);
-  };
-
-  fetchJobs();
-}, []);
-
+    fetchJobs();
+  }, []);
 
   return (
     <Layout>
@@ -142,7 +142,13 @@ const Careers = () => {
                         variant="brand"
                         className="hover:scale-110 hover:shadow-xl transition-all duration-300 self-start"
                       >
-                        <Link to={`/careers/${job.id}`}>Apply Now</Link>
+                        <a
+                          href={job.application_link || "#"}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          Apply Now
+                        </a>
                       </Button>
                     </div>
 
