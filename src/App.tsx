@@ -20,6 +20,7 @@ import AdminTestimonialsDashboard from "./pages/admin/AdminTestimonialsDashboard
 import AdminContactDashboard from "./pages/admin/AdminContactDashboard";
 import Gallery from "./pages/Gallery";
 import AdminGalleryDashboard from "./pages/admin/GalleryAdminPage";
+import ScrollToTop from "./components/ui/ScrollToTop";
 
 const queryClient = new QueryClient();
 
@@ -29,6 +30,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       <HashRouter>
+        <ScrollToTop />
         <Routes>
           {/* Public Pages */}
           <Route path="/" element={<Index />} />
