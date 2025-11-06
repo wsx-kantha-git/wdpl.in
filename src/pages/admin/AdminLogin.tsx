@@ -6,7 +6,8 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
-import { Lock, Mail, Shield } from "lucide-react";
+import { Lock, Mail } from "lucide-react";
+import Logo from "@/assets/wdpl-logo.svg";
 
 export default function AdminLogin() {
   const navigate = useNavigate();
@@ -116,9 +117,15 @@ export default function AdminLogin() {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-primary/5 to-background p-4 relative overflow-hidden">
       <Card className="w-full max-w-md border-primary/30 shadow-2xl backdrop-blur-md bg-card/90 animate-scale-in relative z-10">
         <CardHeader className="text-center pb-8">
-          <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-primary to-primary/60 mx-auto mb-6 animate-bounce-in shadow-lg">
-            <Shield className="h-10 w-10 text-primary-foreground" />
-          </div>
+<div className="inline-flex items-center justify-center w-28 h-28  mx-auto mb-2">
+  <img
+    src={Logo}
+    alt="Admin Logo"
+    className="w-auto h-auto object-contain"
+  />
+</div>
+
+
           <CardTitle className="text-4xl font-raleway font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
             Admin Portal
           </CardTitle>

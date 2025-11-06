@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Mail, Phone, MapPin, Linkedin } from "lucide-react";
 import logo from "@/assets/wdpl-logo-white.svg";
+import LinkedIn from "@/assets/linkedin.svg";
 
 const Footer = () => {
   return (
@@ -21,15 +22,16 @@ const Footer = () => {
               Coimbatore.
             </p>
             <a
-              href="https://linkedin.com"
+              href="https://www.linkedin.com/company/webstix-design-private-limited/"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 text-background/80 hover:text-primary transition-all duration-300 hover:translate-x-1 group"
             >
-              <Linkedin
-                size={20}
-                className="transition-transform group-hover:scale-110"
-              />
+              <img
+                          src={LinkedIn}
+                          alt="LinkedIn"
+                          className="w-6 h-6"
+                        />
               <span className="text-sm">Follow us</span>
             </a>
           </div>

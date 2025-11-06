@@ -1,7 +1,13 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent } from "@/components/ui/card";
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 import { Star, Quote } from "lucide-react";
 import type { Database } from "@/integrations/supabase/types";
 
@@ -31,8 +37,10 @@ const TestimonialsCarousel = () => {
     fetchTestimonials();
   }, []);
 
-  if (loading) return <p className="text-center py-12">Loading testimonials...</p>;
-  if (!testimonials.length) return <p className="text-center py-12">No testimonials available.</p>;
+  if (loading)
+    return <p className="text-center py-12">Loading testimonials...</p>;
+  if (!testimonials.length)
+    return <p className="text-center py-12">No testimonials available.</p>;
 
   return (
     <section className="py-20 bg-gradient-to-b from-muted/30 to-background">
@@ -42,18 +50,28 @@ const TestimonialsCarousel = () => {
             What Our Team Say
           </h2>
           <p className="text-xl text-muted-foreground font-source max-w-2xl mx-auto">
-            Don't just take our word for it hear from the companies we've helped succeed
+            Don't just take our word for it hear from the companies we've helped
+            succeed
           </p>
         </div>
 
-        <Carousel opts={{ align: "start", loop: true }} className="w-full max-w-5xl mx-auto animate-fade-in-up">
+        <Carousel
+          opts={{ align: "start", loop: true }}
+          className="w-full max-w-5xl mx-auto animate-fade-in-up"
+        >
           <CarouselContent>
             {testimonials.map((testimonial, index) => (
-              <CarouselItem key={testimonial.id} className="md:basis-1/2 lg:basis-1/2">
+              <CarouselItem
+                key={testimonial.id}
+                className="md:basis-1/2 lg:basis-1/2"
+              >
                 <div className="p-4">
                   <Card
                     className="border-primary/20 hover:border-primary/40 transition-all duration-500 hover:shadow-lg hover:scale-105 bg-card/50 backdrop-blur-sm animate-scale-in"
-                    style={{ animationDelay: `${index * 0.1}s`, animationFillMode: "both" }}
+                    style={{
+                      animationDelay: `${index * 0.1}s`,
+                      animationFillMode: "both",
+                    }}
                   >
                     <CardContent className="p-8 relative">
                       <Quote className="absolute top-4 right-4 h-12 w-12 text-primary/10 animate-float" />
@@ -68,19 +86,25 @@ const TestimonialsCarousel = () => {
                           />
                         </div>
                         <div>
-                          <h4 className="font-raleway font-bold text-lg">{testimonial.name}</h4>
-                          <p className="text-sm text-muted-foreground font-source">{testimonial.role}</p>
+                          <h4 className="font-raleway font-bold text-lg">
+                            {testimonial.name}
+                          </h4>
+                          <p className="text-sm text-muted-foreground font-source">
+                            {testimonial.role}
+                          </p>
                         </div>
                       </div>
 
                       <div className="flex gap-1 mb-4">
-                        {Array.from({ length: testimonial.rating }).map((_, i) => (
-                          <Star
-                            key={i}
-                            className="h-5 w-5 fill-primary text-primary animate-bounce-in"
-                            style={{ animationDelay: `${i * 0.1}s` }}
-                          />
-                        ))}
+                        {Array.from({ length: testimonial.rating }).map(
+                          (_, i) => (
+                            <Star
+                              key={i}
+                              className="h-5 w-5 fill-primary text-primary animate-bounce-in"
+                              style={{ animationDelay: `${i * 0.1}s` }}
+                            />
+                          )
+                        )}
                       </div>
 
                       <p className="text-foreground/90 font-source leading-relaxed italic">
@@ -92,8 +116,8 @@ const TestimonialsCarousel = () => {
               </CarouselItem>
             ))}
           </CarouselContent>
-          <CarouselPrevious className="hover:scale-110 transition-transform" />
-          <CarouselNext className="hover:scale-110 transition-transform" />
+          <CarouselPrevious className="hover:scale-110 transition-transform absolute -left-5 top-1/2 -translate-y-1/2 md:-left-6 z-20 bg-background/80 backdrop-blur-sm border border-primary/30 shadow-md rounded-full p-2" />
+          <CarouselNext className="hover:scale-110 transition-transform absolute -right-5 top-1/2 -translate-y-1/2 md:-right-6 z-20 bg-background/80 backdrop-blur-sm border border-primary/30 shadow-md rounded-full p-2" />
         </Carousel>
       </div>
     </section>

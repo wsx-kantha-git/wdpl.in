@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Layout from "@/components/layout/Layout";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { useSearchParams } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { ChevronLeft, ChevronRight, Plus, Minus, X } from "lucide-react";
 
@@ -28,11 +28,19 @@ const Gallery = () => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [events, setEvents] = useState<Event[]>([]);
   const [images, setImages] = useState<GalleryImage[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState<string>("all");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const categoryFromURL = searchParams.get("category") || "all";
+  const [selectedCategory, setSelectedCategory] =
+    useState<string>(categoryFromURL);
+
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
   const [selectedImage, setSelectedImage] = useState<GalleryImage | null>(null);
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [zoom, setZoom] = useState<number>(1);
+
+  useEffect(() => {
+    setSelectedCategory(categoryFromURL);
+  }, [categoryFromURL]);
 
   // Fetch categories
   useEffect(() => {
@@ -49,10 +57,13 @@ const Gallery = () => {
   // Fetch events
   useEffect(() => {
     const fetchEventsWithCovers = async () => {
-      let query = supabase.from("gallery_events").select("*");
-      if (selectedCategory !== "all") query = query.eq("category_id", selectedCategory);
+let query = supabase.from("gallery_events").select("*");
+      if (selectedCategory !== "all")
+        query = query.eq("category_id", selectedCategory);      
 
-      const { data: eventsData } = await query.order("created_at", { ascending: false });
+      const { data: eventsData } = await query.order("created_at", {
+        ascending: false,
+      });
       if (!eventsData) return;
 
       const updatedEvents = await Promise.all(
@@ -157,26 +168,28 @@ const Gallery = () => {
         <div className="container mx-auto px-4">
           <div className="flex flex-wrap gap-3 justify-center">
             <Button
-  variant={selectedCategory === "all" ? "brand" : "outline"}
-  onClick={() => {
-    setSelectedCategory("all");
-    setSelectedEvent(null); // go back to events grid
-    setImages([]);          // clear previous event images
-  }}
-  className="capitalize hover:scale-110 transition-all duration-300"
->
-  All
-</Button>
+              variant={selectedCategory === "all" ? "brand" : "outline"}
+              onClick={() => {
+  setSearchParams({ category: "all" });
+  setSelectedEvent(null);
+  setImages([]);
+}}
+
+              className="capitalize hover:scale-110 transition-all duration-300"
+            >
+              All
+            </Button>
 
             {categories.map((cat) => (
               <Button
                 key={cat.id}
                 variant={selectedCategory === cat.id ? "brand" : "outline"}
                 onClick={() => {
-                  setSelectedCategory(cat.id);
-                  setSelectedEvent(null);
-                  setImages([]);
-                }}
+  setSearchParams({ category: cat.id });
+  setSelectedEvent(null);
+  setImages([]);
+}}
+
                 className="capitalize hover:scale-110 transition-all duration-300"
               >
                 {cat.name}
@@ -267,63 +280,74 @@ const Gallery = () => {
 
       {/* Lightbox Modal */}
       {selectedImage && (
-  <div
-    className="fixed inset-0 z-[1000] bg-black/90 flex items-center justify-center"
-    onClick={() => setSelectedImage(null)} // click outside closes
-  >
-    {/* Prevent closing when clicking the image */}
-    <div className="relative" onClick={(e) => e.stopPropagation()}>
-      {/* Centered Image */}
-      <img
-        src={selectedImage.image_url}
-        alt=""
-        style={{ transform: `scale(${zoom})`, transition: "transform 0.3s ease" }}
-        className="max-h-[90vh] max-w-[90vw] object-contain rounded-lg select-none"
-        onDoubleClick={resetZoom}
-      />
+        <div
+          className="fixed inset-0 z-[1000] bg-black/90 flex items-center justify-center"
+          onClick={() => setSelectedImage(null)} // click outside closes
+        >
+          {/* Prevent closing when clicking the image */}
+          <div className="relative" onClick={(e) => e.stopPropagation()}>
+            {/* Centered Image */}
+            <img
+              src={selectedImage.image_url}
+              alt=""
+              style={{
+                transform: `scale(${zoom})`,
+                transition: "transform 0.3s ease",
+              }}
+              className="max-h-[90vh] max-w-[90vw] object-contain rounded-lg select-none"
+              onDoubleClick={resetZoom}
+            />
 
-      {/* Navigation Arrows */}
-      {images.length > 1 && (
-        <>
-          <button
-            onClick={handlePrev}
-            className="absolute left-[-60px] top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/30 rounded-full p-3 text-white transition"
-          >
-            <ChevronLeft className="w-6 h-6" />
-          </button>
-          <button
-            onClick={handleNext}
-            className="absolute right-[-60px] top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/30 rounded-full p-3 text-white transition"
-          >
-            <ChevronRight className="w-6 h-6" />
-          </button>
-        </>
+            {/* Navigation Arrows */}
+            {images.length > 1 && (
+              <>
+                <button
+                  onClick={handlePrev}
+                  className="absolute left-[-60px] top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/30 rounded-full p-3 text-white transition"
+                >
+                  <ChevronLeft className="w-6 h-6" />
+                </button>
+                <button
+                  onClick={handleNext}
+                  className="absolute right-[-60px] top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/30 rounded-full p-3 text-white transition"
+                >
+                  <ChevronRight className="w-6 h-6" />
+                </button>
+              </>
+            )}
+
+            {/* Zoom Controls */}
+            <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-3 bg-white/10 rounded-full backdrop-blur-md px-4 py-2">
+              <button
+                onClick={zoomOut}
+                className="text-white hover:text-accent transition p-2"
+              >
+                <Minus className="w-5 h-5" />
+              </button>
+              <button
+                onClick={resetZoom}
+                className="text-white font-semibold text-sm px-3"
+              >
+                {Math.round(zoom * 100)}%
+              </button>
+              <button
+                onClick={zoomIn}
+                className="text-white hover:text-accent transition p-2"
+              >
+                <Plus className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Close Button */}
+            <button
+              onClick={() => setSelectedImage(null)}
+              className="absolute top-4 right-4 bg-white/10 hover:bg-white/30 rounded-full p-2 text-white transition"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
+        </div>
       )}
-
-      {/* Zoom Controls */}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-3 bg-white/10 rounded-full backdrop-blur-md px-4 py-2">
-        <button onClick={zoomOut} className="text-white hover:text-accent transition p-2">
-          <Minus className="w-5 h-5" />
-        </button>
-        <button onClick={resetZoom} className="text-white font-semibold text-sm px-3">
-          {Math.round(zoom * 100)}%
-        </button>
-        <button onClick={zoomIn} className="text-white hover:text-accent transition p-2">
-          <Plus className="w-5 h-5" />
-        </button>
-      </div>
-
-      {/* Close Button */}
-      <button
-        onClick={() => setSelectedImage(null)}
-        className="absolute top-4 right-4 bg-white/10 hover:bg-white/30 rounded-full p-2 text-white transition"
-      >
-        <X className="w-5 h-5" />
-      </button>
-    </div>
-  </div>
-)}
-
     </Layout>
   );
 };

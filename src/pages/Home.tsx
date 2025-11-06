@@ -15,6 +15,7 @@ import WorkCultureCarousel from "@/components/home/WorkCultureCarousel";
 import heroImage from "@/assets/hero-main.jpg";
 import chennaiImage from "@/assets/office-chennai.jpg";
 import coimbatoreImage from "@/assets/office-coimbatore.jpg";
+import GalleryPreview from "./GalleryPreviewPage";
 
 const Home = () => {
   const perks = [
@@ -90,11 +91,12 @@ const Home = () => {
         </div>
       </section>
 
+
       {/* Work Culture Carousel */}
       <WorkCultureCarousel />
 
       {/* Culture Highlights */}
-      <section className="py-24 bg-gradient-to-b from-background via-primary/5 to-background">
+      <section className="py-20 bg-gradient-to-b from-background via-primary/5 to-background">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16 animate-fade-in">
             <h2 className="text-5xl md:text-6xl font-raleway font-bold mb-6 md:leading-[1.2] bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
@@ -173,9 +175,13 @@ const Home = () => {
                   Tamil Nadu 600096, India
                 </p>
                 <Button asChild variant="link" className="mt-4 p-0">
-                  <Link to="/contact">
+                  <a
+                    href="https://maps.google.com/?q=286/1,+Rajiv+Gandhi+Salai,+Nehru+Nagar,+Perungudi,+Chennai,+600096"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     View on Map <ArrowRight className="ml-2" size={16} />
-                  </Link>
+                  </a>
                 </Button>
               </div>
             </Card>
@@ -206,16 +212,21 @@ const Home = () => {
                   Hypermarket, Coimbatore, Tamil Nadu 641045, India
                 </p>
                 <Button asChild variant="link" className="mt-4 p-0">
-                  <Link to="/contact">
+                  <a
+                    href="https://maps.google.com/?q=MAPA+Center,+Mikro+Grafeio,+Coimbatore,+641045"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     View on Map <ArrowRight className="ml-2" size={16} />
-                  </Link>
+                  </a>
                 </Button>
               </div>
             </Card>
           </div>
         </div>
       </section>
-
+      {/* Gallery Preview Section */}
+      <GalleryPreview />
       {/* Testimonials Carousel */}
       <TestimonialsCarousel />
 
@@ -236,7 +247,7 @@ const Home = () => {
               size="lg"
               className="bg-background text-primary border-background hover:bg-background/90 hover:text-black font-raleway font-semibold"
             >
-              <Link to="/careers">View Open Positions</Link>
+              <Link to="/careers">View Open Roles</Link>
             </Button>
             <Button
               asChild

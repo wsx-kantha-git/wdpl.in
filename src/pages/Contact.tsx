@@ -59,15 +59,14 @@ const Contact = () => {
       address: "286/1, Rajiv Gandhi Salai, Nehru Nagar, Perungudi",
       fullAddress: "Chennai, Tamil Nadu 600096, India",
       mapUrl:
-        "https://maps.google.com/?q=286/1,+Rajiv+Gandhi+Salai,+Nehru+Nagar,+Perungudi,+Chennai,+Tamil+Nadu+600096",
-    },
+        "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.0486000973997!2d80.24550057507643!3d12.968741987346368!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a525d6cbd3f3a21%3A0x4d9dcffff16b35d5!2sPrince%20Info%20City%20I%2C%20286%2F1%2C%20Rajiv%20Gandhi%20Salai%2C%20Nehru%20Nagar%2C%20Perungudi%2C%20Chennai%2C%20Tamil%20Nadu%20600096!5e0!3m2!1sen!2sin!4v1762409933735!5m2!1sen!2sin",    },
     {
       city: "Coimbatore",
       address:
         "2nd Floor, MAPA Center, Mikro Grafeio opposite LuLu Hypermarket",
       fullAddress: "Papanaickenpalayam, Coimbatore, Tamil Nadu 641045, India",
       mapUrl:
-        "https://maps.google.com/?q=2nd+Floor,+MAPA+Center,+Mikro+Grafeio+opposite+LuLu+Hypermarket,+Papanaickenpalayam,+Coimbatore,+Tamil+Nadu+641045",
+        "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3916.3898421049676!2d76.9865162250453!3d11.009349389153908!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba85997d75fdd63%3A0x45702f5f5e148762!2sMikro%20Grafeio%20(Beyond%20Workspaces)!5e0!3m2!1sen!2sin!4v1762348760819!5m2!1sen!2sin",
     },
   ];
 
@@ -78,7 +77,6 @@ const Contact = () => {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(120,119,198,0.15),transparent_60%)]"></div>
         <div className="container mt-4 mx-auto px-4 relative z-10">
           <div className="max-w-4xl mx-auto text-center flex flex-col items-center justify-center min-h-[60vh]">
-            {/* Contact Badge */}
             <Badge className="mb-4 animate-fade-in hover:scale-110 transition-transform duration-300">
               Contact Us
             </Badge>
@@ -100,85 +98,87 @@ const Contact = () => {
         </div>
       </section>
 
-      {/* Contact Form & Office Info Side by Side */}
+      {/* Contact Form & Office Info */}
       <section className="py-16 bg-background">
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
-            {/* Contact Form */}
-            <Card>
-              <CardHeader>
-                <CardTitle>Send Us a Message</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div>
-                    <Label htmlFor="name">Name *</Label>
-                    <Input
-                      id="name"
-                      required
-                      value={formData.name}
-                      onChange={(e) =>
-                        setFormData({ ...formData, name: e.target.value })
-                      }
-                      placeholder="Your full name"
-                    />
-                  </div>
+            {/* Fixed Contact Form */}
+            <div className="lg:sticky lg:top-20 self-start h-fit">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Send Us a Message</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <form onSubmit={handleSubmit} className="space-y-6">
+                    <div>
+                      <Label htmlFor="name">Name *</Label>
+                      <Input
+                        id="name"
+                        required
+                        value={formData.name}
+                        onChange={(e) =>
+                          setFormData({ ...formData, name: e.target.value })
+                        }
+                        placeholder="Your full name"
+                      />
+                    </div>
 
-                  <div>
-                    <Label htmlFor="email">Email *</Label>
-                    <Input
-                      id="email"
-                      type="email"
-                      required
-                      value={formData.email}
-                      onChange={(e) =>
-                        setFormData({ ...formData, email: e.target.value })
-                      }
-                      placeholder="your.email@example.com"
-                    />
-                  </div>
+                    <div>
+                      <Label htmlFor="email">Email *</Label>
+                      <Input
+                        id="email"
+                        type="email"
+                        required
+                        value={formData.email}
+                        onChange={(e) =>
+                          setFormData({ ...formData, email: e.target.value })
+                        }
+                        placeholder="your.email@example.com"
+                      />
+                    </div>
 
-                  <div>
-                    <Label htmlFor="phone">Phone</Label>
-                    <Input
-                      id="phone"
-                      type="tel"
-                      value={formData.phone}
-                      onChange={(e) =>
-                        setFormData({ ...formData, phone: e.target.value })
-                      }
-                      placeholder="eg. +91 98765 43210"
-                    />
-                  </div>
+                    <div>
+                      <Label htmlFor="phone">Phone</Label>
+                      <Input
+                        id="phone"
+                        type="tel"
+                        value={formData.phone}
+                        onChange={(e) =>
+                          setFormData({ ...formData, phone: e.target.value })
+                        }
+                        placeholder="eg. +91 98765 43210"
+                      />
+                    </div>
 
-                  <div>
-                    <Label htmlFor="message">Message *</Label>
-                    <Textarea
-                      id="message"
-                      required
-                      value={formData.message}
-                      onChange={(e) =>
-                        setFormData({ ...formData, message: e.target.value })
-                      }
-                      placeholder="Tell us what you'd like to discuss..."
-                      rows={5}
-                    />
-                  </div>
+                    <div>
+                      <Label htmlFor="message">Message *</Label>
+                      <Textarea
+                        id="message"
+                        required
+                        value={formData.message}
+                        onChange={(e) =>
+                          setFormData({ ...formData, message: e.target.value })
+                        }
+                        placeholder="Tell us what you'd like to discuss..."
+                        rows={5}
+                      />
+                    </div>
 
-                  <Button
-                    type="submit"
-                    variant="brand"
-                    className="w-full"
-                    disabled={isSubmitting}
-                  >
-                    {isSubmitting ? "Sending..." : "Send Message"}
-                  </Button>
-                </form>
-              </CardContent>
-            </Card>
+                    <Button
+                      type="submit"
+                      variant="brand"
+                      className="w-full"
+                      disabled={isSubmitting}
+                    >
+                      {isSubmitting ? "Sending..." : "Send Message"}
+                    </Button>
+                  </form>
+                </CardContent>
+              </Card>
+            </div>
 
-            {/* Our Offices */}
-            <div className="space-y-6">
+            {/* Scrollable Offices Section */}
+            <div className="space-y-8 overflow-y-auto max-h-[80vh] pr-2">
               <h2 className="text-2xl font-bold mb-4 text-foreground">
                 Our Offices
               </h2>
@@ -201,15 +201,18 @@ const Contact = () => {
                     <p className="text-muted-foreground mb-4">
                       {office.fullAddress}
                     </p>
-                    <Button asChild variant="outline" className="w-full">
-                      <a
-                        href={office.mapUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        View on Google Maps
-                      </a>
-                    </Button>
+
+                    {/* Direct Map Embed */}
+                    <div className="aspect-video w-full overflow-hidden rounded-lg border">
+                      <iframe
+                        src={office.mapUrl}
+                        width="100%"
+                        height="100%"
+                        style={{ border: 0 }}
+                        allowFullScreen
+                        loading="lazy"
+                      ></iframe>
+                    </div>
                   </CardContent>
                 </Card>
               ))}

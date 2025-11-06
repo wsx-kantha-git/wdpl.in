@@ -98,7 +98,6 @@ export default function AdminDashboard() {
   const [loading, setLoading] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
 
-
   // Job states
   const [jobs, setJobs] = useState<Job[]>([]);
   const [editingJobId, setEditingJobId] = useState<number | null>(null);
@@ -563,7 +562,7 @@ export default function AdminDashboard() {
           seniority_level: jobForm.seniority_level,
           description: jobForm.description,
           application_link: jobForm.application_link,
-          
+
           responsibilities,
           requirements,
           perks,
@@ -719,7 +718,6 @@ export default function AdminDashboard() {
 
           <Tabs defaultValue="team" className="animate-fade-in-up">
             <TabsList className="flex flex-wrap md:grid md:grid-cols-5 gap-2 mb-4 overflow-x-auto scrollbar-hide">
-
               {" "}
               {/* 5 columns */}
               <TabsTrigger value="team" className="gap-2 font-raleway">
@@ -966,14 +964,14 @@ export default function AdminDashboard() {
                               size="sm"
                               onClick={() => handleEditTeamMember(member)}
                             >
-                              <Edit className="h-4 w-4 mr-1" /> Edit
+                              <Edit className="h-4 w-4 mr-1" />
                             </Button>
                             <Button
                               size="sm"
                               variant="destructive"
                               onClick={() => handleDeleteTeamMember(member.id)}
                             >
-                              <Trash2 className="h-4 w-4 mr-1" /> Delete
+                              <Trash2 className="h-4 w-4 mr-1" />
                             </Button>
                             <label className="flex items-center gap-2 cursor-pointer">
                               <span className="text-sm">
@@ -1076,18 +1074,18 @@ export default function AdminDashboard() {
                       </div>
                     </div>
                     <div>
-                        <Label>Linked Job Url</Label>
-                        <Input
-                          required
-                          value={jobForm.application_link}
-                          onChange={(e) =>
-                            setJobForm({
-                              ...jobForm,
-                              application_link: e.target.value,
-                            })
-                          }
-                        />
-                      </div>
+                      <Label>Linked Job Url</Label>
+                      <Input
+                        required
+                        value={jobForm.application_link}
+                        onChange={(e) =>
+                          setJobForm({
+                            ...jobForm,
+                            application_link: e.target.value,
+                          })
+                        }
+                      />
+                    </div>
 
                     <div>
                       <Label>Description</Label>
@@ -1166,17 +1164,17 @@ export default function AdminDashboard() {
                           </div>
                           <div className="flex items-center gap-4">
                             <Button
-                              size="sm"
+                              size="icon"
                               onClick={() => handleEditJob(job)}
                             >
-                              Edit
+                              <Edit size={16} />
                             </Button>
                             <Button
                               size="sm"
                               variant="destructive"
                               onClick={() => handleDeleteJob(job.id)}
                             >
-                              <Trash2 className="h-4 w-4 mr-1" /> Delete
+                              <Trash2 className="h-4 w-4 mr-1" />
                             </Button>
                             <label className="flex items-center gap-2 cursor-pointer">
                               <span className="text-sm">
@@ -1199,7 +1197,7 @@ export default function AdminDashboard() {
                 </CardContent>
               </Card>
             </TabsContent>
-           
+
             {/* CONTACT SUBMISSIONS */}
 
             <TabsContent value="contacts">
