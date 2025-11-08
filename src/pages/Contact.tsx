@@ -73,7 +73,7 @@ const Contact = () => {
   return (
     <Layout>
       {/* Hero Section */}
-      <section className="relative py-30 bg-gradient-to-br from-primary/10 via-accent/5 to-secondary/10 overflow-hidden">
+      <section className="relative py-0 bg-gradient-to-br from-primary/10 via-accent/5 to-secondary/10 overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(120,119,198,0.15),transparent_60%)]"></div>
         <div className="container mt-4 mx-auto px-4 relative z-10">
           <div className="max-w-4xl mx-auto text-center flex flex-col items-center justify-center min-h-[60vh]">
@@ -82,7 +82,7 @@ const Contact = () => {
             </Badge>
 
             <h1
-              className="text-5xl md:text-7xl font-bold mb-8 animate-fade-in bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent hover:scale-105 transition-transform duration-500 inline-block"
+              className="text-3xl md:text-5xl font-bold mb-8 animate-fade-in bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent transition-transform duration-500 inline-block"
               style={{ animationDelay: "0.1s" }}
             >
               Let's Connect

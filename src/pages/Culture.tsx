@@ -13,6 +13,7 @@ import cultureCelebration from "@/assets/culture-celebration.jpg";
 import cultureTraining from "@/assets/culture-training.jpg";
 import cultureTrip from "@/assets/culture-trip.jpg";
 import { useNavigate } from "react-router-dom";
+import TestimonialsCarousel from "@/components/home/TestimonialsCarousel";
 
 const Culture = () => {
   const navigate = useNavigate();
@@ -56,39 +57,18 @@ const Culture = () => {
     },
   ];
 
-  const testimonials = [
-    {
-      quote:
-        "WDPL has been an incredible place to grow. The training programs and supportive team have helped me develop skills I never thought I'd have.",
-      author: "Priya Sharma",
-      role: "Frontend Developer",
-    },
-    {
-      quote:
-        "The work culture here is unlike any other company. It truly feels like a family, and the celebrations and trips make every day enjoyable.",
-      author: "Raj Kumar",
-      role: "UI/UX Designer",
-    },
-    {
-      quote:
-        "I've learned so much in my time here. The mentorship and continuous learning opportunities have been invaluable for my career.",
-      author: "Anjali Reddy",
-      role: "Marketing Specialist",
-    },
-  ];
-
   return (
     <Layout>
       {/* Hero Section */}
-      <section className="relative py-24 bg-gradient-to-br from-primary/10 via-accent/5 to-secondary/10 overflow-hidden">
+      <section className="relative py-20 bg-gradient-to-br from-primary/10 via-accent/5 to-secondary/10 overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(120,119,198,0.15),transparent_50%)]"></div>
         <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-4xl mx-auto text-center">
+          <div className="max-w-4xl max-h-4xl mx-auto text-center">
             <Badge className="mb-6 animate-fade-in hover:scale-110 transition-transform duration-300">
               Our Culture
-            </Badge>
+            </Badge><br />
             <h1
-              className="text-5xl md:text-7xl font-bold  mb-8 animate-fade-in bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent hover:scale-105 transition-transform duration-500 inline-block"
+              className="text-5xl md:text-5xl font-bold  mb-8 animate-fade-in bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent  transition-transform duration-500 inline-block"
               style={{ animationDelay: "0.1s" }}
             >
               More Than Just a Workplace
@@ -233,38 +213,8 @@ const Culture = () => {
       </section>
 
       {/* Testimonials */}
-      <section className="py-16 bg-background">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-foreground mb-4">
-              What Our Team Says
-            </h2>
-            <p className="text-muted-foreground">
-              Hear from the people who make WDPL special.
-            </p>
-          </div>
 
-          <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-            {testimonials.map((testimonial, index) => (
-              <Card key={index} className="hover:shadow-lg transition-shadow">
-                <CardContent className="p-6">
-                  <p className="text-muted-foreground italic mb-4">
-                    "{testimonial.quote}"
-                  </p>
-                  <div className="border-t pt-4">
-                    <p className="font-semibold text-foreground">
-                      {testimonial.author}
-                    </p>
-                    <p className="text-sm text-muted-foreground">
-                      {testimonial.role}
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
+      <TestimonialsCarousel />
     </Layout>
   );
 };

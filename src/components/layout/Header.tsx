@@ -30,7 +30,7 @@ const Header = () => {
   return (
     <header
       className={`py-6 fixed top-0 left-0 right-0 z-50 bg-white transition-all duration-300 ${
-        isScrolled ? "h-16 shadow-md" : "h-20"
+        isScrolled ? "h-20 shadow-md" : "h-20"
       }`}
     >
       <div className="container mx-auto px-4 h-full flex items-center justify-between">
@@ -40,7 +40,7 @@ const Header = () => {
             src={wdplLogo}
             alt="WDPL - Webstix Design Private Limited"
             className={`transition-all duration-300 ${
-              isScrolled ? "h-10" : "h-16"
+              isScrolled ? "h-14" : "h-14"
             }`}
           />
         </Link>
@@ -51,7 +51,7 @@ const Header = () => {
             <Link
               key={link.path}
               to={link.path}
-              className={`px-4 py-2 rounded-md text-sm font-medium hover:scale-110 ${
+              className={`px-4 py-2 rounded-md text-base font-medium hover:scale-110 ${
                 location.pathname === link.path
                   ? "text-primary bg-primary/10 shadow-sm"
                   : "text-foreground hover:text-primary hover:bg-primary/5"
@@ -64,14 +64,10 @@ const Header = () => {
 
         {/* CTA Button */}
         <div className="hidden lg:block">
-          <Button
-            asChild
-            variant="brand"
-            size="lg"
-            className=" rounded-full hover:scale-110 hover:shadow-xl transition-all duration-300"
-          >
-            <Link to="/careers">View Open Roles</Link>
-          </Button>
+          <Button asChild variant="orangeBrand" size="lg" className="font-raleway rounded-full">
+  <Link to="/careers">VIEW ALL ROLES</Link>
+</Button>
+
         </div>
 
         {/* Mobile Menu Button */}
@@ -101,7 +97,7 @@ const Header = () => {
                   {link.label}
                 </Link>
               ))}
-              <Button asChild variant="brand" size="lg" className="mt-2">
+              <Button asChild variant="brand" size="lg" className="mt-2 font-raleway">
                 <Link to="/careers" onClick={() => setIsMobileMenuOpen(false)}>
                   VIEW OPEN ROLES
                 </Link>

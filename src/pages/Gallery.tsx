@@ -57,9 +57,9 @@ const Gallery = () => {
   // Fetch events
   useEffect(() => {
     const fetchEventsWithCovers = async () => {
-let query = supabase.from("gallery_events").select("*");
+      let query = supabase.from("gallery_events").select("*");
       if (selectedCategory !== "all")
-        query = query.eq("category_id", selectedCategory);      
+        query = query.eq("category_id", selectedCategory);
 
       const { data: eventsData } = await query.order("created_at", {
         ascending: false,
@@ -151,8 +151,8 @@ let query = supabase.from("gallery_events").select("*");
           <div className="max-w-3xl mx-auto text-center">
             <Badge className="mb-6 animate-fade-in hover:scale-110 transition-transform duration-300">
               Gallery
-            </Badge>
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-fade-in bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent inline-block">
+            </Badge> <br />
+            <h1 className="text-3xl md:text-5xl font-bold mb-6 animate-fade-in bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent inline-block">
               Moments That Matter
             </h1>
             <p className="text-xl md:text-2xl text-muted-foreground animate-fade-in leading-relaxed">
@@ -164,18 +164,17 @@ let query = supabase.from("gallery_events").select("*");
       </section>
 
       {/* Category Filter */}
-      <section className="py-10 bg-background/50 backdrop-blur-sm border-b sticky top-20 z-40">
+      <section className="py-6 bg-background/50 backdrop-blur-sm border-b sticky top-20 z-40">
         <div className="container mx-auto px-4">
           <div className="flex flex-wrap gap-3 justify-center">
             <Button
               variant={selectedCategory === "all" ? "brand" : "outline"}
               onClick={() => {
-  setSearchParams({ category: "all" });
-  setSelectedEvent(null);
-  setImages([]);
-}}
-
-              className="capitalize hover:scale-110 transition-all duration-300"
+                setSearchParams({ category: "all" });
+                setSelectedEvent(null);
+                setImages([]);
+              }}
+              className="capitalize rounded-full hover:scale-110 transition-all duration-300"
             >
               All
             </Button>
@@ -185,12 +184,11 @@ let query = supabase.from("gallery_events").select("*");
                 key={cat.id}
                 variant={selectedCategory === cat.id ? "brand" : "outline"}
                 onClick={() => {
-  setSearchParams({ category: cat.id });
-  setSelectedEvent(null);
-  setImages([]);
-}}
-
-                className="capitalize hover:scale-110 transition-all duration-300"
+                  setSearchParams({ category: cat.id });
+                  setSelectedEvent(null);
+                  setImages([]);
+                }}
+                className="capitalize rounded-full hover:scale-110 transition-all duration-300"
               >
                 {cat.name}
               </Button>
@@ -239,44 +237,58 @@ let query = supabase.from("gallery_events").select("*");
         </section>
       )}
 
-      {/* Event Images Grid */}
-      {selectedEvent && (
-        <section className="py-20 bg-gradient-to-b from-background via-secondary/5 to-background">
-          <div className="container mx-auto px-4">
-            <div className="flex justify-between items-center mb-8">
-              <h2 className=" font-raleway text-3xl font-bold text-primary">
-                {selectedEvent.name}
-              </h2>
-              <Button variant="outline" onClick={() => setSelectedEvent(null)}>
-                ← Back to Events
-              </Button>
+
+{/* Event Images Grid with Event Filter */}
+{selectedEvent && (
+  <section className="py-20 bg-gradient-to-b from-background via-secondary/5 to-background">
+    <div className="container mx-auto px-4">
+      {/* Event Filter Bar */}
+      <div className="flex flex-wrap gap-3 justify-center mb-10">
+        {events.map((ev) => (
+          <Button
+            key={ev.id}
+            variant={selectedEvent.id === ev.id ? "brand" : "outline"}
+            onClick={() => handleEventClick(ev)}
+            className="capitalize rounded-full hover:scale-110 transition-all duration-300"
+          >
+            {ev.name}
+          </Button>
+        ))}
+      </div>
+
+      {/* Image Grid */}
+      <div className="text-center mb-8">
+        <h2 className="font-raleway text-3xl font-bold text-primary">
+          {selectedEvent.name}
+        </h2>
+      </div>
+
+      {images.length > 0 ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+          {images.map((img) => (
+            <div
+              key={img.id}
+              className="group relative overflow-hidden rounded-xl cursor-pointer hover:shadow-xl transition-all duration-500"
+              onClick={() => setSelectedImage(img)}
+            >
+              <img
+                src={img.image_url}
+                alt=""
+                className="w-full h-full object-cover group-hover:scale-110 transition-all duration-500"
+              />
             </div>
-            {images.length > 0 ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-                {images.map((img) => (
-                  <div
-                    key={img.id}
-                    className="group relative overflow-hidden rounded-xl cursor-pointer hover:shadow-xl transition-all duration-500"
-                    onClick={() => setSelectedImage(img)}
-                  >
-                    <img
-                      src={img.image_url}
-                      alt=""
-                      className="w-full h-full object-cover group-hover:scale-110 transition-all duration-500"
-                    />
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <div className="text-center py-20">
-                <p className="text-muted-foreground text-lg">
-                  No images found for this event.
-                </p>
-              </div>
-            )}
-          </div>
-        </section>
+          ))}
+        </div>
+      ) : (
+        <div className="text-center py-20">
+          <p className="text-muted-foreground text-lg">
+            No images found for this event.
+          </p>
+        </div>
       )}
+    </div>
+  </section>
+)}
 
       {/* Lightbox Modal */}
       {selectedImage && (

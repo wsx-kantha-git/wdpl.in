@@ -28,7 +28,7 @@ const TestimonialsCarousel = () => {
       if (error) {
         console.error(error.message);
       } else if (data) {
-        setTestimonials(data); // Type-safe, no 'any' or 'as unknown'
+        setTestimonials(data); 
       }
 
       setLoading(false);
@@ -74,7 +74,7 @@ const TestimonialsCarousel = () => {
                     }}
                   >
                     <CardContent className="p-8 relative">
-                      <Quote className="absolute top-4 right-4 h-12 w-12 text-primary/10 animate-float" />
+                      <Quote className="absolute top-4 right-4 h-12 w-12 text-primary/10 animate-none" />
 
                       <div className="flex items-center gap-4 mb-6">
                         <div className="relative">

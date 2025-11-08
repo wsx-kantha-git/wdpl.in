@@ -60,18 +60,18 @@ const Careers = () => {
   return (
     <Layout>
       {/* Hero Section */}
-      <section className="relative py-32 bg-gradient-to-br from-primary/10 via-accent/5 to-secondary/10 overflow-hidden">
+      <section className="relative py-20 bg-gradient-to-br from-primary/10 via-accent/5 to-secondary/10 overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(120,119,198,0.15),transparent_50%),radial-gradient(ellipse_at_bottom,rgba(251,146,60,0.15),transparent_50%)]"></div>
         <div className="absolute inset-0 bg-grid-pattern opacity-[0.03] animate-pulse"></div>
 
         <div className="container mx-auto px-4 text-center relative z-10">
           <div className="animate-fade-in mb-6">
-            <span className="inline-block px-4 py-2 bg-primary/10 text-primary rounded-full text-sm md:text-base font-semibold border border-primary/20 hover:scale-110 transition-transform duration-300">
+            <span className="inline-block px-3 py-1 bg-primary/10 text-primary rounded-full text-sm md:text-base font-semibold border border-primary/20 hover:scale-110 transition-transform duration-300">
               We’re Hiring!
             </span>
           </div>
 
-          <h1 className="text-5xl md:text-7xl font-bold  mb-6 animate-fade-in bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent hover:scale-105 transition-transform duration-500 inline-block">
+          <h1 className="text-3xl md:text-5xl font-bold  mb-6 animate-fade-in bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent transition-transform duration-500 inline-block">
             Open Positions
           </h1>
 

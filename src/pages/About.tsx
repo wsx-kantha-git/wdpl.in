@@ -37,11 +37,11 @@ const About = () => {
   return (
     <Layout>
       {/* Hero Section */}
-      <section className="py-24 bg-gradient-to-br from-primary/10 via-secondary/5 to-accent/10 overflow-hidden relative">
+      <section className="py-20 bg-gradient-to-br from-primary/10 via-secondary/5 to-accent/10 overflow-hidden relative">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(120,119,198,0.15),transparent_60%)]"></div>
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-5xl md:text-7xl font-bold  mb-8 animate-fade-in bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent hover:scale-105 transition-transform duration-500 inline-block">About WDPL</h1>
+            <h1 className="text-5xl md:text-5xl font-bold  mb-8 animate-fade-in bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent  transition-transform duration-500 inline-block">About WDPL</h1>
             <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed animate-fade-in" style={{ animationDelay: "0.1s" }}>
               Webstix Design Private Limited - A family-owned technology partner committed to innovation, growth, and
               creating exceptional digital experiences.

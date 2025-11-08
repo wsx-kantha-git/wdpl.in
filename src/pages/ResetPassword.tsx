@@ -1,19 +1,53 @@
-import { useState, FormEvent } from "react";
+import { useEffect, useState, FormEvent } from "react";
+import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "@/hooks/use-toast";
-import { useNavigate } from "react-router-dom";
 
 export default function ResetPassword() {
   const navigate = useNavigate();
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [sessionSet, setSessionSet] = useState(false);
+
+  useEffect(() => {
+    // Extract the token part correctly when using HashRouter
+    const fullHash = window.location.hash; 
+    // e.g. "#/reset-password#access_token=..."
+    const tokenPart = fullHash.split("#").pop(); // last part after second '#'
+    const params = new URLSearchParams(tokenPart);
+
+    const access_token = params.get("access_token");
+    const refresh_token = params.get("refresh_token");
+
+    if (access_token && refresh_token) {
+      supabase.auth.setSession({ access_token, refresh_token })
+        .then(({ error }) => {
+          if (error) {
+            toast({
+              title: "Session Error",
+              description: error.message,
+              variant: "destructive",
+            });
+          } else {
+            setSessionSet(true);
+          }
+        });
+    } else {
+      toast({
+        title: "Invalid Link",
+        description: "Your reset link is invalid or expired.",
+        variant: "destructive",
+      });
+    }
+  }, []);
 
   const handleReset = async (e: FormEvent) => {
     e.preventDefault();
-    setLoading(true);
+    if (!sessionSet) return;
 
+    setLoading(true);
     try {
       const { error } = await supabase.auth.updateUser({ password });
       if (error) throw error;
@@ -22,7 +56,7 @@ export default function ResetPassword() {
         title: "Password Updated!",
         description: "You can now log in with your new password.",
       });
-      navigate("/admin/login");
+      navigate("/wdpl.in/#/admin/login");
     } catch (error) {
       const message = error instanceof Error ? error.message : "Error resetting password";
       toast({
@@ -50,7 +84,7 @@ export default function ResetPassword() {
           onChange={(e) => setPassword(e.target.value)}
           className="mb-6 border-primary/30 focus:border-primary"
         />
-        <Button type="submit" disabled={loading} className="w-full">
+        <Button type="submit" disabled={loading || !sessionSet} className="w-full">
           {loading ? "Updating..." : "Update Password"}
         </Button>
       </form>

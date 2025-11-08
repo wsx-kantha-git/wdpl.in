@@ -6,6 +6,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+
 import cultureCelebration from "@/assets/culture-celebration.jpg";
 import cultureTraining from "@/assets/culture-training.jpg";
 import cultureTrip from "@/assets/culture-trip.jpg";
@@ -47,7 +48,7 @@ const cultureValues = [
     id: 5,
     title: "Global Mindset",
     description:
-      "With teams across continents, we embrace diversity and bring global perspectives to local challenges.",
+      "With teams across continents, we embrace diversity and bring global perspectives to local challenges, fostering innovation and  collaboration.",
     image: cultureTraining,
     color: "from-green-500/20 to-emerald-500/20",
   },
@@ -55,7 +56,7 @@ const cultureValues = [
     id: 6,
     title: "Learning Culture",
     description:
-      "Continuous learning is in our DNA. Access courses, workshops, and conferences to stay ahead in your field.",
+      "Continuous learning is in our DNA. Access courses, workshops, and conferences to stay ahead and grow your expertise.",
     image: cultureTrip,
     color: "from-primary/20 to-accent/20",
   },
@@ -91,7 +92,7 @@ const WorkCultureCarousel = () => {
                 >
                   <div className="p-4">
                     <Card
-                      className="border-primary/20 hover:border-primary/40 transition-all duration-500 overflow-hidden group hover:shadow-xl animate-bounce-in"
+                      className="border-primary/20 hover:border-primary/40 transition-all duration-500 overflow-hidden group hover:shadow-lg animate-bounce-in"
                       style={{
                         animationDelay: `${index * 0.15}s`,
                         animationFillMode: "both",

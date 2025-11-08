@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { ChevronLeft, ChevronRight, Images } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 
@@ -33,13 +33,9 @@ const GalleryPreview = () => {
   }, []);
 
   // ✅ Next / Prev
-  const nextSlide = () => {
-    setCurrentIndex((prev) => (prev + 1) % images.length);
-  };
-
-  const prevSlide = () => {
+  const nextSlide = () => setCurrentIndex((prev) => (prev + 1) % images.length);
+  const prevSlide = () =>
     setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
-  };
 
   // ✅ Auto carousel
   useEffect(() => {
@@ -53,16 +49,10 @@ const GalleryPreview = () => {
   if (images.length === 0) return null;
 
   return (
-    <section className="py-16 sm:py-20 bg-gradient-to-b from-background via-secondary/10 to-background">
+    <section className="relative py-16 sm:py-20 bg-gradient-to-b from-background via-secondary/10 to-background z-0">
       <div className="container mx-auto px-3 sm:px-6 text-center">
         {/* Header */}
-        <div className="flex flex-col items-center justify-center mb-8 sm:mb-10">
-          <div className="inline-flex items-center gap-2 text-primary mb-3">
-            <Images className="w-5 h-5 sm:w-6 sm:h-6" />
-            <span className="font-semibold uppercase tracking-wide text-sm sm:text-base">
-              Gallery
-            </span>
-          </div>
+        <div className="flex flex-col items-center justify-center mb-8 sm:mb-2">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
             Glimpses of WDPL Moments
           </h2>
@@ -72,58 +62,61 @@ const GalleryPreview = () => {
         </div>
 
         {/* Carousel */}
-        <div className="relative max-w-3xl mx-auto">
-          <div className="overflow-hidden rounded-xl sm:rounded-2xl shadow-lg relative">
-            <img
-              src={images[currentIndex]?.image_url || "/placeholder.jpg"}
-              alt="Gallery Preview"
-              className="w-full h-[250px] sm:h-[400px] md:h-[500px] object-cover transition-transform duration-700 ease-in-out"
-            />
-            <div className="absolute bottom-0 left-0 right-0 bg-black/50 py-2 sm:py-4 px-3 sm:px-6 text-white text-center">
-              <h3 className="text-sm sm:text-lg font-semibold tracking-wide uppercase">
-                {images[currentIndex]?.gallery_events?.name || "Event"}
-              </h3>
-            </div>
+        <div className="relative max-w-6xl mx-auto flex items-center justify-center overflow-hidden min-h-[350px] sm:min-h-[450px] md:min-h-[500px] z-[1]">
+          {images.map((img, index) => {
+            const position =
+              index === currentIndex
+                ? "center"
+                : index === (currentIndex - 1 + images.length) % images.length
+                ? "left"
+                : index === (currentIndex + 1) % images.length
+                ? "right"
+                : "hidden";
 
-            {/* Navigation Buttons (Desktop only) */}
-            <button
-              onClick={prevSlide}
-              className="hidden sm:flex absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 p-2 sm:p-3 rounded-full text-white transition"
-            >
-              <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
-            </button>
-            <button
-              onClick={nextSlide}
-              className="hidden sm:flex absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 p-2 sm:p-3 rounded-full text-white transition"
-            >
-              <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
-            </button>
-          </div>
-        </div>
+            const baseStyle =
+              "absolute transition-all duration-700 ease-[cubic-bezier(0.4,0,0.2,1)] transform-gpu rounded-2xl shadow-xl object-cover";
 
-        {/* Thumbnails */}
-        <div className="flex justify-center gap-2 mt-4 sm:mt-6 flex-wrap">
-          {images.map((img, index) => (
-            <button
-              key={img.id}
-              onClick={() => setCurrentIndex(index)}
-              className={`w-12 h-12 sm:w-16 sm:h-16 overflow-hidden rounded-md border-2 transition-all duration-300 ${
-                index === currentIndex
-                  ? "border-primary scale-105"
-                  : "border-transparent hover:scale-105"
-              }`}
-            >
+            const styles: Record<string, string> = {
+              center:
+                "z-30 scale-100 opacity-100 translate-x-0 blur-0 w-[60%] sm:w-[55%] md:w-[50%]",
+              left:
+                "z-20 scale-75 opacity-60 -translate-x-[80%] blur-[2px] w-[30%]",
+              right:
+                "z-20 scale-75 opacity-60 translate-x-[80%] blur-[2px] w-[30%]",
+              hidden:
+                "z-0 opacity-0 scale-50 translate-x-0 pointer-events-none",
+            };
+
+            return (
               <img
+                key={img.id}
                 src={img.image_url}
-                alt="thumbnail"
-                className="w-full h-full object-cover"
+                alt="Gallery Preview"
+                className={`${baseStyle} ${styles[position]} h-[220px] sm:h-[350px] md:h-[420px]`}
               />
-            </button>
-          ))}
+            );
+          })}
+
+
+
+          {/* Navigation Buttons */}
+          <button
+            onClick={prevSlide}
+            className="absolute left-6 sm:left-10 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/60 p-3 rounded-full text-white transition-all duration-300 z-20 backdrop-blur-md"
+          >
+            <ChevronLeft className="w-6 h-6" />
+          </button>
+
+          <button
+            onClick={nextSlide}
+            className="absolute right-6 sm:right-10 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/60 p-3 rounded-full text-white transition-all duration-300 z-20 backdrop-blur-md"
+          >
+            <ChevronRight className="w-6 h-6" />
+          </button>
         </div>
 
         {/* View Full Gallery */}
-        <div className="mt-8 sm:mt-10">
+        <div className="mt-10">
           <Button
             size="lg"
             variant="brand"

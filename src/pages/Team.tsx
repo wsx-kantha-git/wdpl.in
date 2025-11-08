@@ -91,7 +91,7 @@ const Team = () => {
       {/* Hero Section */}
       <section className="relative py-24 bg-gradient-to-br from-primary/10 via-secondary/5 to-accent/10 overflow-hidden">
         <div className="container mx-auto px-4 text-center relative z-10">
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-fade-in bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent hover:scale-105 transition-transform duration-500 inline-block">
+          <h1 className="text-3xl md:text-5xl font-bold mb-6 animate-fade-in bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent  transition-transform duration-500 inline-block">
             Meet Our Team
           </h1>
           <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto animate-fade-in leading-relaxed">
@@ -101,15 +101,15 @@ const Team = () => {
       </section>
 
       {/* Department Filter */}
-      <section className="py-8 bg-background/70 backdrop-blur-sm border-b sticky top-20 z-40">
+      <section className="py-6 bg-background/70 backdrop-blur-sm border-b sticky top-20 z-40">
         <div className="container mx-auto px-4">
           <div className="flex flex-wrap justify-center gap-2">
             {departments.map((dept) => (
               <Button
                 key={dept}
-                variant={selectedDepartment === dept ? "default" : "outline"}
+                variant={selectedDepartment === dept ? "brand" : "outline"}
                 onClick={() => setSelectedDepartment(dept)}
-                className="capitalize"
+                className="capitalize rounded-full"
               >
                 {dept}
               </Button>
@@ -132,7 +132,7 @@ const Team = () => {
               {filteredMembers.map((member, index) => (
                 <Card
                   key={member.id}
-                  className="overflow-hidden group hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.3)] transition-all duration-700 hover:-translate-y-3 hover:rotate-0 animate-fade-in border-2 hover:border-primary/50"
+                  className="overflow-hidden group hover:shadow-lg transition-all duration-700 hover:-translate-y-3 hover:rotate-0 animate-fade-in border-2 hover:border-primary/50"
                   style={{ animationDelay: `${index * 0.08}s` }}
                 >
                   {/* Image */}
@@ -154,13 +154,13 @@ const Team = () => {
 
                   {/* Info */}
                   <div className="p-6">
-                    <h3 className="text-lg font-semibold text-foreground mb-1">
+                    <h3 className="text-lg font-semibold text-foreground mb-2">
                       {member.name}
                     </h3>
-                    <p className="text-primary text-sm font-medium mb-2">
+                    <p className="text-primary text-sm font-medium mb-3">
                       {member.role}
                     </p>
-                    <div className="flex items-center gap-2 mb-3">
+                    <div className="flex items-center gap-2 mb-4">
                       <Badge variant="secondary" className="capitalize">
                         {member.department_name}
                       </Badge>
@@ -207,7 +207,8 @@ const Team = () => {
                         <img
                           src={LinkedIn}
                           alt="LinkedIn"
-                          className="w-6 h-6"
+                          className="w-6 h-6 transition-transform duration-300 group-hover:-translate-y-1 group-hover:brightness-100"
+                
                         />
                       </a>
                     )}
