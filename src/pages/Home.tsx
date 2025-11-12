@@ -1,41 +1,39 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import {
-  ArrowRight,
-  Award,
-  Coffee,
-  Users,
-  Plane,
-  GraduationCap,
-} from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import TestimonialsCarousel from "@/components/home/TestimonialsCarousel";
 import WorkCultureCarousel from "@/components/home/WorkCultureCarousel";
-import heroImage from "@/assets/hero-main.jpg";
-import chennaiImage from "@/assets/office-chennai.jpg";
+import HeroImage from "@/assets/homepage/slideshow_new_bg.webp";
+import HeroIllustration from "@/assets/homepage/web-design.svg";
+import chennaiImage from "@/assets/homepage/webstix-chennai-office-interior.jpg";
 import coimbatoreImage from "@/assets/office-coimbatore.jpg";
 import GalleryPreview from "./GalleryPreviewPage";
+import Trainning from "@/assets/homepage/home-icons/trainning.svg";
+import Food from "@/assets/homepage/home-icons/food-and-beverage.svg";
+import Celebrate from "@/assets/homepage/home-icons/celebrate.svg";
+import Travel from "@/assets/homepage/home-icons/travel.svg";
 
 const Home = () => {
   const perks = [
     {
-      icon: GraduationCap,
+      icon: Trainning,
       title: "Training Programs",
       description: "Continuous learning & skill development",
     },
     {
-      icon: Coffee,
+      icon: Food,
       title: "Inclusive Food & Beverages",
       description: "Complimentary meals & beverages",
     },
     {
-      icon: Plane,
+      icon: Travel,
       title: "Company Trips",
       description: "Annual team outings & retreats",
     },
     {
-      icon: Award,
+      icon: Celebrate,
       title: "Celebrations",
       description: "Regular events & recognition",
     },
@@ -46,11 +44,12 @@ const Home = () => {
       {/* Hero Section */}
       <section
         className="relative min-h-[95vh] flex items-center justify-center bg-cover bg-center overflow-hidden"
-        style={{ backgroundImage: `url(${heroImage})` }}
+        style={{ backgroundImage: `url(${HeroImage})` }}
       >
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="px-6 max-w-3xl">
-            <h1 className="text-[62px] md:text-5xl lg:text-7xl font-raleway font-bold text-background mb-8">
+        <div className="container mx-auto px-4 relative z-10 flex flex-col md:flex-row items-center justify-between gap-10">
+          {/* Left Text Section */}
+          <div className="px-6 max-w-3xl text-center md:text-left">
+            <h1 className="text-[62px] md:text-5xl lg:text-7xl font-raleway font-bold text-background mb-8 leading-tight">
               Design, Build & Grow
             </h1>
             <p
@@ -60,15 +59,16 @@ const Home = () => {
               Join WDPL in Chennai & Coimbatore. Family-first,
               growth-focused-training, food, trips, celebrations.
             </p>
+
             <div
-              className="flex flex-wrap gap-5 animate-fade-in"
+              className="flex flex-wrap gap-5 animate-fade-in justify-center md:justify-start"
               style={{ animationDelay: "0.2s" }}
             >
               <Button
                 asChild
                 variant="brand"
                 size="lg"
-                className="text-lg px-8 py-6 hover:scale-110 hover:shadow-2xl  duration-300"
+                className="text-lg px-8 py-6 hover:scale-110 hover:shadow-2xl duration-300"
               >
                 <Link to="/team">
                   SEE OUR TEAM{" "}
@@ -78,15 +78,28 @@ const Home = () => {
                   />
                 </Link>
               </Button>
+
               <Button
                 asChild
                 variant="outline"
                 size="lg"
-                className="bg-background/10 backdrop-blur-sm border-2 border-background text-background hover:bg-background hover:text-foreground text-lg px-8 py-6 hover:scale-110  duration-300"
+                className="bg-background/10 backdrop-blur-sm border-2 border-background text-background hover:bg-background hover:text-foreground text-lg px-8 py-6 hover:scale-110 duration-300"
               >
                 <Link to="/culture">EXPLORE OUR CULTURE</Link>
               </Button>
             </div>
+          </div>
+
+          {/* Right SVG Section */}
+          <div
+            className="w-full md:w-1/2 flex justify-center md:justify-end animate-fade-in"
+            style={{ animationDelay: "0.3s" }}
+          >
+            <img
+              src={HeroIllustration}
+              alt="Team Illustration"
+              className="w-[95%] md:w-[110%] lg:w-[130%] max-w-2xl drop-shadow-2xl hover:scale-110 transition-transform duration-500"
+            />
           </div>
         </div>
       </section>
@@ -114,11 +127,13 @@ const Home = () => {
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
                 <div className="w-20 h-20 bg-gradient-to-br from-primary/20 to-accent/10 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-gradient-to-br group-hover:from-primary group-hover:to-accent group-hover:scale-125 group-hover:rotate-12 transition-all duration-500 shadow-lg">
-                  <perk.icon
-                    className="text-primary group-hover:text-primary-foreground transition-colors duration-300"
-                    size={36}
+                  <img
+                    src={perk.icon}
+                    alt={perk.title}
+                    className="w-12 h-12 object-contain transition-all duration-300 group-hover:brightness-0 group-hover:invert"
                   />
                 </div>
+
                 <h3 className="text-xl font-semibold text-foreground mb-2">
                   {perk.title}
                 </h3>
@@ -244,9 +259,9 @@ const Home = () => {
               asChild
               variant="outline"
               size="lg"
-              className="bg-background text-primary border-background hover:bg-background/90 hover:text-black font-raleway font-semibold"
+              className=" bg-background text-primary border-background hover:bg-background/90 hover:text-black font-raleway font-semibold"
             >
-              <Link to="/careers">VIEW OPEN ROLES</Link>
+              <Link to="/careers">VIEW ALL ROLES</Link>
             </Button>
             <Button
               asChild

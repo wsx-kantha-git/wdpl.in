@@ -9,7 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { MapPin } from "lucide-react";
-
+import Hero from "@/assets/wdpl-images/Contactus/contact.jpg";
 const Contact = () => {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -59,7 +59,8 @@ const Contact = () => {
       address: "286/1, Rajiv Gandhi Salai, Nehru Nagar, Perungudi",
       fullAddress: "Chennai, Tamil Nadu 600096, India",
       mapUrl:
-        "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.0486000973997!2d80.24550057507643!3d12.968741987346368!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a525d6cbd3f3a21%3A0x4d9dcffff16b35d5!2sPrince%20Info%20City%20I%2C%20286%2F1%2C%20Rajiv%20Gandhi%20Salai%2C%20Nehru%20Nagar%2C%20Perungudi%2C%20Chennai%2C%20Tamil%20Nadu%20600096!5e0!3m2!1sen!2sin!4v1762409933735!5m2!1sen!2sin",    },
+        "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.0486000973997!2d80.24550057507643!3d12.968741987346368!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a525d6cbd3f3a21%3A0x4d9dcffff16b35d5!2sPrince%20Info%20City%20I%2C%20286%2F1%2C%20Rajiv%20Gandhi%20Salai%2C%20Nehru%20Nagar%2C%20Perungudi%2C%20Chennai%2C%20Tamil%20Nadu%20600096!5e0!3m2!1sen!2sin!4v1762409933735!5m2!1sen!2sin",
+    },
     {
       city: "Coimbatore",
       address:
@@ -73,28 +74,34 @@ const Contact = () => {
   return (
     <Layout>
       {/* Hero Section */}
-      <section className="relative py-0 bg-gradient-to-br from-primary/10 via-accent/5 to-secondary/10 overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(120,119,198,0.15),transparent_60%)]"></div>
-        <div className="container mt-4 mx-auto px-4 relative z-10">
-          <div className="max-w-4xl mx-auto text-center flex flex-col items-center justify-center min-h-[60vh]">
-            <Badge className="mb-4 animate-fade-in hover:scale-110 transition-transform duration-300">
+      <section
+        className="relative py-24 bg-cover bg-right bg-no-repeat text-center flex items-center justify-center overflow-hidden"
+        style={{
+          backgroundImage: `url(${Hero})`,
+        }}
+      >
+        {/* Overlay for readability */}
+        <div className="absolute inset-0 bg-black/70"></div>
+
+        {/* Decorative gradients on top of overlay */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(120,119,198,0.2),transparent_50%),radial-gradient(ellipse_at_bottom,rgba(251,146,60,0.2),transparent_50%)] mix-blend-overlay"></div>
+        <div className="absolute inset-0 bg-grid-pattern opacity-[0.03] animate-pulse"></div>
+
+        {/* Content */}
+        <div className="relative z-10 container mx-auto px-4">
+          <div className="mx-auto  max-w-max">
+            <Badge className="mb-6 animate-fade-in hover:scale-110 transition-transform duration-300">
               Contact Us
             </Badge>
-
-            <h1
-              className="text-3xl md:text-5xl font-bold mb-8 animate-fade-in bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent transition-transform duration-500 inline-block"
-              style={{ animationDelay: "0.1s" }}
-            >
-              Let's Connect
-            </h1>
-
-            <p
-              className="text-xl md:text-2xl text-muted-foreground leading-relaxed animate-fade-in max-w-2xl"
-              style={{ animationDelay: "0.2s" }}
-            >
-              Have questions? Want to join our team? We'd love to hear from you.
-            </p>
           </div>
+
+          <h1 className="text-3xl md:text-5xl font-bold font-raleway mb-6 animate-fade-in text-white drop-shadow-lg">
+            Let’s Connect
+          </h1>
+
+          <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto animate-fade-in leading-relaxed">
+            Have questions? Want to join our team? We’d love to hear from you.
+          </p>
         </div>
       </section>
 

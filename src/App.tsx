@@ -2,7 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { HashRouter,Routes, Route } from "react-router-dom"; 
+import { HashRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import About from "./pages/About";
@@ -21,6 +21,9 @@ import AdminContactDashboard from "./pages/admin/AdminContactDashboard";
 import Gallery from "./pages/Gallery";
 import AdminGalleryDashboard from "./pages/admin/GalleryAdminPage";
 import ScrollToTop from "./components/ui/ScrollToTop";
+import TermsAndConditions from "./pages/TermsAndConditions";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import Sitemap from "./pages/Sitemap";
 
 const queryClient = new QueryClient();
 
@@ -40,17 +43,48 @@ const App = () => (
           <Route path="/careers" element={<Careers />} />
           <Route path="/careers/apply/:jobId" element={<ApplyJob />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path="/gallery" element={<Gallery />} /> 
-          
+          <Route path="/gallery" element={<Gallery />} />
+          <Route path="/terms" element={<TermsAndConditions />} />
+          <Route path="/privacy" element={<PrivacyPolicy />} />
+          <Route path="/sitemap" element={<Sitemap />} />
+
           {/* Gallery Routes */}
           <Route path="/gallery-main" element={<GalleryPreviewPage />} />
 
           {/* Admin & Auth */}
           <Route path="/admin/login" element={<AdminLogin />} />
-          <Route path="/admin/dashboard" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
-          <Route path="/admin/testimonials" element={<ProtectedRoute><AdminTestimonialsDashboard /></ProtectedRoute>} />
-          <Route path="/admin/contacts" element={<ProtectedRoute><AdminContactDashboard /></ProtectedRoute>} />
-          <Route path="/admin/gallery" element={<ProtectedRoute><AdminGalleryDashboard /></ProtectedRoute>} />
+          <Route
+            path="/admin/dashboard"
+            element={
+              <ProtectedRoute>
+                <AdminDashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/testimonials"
+            element={
+              <ProtectedRoute>
+                <AdminTestimonialsDashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/contacts"
+            element={
+              <ProtectedRoute>
+                <AdminContactDashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/gallery"
+            element={
+              <ProtectedRoute>
+                <AdminGalleryDashboard />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/reset-password" element={<ResetPassword />} />
 
           {/* 404 */}

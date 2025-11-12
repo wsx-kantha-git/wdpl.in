@@ -25,7 +25,7 @@ const GalleryPreview = () => {
         .from("gallery_images")
         .select("id, image_url, event_id, gallery_events(name)")
         .order("created_at", { ascending: false })
-        .limit(12);
+        .limit(100);
 
       if (!error && data) setImages(data);
     };
@@ -53,10 +53,10 @@ const GalleryPreview = () => {
       <div className="container mx-auto px-3 sm:px-6 text-center">
         {/* Header */}
         <div className="flex flex-col items-center justify-center mb-8 sm:mb-2">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
+          <h2 className="font-raleway text-3xl sm:text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
             Glimpses of WDPL Moments
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto text-sm sm:text-base mb-6 sm:mb-8">
+          <p className="font-sans text-muted-foreground max-w-2xl mx-auto text-sm sm:text-base mb-6 sm:mb-8">
             A sneak peek into our events, celebrations, and team experiences.
           </p>
         </div>
@@ -79,8 +79,7 @@ const GalleryPreview = () => {
             const styles: Record<string, string> = {
               center:
                 "z-30 scale-100 opacity-100 translate-x-0 blur-0 w-[60%] sm:w-[55%] md:w-[50%]",
-              left:
-                "z-20 scale-75 opacity-60 -translate-x-[80%] blur-[2px] w-[30%]",
+              left: "z-20 scale-75 opacity-60 -translate-x-[80%] blur-[2px] w-[30%]",
               right:
                 "z-20 scale-75 opacity-60 translate-x-[80%] blur-[2px] w-[30%]",
               hidden:
@@ -96,8 +95,6 @@ const GalleryPreview = () => {
               />
             );
           })}
-
-
 
           {/* Navigation Buttons */}
           <button
@@ -121,7 +118,7 @@ const GalleryPreview = () => {
             size="lg"
             variant="brand"
             onClick={() => navigate("/gallery")}
-            className="px-6 sm:px-8 py-2 sm:py-3 rounded-full text-base sm:text-lg font-semibold"
+            className="px-6 sm:px-8 py-2 sm:py-3 rounded-full text-base font-raleway sm:text-lg font-semibold"
           >
             View Full Gallery
           </Button>

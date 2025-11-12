@@ -6,10 +6,12 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-
-import cultureCelebration from "@/assets/culture-celebration.jpg";
-import cultureTraining from "@/assets/culture-training.jpg";
-import cultureTrip from "@/assets/culture-trip.jpg";
+import OurWorkCulture1 from "@/assets/homepage/manager-developer-talk.jpg";
+import OurWorkCulture2 from "@/assets/homepage/team-meet.jpg";
+import OurWorkCulture3 from "@/assets/homepage/team-viewing-monitor.jpg";
+import OurWorkCulture4 from "@/assets/homepage/employees-handshake.jpg";
+import OurWorkCulture5 from "@/assets/homepage/looking-at-screen.jpg";
+import OurWorkCulture6 from "@/assets/homepage/manager-developer-tdiscuss.jpg";
 
 const cultureValues = [
   {
@@ -17,7 +19,7 @@ const cultureValues = [
     title: "Employee Well-being",
     description:
       "We prioritize the health and happiness of our team with comprehensive benefits, flexible schedules, and a supportive environment.",
-    image: cultureCelebration,
+    image: OurWorkCulture1,
     color: "from-red-500/20 to-pink-500/20",
   },
   {
@@ -25,7 +27,7 @@ const cultureValues = [
     title: "Collaborative Spirit",
     description:
       "Our open workspace fosters creativity and teamwork. We believe the best ideas come from diverse perspectives working together.",
-    image: cultureTraining,
+    image: OurWorkCulture2,
     color: "from-blue-500/20 to-cyan-500/20",
   },
   {
@@ -33,7 +35,7 @@ const cultureValues = [
     title: "Innovation First",
     description:
       "We encourage experimentation and learning. Failure is just another step towards success in our culture of continuous improvement.",
-    image: cultureTrip,
+    image: OurWorkCulture3,
     color: "from-purple-500/20 to-indigo-500/20",
   },
   {
@@ -41,15 +43,15 @@ const cultureValues = [
     title: "Recognition & Growth",
     description:
       "Your achievements matter. We celebrate wins and invest in your professional development with training and mentorship programs.",
-    image: cultureCelebration,
+    image: OurWorkCulture4,
     color: "from-yellow-500/20 to-orange-500/20",
   },
   {
     id: 5,
     title: "Global Mindset",
     description:
-      "With teams across continents, we embrace diversity and bring global perspectives to local challenges, fostering innovation and  collaboration.",
-    image: cultureTraining,
+      "With teams across continents, we embrace diversity and bring global perspectives to local challenges, fostering innovation and collaboration.",
+    image: OurWorkCulture5,
     color: "from-green-500/20 to-emerald-500/20",
   },
   {
@@ -57,7 +59,7 @@ const cultureValues = [
     title: "Learning Culture",
     description:
       "Continuous learning is in our DNA. Access courses, workshops, and conferences to stay ahead and grow your expertise.",
-    image: cultureTrip,
+    image: OurWorkCulture6,
     color: "from-primary/20 to-accent/20",
   },
 ];
@@ -71,7 +73,7 @@ const WorkCultureCarousel = () => {
             Our Work Culture
           </h2>
           <p className="text-xl text-muted-foreground font-source max-w-2xl mx-auto">
-            More than just a workplace - it's a community where innovation
+            More than just a workplace — it's a community where innovation
             thrives and people grow
           </p>
         </div>
@@ -84,47 +86,44 @@ const WorkCultureCarousel = () => {
           className="w-full max-w-6xl mx-auto animate-fade-in-up"
         >
           <CarouselContent>
-            {cultureValues.map((value, index) => {
-              return (
-                <CarouselItem
-                  key={value.id}
-                  className="md:basis-1/2 lg:basis-1/3"
-                >
-                  <div className="p-4">
-                    <Card
-                      className="border-primary/20 hover:border-primary/40 transition-all duration-500 overflow-hidden group hover:shadow-lg animate-bounce-in"
-                      style={{
-                        animationDelay: `${index * 0.15}s`,
-                        animationFillMode: "both",
-                      }}
-                    >
-                      <CardContent className="p-0">
-                        <div className="relative h-48 overflow-hidden">
-                          <div
-                            className={`absolute inset-0 bg-gradient-to-br ${value.color} opacity-80 z-10`}
-                          ></div>
-                          <img
-                            src={value.image}
-                            alt={value.title}
-                            className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
-                          />
-                        </div>
+            {cultureValues.map((value, index) => (
+              <CarouselItem key={value.id} className="md:basis-1/2 lg:basis-1/3">
+                <div className="p-4 h-full">
+                  <Card
+                    className="flex flex-col h-full border-primary/20 hover:border-primary/40 transition-all duration-500 overflow-hidden group hover:shadow-lg animate-bounce-in"
+                    style={{
+                      animationDelay: `${index * 0.15}s`,
+                      animationFillMode: "both",
+                    }}
+                  >
+                    <CardContent className="flex flex-col p-0 h-full">
+                      <div className="relative h-48 overflow-hidden flex-shrink-0">
+                        <div
+                          className={`absolute inset-0 bg-gradient-to-br ${value.color} opacity-80 z-10`}
+                        ></div>
+                        <img
+                          src={value.image}
+                          alt={value.title}
+                          className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
+                        />
+                      </div>
 
-                        <div className="p-6">
-                          <h3 className="text-xl font-raleway font-bold mb-3 group-hover:text-primary transition-colors">
-                            {value.title}
-                          </h3>
-                          <p className="text-muted-foreground font-source leading-relaxed">
-                            {value.description}
-                          </p>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </div>
-                </CarouselItem>
-              );
-            })}
+                      {/* Equal height ensured by flex-grow */}
+                      <div className="flex flex-col flex-grow p-6">
+                        <h3 className="text-xl font-raleway font-bold mb-3 group-hover:text-primary transition-colors">
+                          {value.title}
+                        </h3>
+                        <p className="text-muted-foreground font-source leading-relaxed flex-grow">
+                          {value.description}
+                        </p>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
+              </CarouselItem>
+            ))}
           </CarouselContent>
+
           <CarouselPrevious className="hover:scale-110 transition-transform absolute -left-5 top-1/2 -translate-y-1/2 md:-left-6 z-20 bg-background/80 backdrop-blur-sm border border-primary/30 shadow-md rounded-full p-2" />
           <CarouselNext className="hover:scale-110 transition-transform absolute -right-5 top-1/2 -translate-y-1/2 md:-right-6 z-20 bg-background/80 backdrop-blur-sm border border-primary/30 shadow-md rounded-full p-2" />
         </Carousel>

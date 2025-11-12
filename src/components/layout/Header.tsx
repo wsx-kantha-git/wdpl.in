@@ -21,7 +21,7 @@ const Header = () => {
     { label: "Home", path: "/" },
     { label: "About", path: "/about" },
     { label: "Our Team", path: "/team" },
-    { label: "Culture", path: "/culture" },
+    { label: "Work Culture", path: "/culture" },
     { label: "Careers", path: "/careers" },
     { label: "Gallery", path: "/gallery" },
     { label: "Contact", path: "/contact" },
@@ -64,10 +64,14 @@ const Header = () => {
 
         {/* CTA Button */}
         <div className="hidden lg:block">
-          <Button asChild variant="orangeBrand" size="lg" className="font-raleway rounded-full">
-  <Link to="/careers">VIEW ALL ROLES</Link>
-</Button>
-
+          <Button
+            asChild
+            variant="orangeBrand"
+            size="lg"
+            className="font-raleway rounded-full"
+          >
+            <Link to="/careers">VIEW ALL ROLES</Link>
+          </Button>
         </div>
 
         {/* Mobile Menu Button */}
@@ -97,9 +101,14 @@ const Header = () => {
                   {link.label}
                 </Link>
               ))}
-              <Button asChild variant="brand" size="lg" className="mt-2 font-raleway">
+              <Button
+                asChild
+                variant="brand"
+                size="lg"
+                className="mt-2 font-raleway"
+              >
                 <Link to="/careers" onClick={() => setIsMobileMenuOpen(false)}>
-                  VIEW OPEN ROLES
+                  VIEW ALL ROLES
                 </Link>
               </Button>
             </nav>

@@ -1,50 +1,110 @@
 import { Card } from "@/components/ui/card";
-import { Target, Heart, Zap, Shield } from "lucide-react";
 import Layout from "@/components/layout/Layout";
-
+import Bottom from "@/assets/wdpl-images/aboutus/philipandlennart.jpg";
+import Hero from "@/assets/wdpl-images/aboutus/team.jpg";
+import icon1 from "@/assets/wdpl-images/aboutus/creative.svg";
+import icon2 from "@/assets/wdpl-images/aboutus/family.svg";
+import icon3 from "@/assets/wdpl-images/aboutus/integrity.svg";
+import icon4 from "@/assets/wdpl-images/aboutus/star.svg";
 const About = () => {
   const values = [
     {
-      icon: Heart,
+      icon: icon2,
       title: "Family First",
-      description: "We treat our team like family, fostering a supportive and caring environment.",
+      description:
+        "We treat our team like family, fostering a supportive and caring environment.",
     },
     {
-      icon: Zap,
+      icon: icon1,
       title: "Innovation",
-      description: "We embrace new technologies and creative solutions to stay ahead.",
+      description:
+        "We embrace new technologies and creative solutions to stay ahead.",
     },
     {
-      icon: Target,
+      icon: icon4,
       title: "Excellence",
       description: "We strive for the highest quality in everything we do.",
     },
     {
-      icon: Shield,
+      icon: icon3,
       title: "Integrity",
       description: "We build trust through transparency and ethical practices.",
     },
   ];
 
   const timeline = [
-    { year: "2010", title: "Founded", description: "Started as a small design studio in Chennai" },
-    { year: "2015", title: "Expanded", description: "Opened our Coimbatore office" },
-    { year: "2018", title: "Growth", description: "Reached 50+ team members" },
-    { year: "2020", title: "Digital Transformation", description: "Pivoted to full-stack development" },
-    { year: "2024", title: "Today", description: "Leading employer in Tamil Nadu tech scene" },
+    {
+      year: "2025",
+      title: "AI, React.js & Chatbots",
+      description:
+        "Embracing AI-powered automation, modern front-end frameworks, and conversational chatbots to redefine web experiences.",
+    },
+    {
+      year: "2020",
+      title: "B2B Large-Scale Websites",
+      description:
+        "Delivered complex, high-traffic B2B platforms with advanced product catalogs and dealer portals.",
+    },
+    {
+      year: "2018",
+      title: "WordPress Multisite",
+      description:
+        "Implemented large, multi-site WordPress networks for bigger clients.",
+    },
+    {
+      year: "2016",
+      title: "API Integrations",
+      description:
+        "Began integrating websites with CRMs, ERPs, and third-party systems to streamline business operations.",
+    },
+    {
+      year: "2012",
+      title: "WordPress, WooCommerce & SEO",
+      description:
+        "Transitioned to WordPress as our core platform, adding WooCommerce and SEO expertise for complete digital solutions.",
+    },
+    {
+      year: "2005",
+      title: "Joomla & VirtueMart",
+      description:
+        "Adopted CMS-driven development with Joomla and integrated eCommerce capabilities through VirtueMart.",
+    },
+    {
+      year: "2002",
+      title: "HTML/CSS & Support",
+      description:
+        "Expanded services with custom HTML/CSS websites and dedicated maintenance support for growing client needs.",
+    },
+    {
+      year: "2000",
+      title: "Founded",
+      description:
+        "Webstix was established with a vision to build reliable, high-performing websites that deliver measurable results.",
+    },
   ];
 
   return (
     <Layout>
       {/* Hero Section */}
-      <section className="py-20 bg-gradient-to-br from-primary/10 via-secondary/5 to-accent/10 overflow-hidden relative">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_50%,rgba(120,119,198,0.15),transparent_60%)]"></div>
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-5xl md:text-5xl font-bold  mb-8 animate-fade-in bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent  transition-transform duration-500 inline-block">About WDPL</h1>
-            <p className="text-xl md:text-2xl text-muted-foreground leading-relaxed animate-fade-in" style={{ animationDelay: "0.1s" }}>
-              Webstix Design Private Limited - A family-owned technology partner committed to innovation, growth, and
-              creating exceptional digital experiences.
+      <section
+        className="relative py-24  bg-center bg-cover bg-no-repeat overflow-hidden"
+        style={{ backgroundImage: `url(${Hero})` }}
+      >
+        {/* Optional overlay for readability */}
+        <div className="absolute inset-0 bg-black/70"></div>
+
+        <div className="container mx-auto px-4 relative z-10 text-center">
+          <div className="max-w-4xl mx-auto">
+            <h1 className="font-raleway text-5xl md:text-6xl font-bold mb-8 animate-fade-in bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-white inline-block">
+              About WDPL
+            </h1>
+            <p
+              className="text-xl md:text-2xl text-white/90 leading-relaxed animate-fade-in"
+              style={{ animationDelay: "0.1s" }}
+            >
+              Webstix Design Private Limited - A family owned technology partner
+              committed to innovation, growth, and creating exceptional digital
+              experiences.
             </p>
           </div>
         </div>
@@ -54,18 +114,31 @@ const About = () => {
       <section className="py-20">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 gap-10">
-            <Card className="p-10 hover:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)] hover:-translate-y-2 transition-all duration-500 border-2 hover:border-primary/50 animate-fade-in bg-gradient-to-br from-background to-primary/5" style={{ animationDelay: "0.1s" }}>
-              <h2 className="text-4xl font-bold  mb-6 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Our Mission</h2>
+            <Card
+              className="p-10 hover:shadow-lg hover:-translate-y-2 transition-all duration-500 border-2 hover:border-primary/50 animate-fade-in bg-gradient-to-br from-background to-primary/5"
+              style={{ animationDelay: "0.1s" }}
+            >
+              <h2 className="text-4xl font-bold  mb-6 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                Our Mission
+              </h2>
               <p className="text-muted-foreground text-lg">
-                To empower businesses through cutting-edge design and development, while nurturing a workplace where
-                talent thrives, creativity flourishes, and every team member feels valued and supported.
+                To empower businesses through cutting-edge design and
+                development, while nurturing a workplace where talent thrives,
+                creativity flourishes, and every team member feels valued and
+                supported.
               </p>
             </Card>
-            <Card className="p-10 hover:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)] hover:-translate-y-2 transition-all duration-500 border-2 hover:border-primary/50 animate-fade-in bg-gradient-to-br from-background to-accent/5" style={{ animationDelay: "0.2s" }}>
-              <h2 className="text-4xl font-bold  mb-6 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Our Vision</h2>
+            <Card
+              className="p-10 hover:shadow-lg hover:-translate-y-2 transition-all duration-500 border-2 hover:border-primary/50 animate-fade-in bg-gradient-to-br from-background to-accent/5"
+              style={{ animationDelay: "0.2s" }}
+            >
+              <h2 className="text-4xl font-bold  mb-6 bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                Our Vision
+              </h2>
               <p className="text-muted-foreground text-lg">
-                To become the most sought-after employer in Tamil Nadu's tech industry, known for fostering innovation,
-                professional growth, and a culture that balances excellence with work-life harmony.
+                To become the most sought-after employer in Tamil Nadu's tech
+                industry, known for fostering innovation, professional growth,
+                and a culture that balances excellence with work-life harmony.
               </p>
             </Card>
           </div>
@@ -75,7 +148,9 @@ const About = () => {
       {/* Company Timeline */}
       <section className="py-20 bg-secondary">
         <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold text-center text-foreground mb-12">Our Journey</h2>
+          <h2 className="text-4xl font-bold text-center text-foreground mb-12">
+            Our Journey
+          </h2>
           <div className="max-w-4xl mx-auto">
             <div className="space-y-8">
               {timeline.map((item, index) => (
@@ -84,10 +159,14 @@ const About = () => {
                     <div className="w-16 h-16 rounded-full bg-primary flex items-center justify-center text-primary-foreground font-bold text-lg group-hover:scale-110 transition-transform shrink-0">
                       {item.year}
                     </div>
-                    {index < timeline.length - 1 && <div className="w-1 h-full bg-primary/20 mt-4"></div>}
+                    {index < timeline.length - 1 && (
+                      <div className="w-[2px] h-full bg-primary/20 mt-4"></div>
+                    )}
                   </div>
                   <Card className="p-6 flex-1 group-hover:shadow-lg transition-all">
-                    <h3 className="text-xl font-semibold text-foreground mb-2">{item.title}</h3>
+                    <h3 className="text-xl font-semibold text-foreground mb-2">
+                      {item.title}
+                    </h3>
                     <p className="text-muted-foreground">{item.description}</p>
                   </Card>
                 </div>
@@ -100,15 +179,29 @@ const About = () => {
       {/* Core Values */}
       <section className="py-20">
         <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold text-center text-foreground mb-12">Our Core Values</h2>
+          <h2 className="text-4xl font-bold text-center text-foreground mb-12">
+            Our Core Values
+          </h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {values.map((value, index) => (
-              <Card key={index} className="p-6 text-center hover:shadow-lg hover:scale-105 transition-all group">
-                <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-primary group-hover:scale-110 transition-all">
-                  <value.icon className="text-primary group-hover:text-primary-foreground transition-colors" size={32} />
+              <Card
+                key={index}
+                className="p-6 text-center hover:shadow-lg hover:scale-105 transition-all group"
+              >
+                <div className="w-20 h-20 bg-gradient-to-br from-primary/20 to-accent/10 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-gradient-to-br group-hover:from-primary group-hover:to-accent group-hover:scale-125 group-hover:rotate-12 transition-all duration-500 shadow-lg">
+                  <img
+                    src={value.icon}
+                    alt={value.title}
+                    className="w-12 h-12 object-contain transition-all duration-300 group-hover:brightness-0 group-hover:invert"
+                  />
                 </div>
-                <h3 className="text-xl font-semibold text-foreground mb-2">{value.title}</h3>
-                <p className="text-muted-foreground text-sm">{value.description}</p>
+
+                <h3 className="text-xl font-semibold text-foreground mb-2">
+                  {value.title}
+                </h3>
+                <p className="text-muted-foreground text-sm">
+                  {value.description}
+                </p>
               </Card>
             ))}
           </div>
@@ -116,14 +209,25 @@ const About = () => {
       </section>
 
       {/* US Partnership Note */}
-      <section className="py-20 bg-gradient-to-r from-primary to-primary/90">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold text-primary-foreground mb-4">Global Reach, Local Values</h2>
-          <p className="text-xl text-primary-foreground/90 max-w-3xl mx-auto">
-            Proudly partnered with US Mid-West-Family Company, we combine international standards with Indian
-            warmth and hospitality. This collaboration brings global opportunities while maintaining our core values of
-            trust, respect, and family-first culture.
-          </p>
+      <section
+        className="relative py-24 bg-center bg-cover bg-no-repeat overflow-hidden"
+        style={{ backgroundImage: `url(${Bottom})` }}
+      >
+        {/* Overlay for readability */}
+        <div className="absolute inset-0 bg-black/50"></div>
+
+        <div className="relative z-10 container mx-auto px-4 flex justify-start">
+          <div className="max-w-3xl text-center md:text-left md:pl-10">
+            <h2 className="text-4xl font-bold text-white mb-4">
+              Global Reach, Local Values
+            </h2>
+            <p className="text-lg md:text-xl text-white/90 leading-relaxed">
+              Proudly partnered with US Mid-West-Family Company, we combine
+              international standards with Indian warmth and hospitality. This
+              collaboration brings global opportunities while maintaining our
+              core values of trust, respect, and family-first culture.
+            </p>
+          </div>
         </div>
       </section>
     </Layout>

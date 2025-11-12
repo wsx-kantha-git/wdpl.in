@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { useSearchParams } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { ChevronLeft, ChevronRight, Plus, Minus, X } from "lucide-react";
+import Hero from "@/assets/wdpl-images/Gallery/carrom-board.jpg";
 
 interface Category {
   id: string;
@@ -144,20 +145,33 @@ const Gallery = () => {
   return (
     <Layout>
       {/* Hero Section */}
-      <section className="relative py-24 bg-gradient-to-br from-primary/10 via-accent/5 to-secondary/10 overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_50%,rgba(120,119,198,0.2),transparent_50%),radial-gradient(circle_at_80%_50%,rgba(251,146,60,0.2),transparent_50%)]"></div>
-        <div className="absolute inset-0 bg-grid-pattern opacity-[0.02]"></div>
-        <div className="container mx-auto px-4 relative z-10">
+      <section
+        className="relative py-24 bg-cover bg-right bg-no-repeat text-center flex items-center justify-center overflow-hidden"
+        style={{
+          backgroundImage: `url(${Hero})`,
+        }}
+      >
+        {/* Dark overlay for readability */}
+        <div className="absolute inset-0 bg-black/70"></div>
+
+        {/* Subtle decorative gradients */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(120,119,198,0.25),transparent_50%),radial-gradient(ellipse_at_bottom,rgba(251,146,60,0.25),transparent_50%)] mix-blend-overlay"></div>
+
+        {/* Optional faint grid texture */}
+        <div className="absolute inset-0 bg-grid-pattern opacity-[0.03] animate-pulse"></div>
+
+        {/* Content */}
+        <div className="relative z-10 container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
-            <Badge className="mb-6 animate-fade-in hover:scale-110 transition-transform duration-300">
+            <Badge className="mb-4 animate-fade-in hover:scale-110 transition-transform duration-300">
               Gallery
-            </Badge> <br />
-            <h1 className="text-3xl md:text-5xl font-bold mb-6 animate-fade-in bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent inline-block">
+            </Badge>
+            <h1 className="text-3xl md:text-5xl font-bold font-raleway mb-4 animate-fade-in text-white drop-shadow-lg">
               Moments That Matter
             </h1>
-            <p className="text-xl md:text-2xl text-muted-foreground animate-fade-in leading-relaxed">
+            <p className="text-xl md:text-2xl text-white/90 animate-fade-in leading-relaxed max-w-2xl mx-auto">
               Explore our journey through celebrations, training sessions, team
-              trips, and everyday moments at WDPL
+              trips, and everyday moments at WDPL.
             </p>
           </div>
         </div>
@@ -237,58 +251,57 @@ const Gallery = () => {
         </section>
       )}
 
-
-{/* Event Images Grid with Event Filter */}
-{selectedEvent && (
-  <section className="py-20 bg-gradient-to-b from-background via-secondary/5 to-background">
-    <div className="container mx-auto px-4">
-      {/* Event Filter Bar */}
-      <div className="flex flex-wrap gap-3 justify-center mb-10">
-        {events.map((ev) => (
-          <Button
-            key={ev.id}
-            variant={selectedEvent.id === ev.id ? "brand" : "outline"}
-            onClick={() => handleEventClick(ev)}
-            className="capitalize rounded-full hover:scale-110 transition-all duration-300"
-          >
-            {ev.name}
-          </Button>
-        ))}
-      </div>
-
-      {/* Image Grid */}
-      <div className="text-center mb-8">
-        <h2 className="font-raleway text-3xl font-bold text-primary">
-          {selectedEvent.name}
-        </h2>
-      </div>
-
-      {images.length > 0 ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-          {images.map((img) => (
-            <div
-              key={img.id}
-              className="group relative overflow-hidden rounded-xl cursor-pointer hover:shadow-xl transition-all duration-500"
-              onClick={() => setSelectedImage(img)}
-            >
-              <img
-                src={img.image_url}
-                alt=""
-                className="w-full h-full object-cover group-hover:scale-110 transition-all duration-500"
-              />
+      {/* Event Images Grid with Event Filter */}
+      {selectedEvent && (
+        <section className="py-20 bg-gradient-to-b from-background via-secondary/5 to-background">
+          <div className="container mx-auto px-4">
+            {/* Event Filter Bar */}
+            <div className="flex flex-wrap gap-3 justify-center mb-10">
+              {events.map((ev) => (
+                <Button
+                  key={ev.id}
+                  variant={selectedEvent.id === ev.id ? "brand" : "outline"}
+                  onClick={() => handleEventClick(ev)}
+                  className="capitalize rounded-full hover:scale-110 transition-all duration-300"
+                >
+                  {ev.name}
+                </Button>
+              ))}
             </div>
-          ))}
-        </div>
-      ) : (
-        <div className="text-center py-20">
-          <p className="text-muted-foreground text-lg">
-            No images found for this event.
-          </p>
-        </div>
+
+            {/* Image Grid */}
+            <div className="text-center mb-8">
+              <h2 className="font-raleway text-3xl font-bold text-primary">
+                {selectedEvent.name}
+              </h2>
+            </div>
+
+            {images.length > 0 ? (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                {images.map((img) => (
+                  <div
+                    key={img.id}
+                    className="group relative overflow-hidden rounded-xl cursor-pointer hover:shadow-xl transition-all duration-500"
+                    onClick={() => setSelectedImage(img)}
+                  >
+                    <img
+                      src={img.image_url}
+                      alt=""
+                      className="w-full h-full object-cover group-hover:scale-110 transition-all duration-500"
+                    />
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-20">
+                <p className="text-muted-foreground text-lg">
+                  No images found for this event.
+                </p>
+              </div>
+            )}
+          </div>
+        </section>
       )}
-    </div>
-  </section>
-)}
 
       {/* Lightbox Modal */}
       {selectedImage && (

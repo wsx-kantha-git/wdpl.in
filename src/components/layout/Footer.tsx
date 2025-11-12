@@ -5,6 +5,7 @@ import { ChevronRight } from "lucide-react";
 import { Mail, Phone, MapPin, Linkedin } from "lucide-react";
 import logo from "@/assets/wdpl-logo-white.svg";
 import LinkedIn from "@/assets/linkedin.svg";
+import TermsAndConditions from "@/pages/TermsAndConditions";
 
 const Footer = () => {
   return (
@@ -79,7 +80,8 @@ const Footer = () => {
                   className="mt-1 shrink-0 transition-transform duration-300 "
                 />
                 <span>
-                  286/1, Rajiv Gandhi Salai, Nehru Nagar, Perungudi, Chennai,<br />
+                  286/1, Rajiv Gandhi Salai, Nehru Nagar, Perungudi, Chennai,
+                  <br />
                   Tamil Nadu-600096, India.
                 </span>
               </div>
@@ -114,7 +116,8 @@ const Footer = () => {
                 />
                 <span>
                   Mikro Grafeio, 1st Floor, 766, 767, Puliakulam Road,
-                  Coimbatore,<br /> Tamil Nadu-641037, India.
+                  Coimbatore,
+                  <br /> Tamil Nadu-641037, India.
                 </span>
               </div>
 
@@ -136,38 +139,38 @@ const Footer = () => {
           </div>
         </div>
 
-{/* Bottom Bar */}
-<div className="pt-4 border-t border-background/20">
-  <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-    <p className="text-background/60 text-sm text-center md:text-left">
-      © {new Date().getFullYear()} Webstix Design Private Limited. All Rights Reserved.
-    </p>
+        {/* Bottom Bar */}
+        <div className="pt-4 border-t border-background/20">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+            <p className="text-background/60 text-sm text-center md:text-left">
+              © {new Date().getFullYear()} Webstix Design Private Limited. All
+              Rights Reserved.
+            </p>
 
-    <div className="mx-20 flex items-center gap-2 text-sm">
-      <Link
-        to="/terms&conditions"
-        className="text-background/60 underline-offset-4 hover:underline decoration-secondary transition-all duration-300"
-      >
-        Terms & Conditions
-      </Link>
-      <span className="text-background/40">|</span>
-      <Link
-        to="/privacypolicy"
-        className="text-background/60 underline-offset-4 hover:underline decoration-secondary transition-all duration-300"
-      >
-        Privacy Policy
-      </Link>
-      <span className="text-background/40">|</span>
-      <Link
-        to="/sitemap"
-        className="text-background/60 underline-offset-4 hover:underline decoration-secondary transition-all duration-300"
-      >
-        Site Map
-      </Link>
-    </div>
-  </div>
-</div>
-
+            <div className="mx-20 flex items-center gap-2 text-sm">
+              <Link
+                to="/terms"
+                className="text-background/60 underline-offset-4 hover:underline decoration-secondary transition-all duration-300"
+              >
+                Terms & Conditions
+              </Link>
+              <span className="text-background/40">|</span>
+              <Link
+                to="/privacy"
+                className="text-background/60 underline-offset-4 hover:underline decoration-secondary transition-all duration-300"
+              >
+                Privacy Policy
+              </Link>
+              <span className="text-background/40">|</span>
+              <Link
+                to="/sitemap"
+                className="text-background/60 underline-offset-4 hover:underline decoration-secondary transition-all duration-300"
+              >
+                Site Map
+              </Link>
+            </div>
+          </div>
+        </div>
       </div>
     </footer>
   );

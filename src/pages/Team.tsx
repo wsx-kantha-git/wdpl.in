@@ -8,6 +8,7 @@ import LinkedIn from "@/assets/linkedin.svg";
 import Layout from "@/components/layout/Layout";
 import { supabase } from "@/integrations/supabase/client";
 import { Tables } from "@/integrations/supabase/types";
+import Hero from "@/assets/wdpl-images/ourteam/coorg-group-picture.jpg";
 
 // Types
 type TeamMemberRow = Tables<"team_members">;
@@ -89,14 +90,24 @@ const Team = () => {
   return (
     <Layout>
       {/* Hero Section */}
-      <section className="relative py-24 bg-gradient-to-br from-primary/10 via-secondary/5 to-accent/10 overflow-hidden">
-        <div className="container mx-auto px-4 text-center relative z-10">
-          <h1 className="text-3xl md:text-5xl font-bold mb-6 animate-fade-in bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent  transition-transform duration-500 inline-block">
-            Meet Our Team
-          </h1>
-          <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto animate-fade-in leading-relaxed">
-            The talented individuals who make WDPL a great place to work
-          </p>
+      <section
+        className="relative py-28 bg-cover bg-center bg-no-repeat text-center flex items-center justify-center"
+        style={{
+          backgroundImage: `url(${Hero})`,
+        }}
+      >
+        {/* Overlay for readability */}
+        <div className="absolute inset-0 bg-black/70"></div>
+
+        <div className="container mx-auto px-4 relative z-10 text-center">
+          <div className="max-w-4xl mx-auto">
+            <h1 className="font-raleway text-5xl md:text-6xl font-bold mb-8 animate-fade-in bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-white inline-block">
+              Meet Our Team
+            </h1>
+            <p className="text-xl md:text-2xl text-white max-w-3xl mx-auto animate-fade-in leading-relaxed">
+              The talented individuals who make WDPL a great place to work
+            </p>
+          </div>
         </div>
       </section>
 
@@ -208,7 +219,6 @@ const Team = () => {
                           src={LinkedIn}
                           alt="LinkedIn"
                           className="w-6 h-6 transition-transform duration-300 group-hover:-translate-y-1 group-hover:brightness-100"
-                
                         />
                       </a>
                     )}

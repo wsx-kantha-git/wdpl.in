@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { MapPin, Briefcase, Clock } from "lucide-react";
 import Layout from "@/components/layout/Layout";
 import { Link } from "react-router-dom";
+import Hero from "@/assets/wdpl-images/openpositions/handshake.jpg";
 
 interface JobPosting {
   id: number;
@@ -60,22 +61,32 @@ const Careers = () => {
   return (
     <Layout>
       {/* Hero Section */}
-      <section className="relative py-20 bg-gradient-to-br from-primary/10 via-accent/5 to-secondary/10 overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(120,119,198,0.15),transparent_50%),radial-gradient(ellipse_at_bottom,rgba(251,146,60,0.15),transparent_50%)]"></div>
+      <section
+        className="relative py-24 bg-cover bg-center bg-no-repeat text-center flex items-center justify-center overflow-hidden"
+        style={{
+          backgroundImage: `url(${Hero})`,
+        }}
+      >
+        {/* Overlay for readability */}
+        <div className="absolute inset-0 bg-black/70"></div>
+
+        {/* Decorative gradients on top of overlay (optional) */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(120,119,198,0.2),transparent_50%),radial-gradient(ellipse_at_bottom,rgba(251,146,60,0.2),transparent_50%)] mix-blend-overlay"></div>
         <div className="absolute inset-0 bg-grid-pattern opacity-[0.03] animate-pulse"></div>
 
-        <div className="container mx-auto px-4 text-center relative z-10">
+        {/* Content */}
+        <div className="relative z-10 container mx-auto px-4">
           <div className="animate-fade-in mb-6">
-            <span className="inline-block px-3 py-1 bg-primary/10 text-primary rounded-full text-sm md:text-base font-semibold border border-primary/20 hover:scale-110 transition-transform duration-300">
+            <span className="inline-block px-3 py-1 bg-primary/20 text-white rounded-full text-sm md:text-base font-semibold border border-white/20 hover:scale-110 transition-transform duration-300">
               We’re Hiring!
             </span>
           </div>
 
-          <h1 className="text-3xl md:text-5xl font-bold  mb-6 animate-fade-in bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent transition-transform duration-500 inline-block">
+          <h1 className="text-3xl md:text-5xl font-bold font-raleway mb-6 animate-fade-in text-white drop-shadow-lg">
             Open Positions
           </h1>
 
-          <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto animate-fade-in leading-relaxed">
+          <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto animate-fade-in leading-relaxed">
             Join our team and build your career with WDPL
           </p>
         </div>
@@ -101,7 +112,7 @@ const Careers = () => {
               {jobs.map((job, index) => (
                 <Card
                   key={job.id}
-                  className={`overflow-hidden group transition-all duration-500 ease-out hover:-translate-y-3 hover:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)] border-2 hover:border-primary/60 bg-gradient-to-br from-background to-secondary/20 hover:from-primary/5 hover:to-accent/10`}
+                  className={`overflow-hidden group transition-all duration-500 ease-out hover:-translate-y-3 hover:shadow-lg border-2 hover:border-primary/60 bg-gradient-to-br from-background to-secondary/20 hover:from-primary/5 hover:to-accent/10`}
                   style={{ animationDelay: `${index * 0.08}s` }}
                 >
                   <div className="p-8">

@@ -1,87 +1,113 @@
 import Layout from "@/components/layout/Layout";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import {
-  GraduationCap,
-  Coffee,
-  Plane,
-  PartyPopper,
-  Heart,
-  Users,
-} from "lucide-react";
-import cultureCelebration from "@/assets/culture-celebration.jpg";
-import cultureTraining from "@/assets/culture-training.jpg";
-import cultureTrip from "@/assets/culture-trip.jpg";
+import cultureCelebration from "@/assets/wdpl-images/Culture/diwali-2025.jpg";
+import cultureTraining from "@/assets/wdpl-images/Culture/trainnig-team.jpg";
+import cultureTrip from "@/assets/wdpl-images/Culture/monstry.jpg";
 import { useNavigate } from "react-router-dom";
 import TestimonialsCarousel from "@/components/home/TestimonialsCarousel";
-
+import Trainning from "@/assets/homepage/home-icons/trainning.svg";
+import Food from "@/assets/homepage/home-icons/food-and-beverage.svg";
+import Celebrate from "@/assets/homepage/home-icons/celebrate.svg";
+import Travel from "@/assets/homepage/home-icons/travel.svg";
+import Heart from "@/assets/wdpl-images/Culture/work-life-balance.svg";
+import Users from "@/assets/wdpl-images/Culture/family-culture.svg";
+import Hero from "@/assets/wdpl-images/Culture/maddy-and-team.jpg";
 const Culture = () => {
   const navigate = useNavigate();
 
   const perks = [
     {
-      icon: <GraduationCap className="w-8 h-8" />,
+      icon: (
+        <img
+          src={Trainning}
+          alt="Training"
+          className="w-10 h-10 font-extrabold"
+        />
+      ),
       title: "Continuous Training",
       description:
         "Regular workshops, certifications, and skill development programs to help you grow professionally.",
     },
     {
-      icon: <Coffee className="w-8 h-8" />,
+      icon: <img src={Food} alt="Food" className="w-10 h-10 font-extrabold" />,
       title: "Inclusive Food & Beverages",
       description:
         "Complimentary meals, snacks, and beverages throughout the day to keep you energized.",
     },
     {
-      icon: <Plane className="w-8 h-8" />,
+      icon: (
+        <img src={Travel} alt="Travel" className="w-10 h-10 font-extrabold" />
+      ),
       title: "Team Trips",
       description:
         "Annual team outings and retreats to explore new places and bond with colleagues.",
     },
     {
-      icon: <PartyPopper className="w-8 h-8" />,
+      icon: (
+        <img
+          src={Celebrate}
+          alt="Celebrate"
+          className="w-10 h-10 font-extrabold"
+        />
+      ),
       title: "Celebrations",
       description:
-        "Birthdays, festivals, project milestones we celebrate every moment together.",
+        "Birthdays, festivals, project milestones — we celebrate every moment together.",
     },
     {
-      icon: <Heart className="w-8 h-8" />,
+      icon: (
+        <img
+          src={Heart}
+          alt="Work-life balance"
+          className="w-10 h-10 font-extrabold"
+        />
+      ),
       title: "Work-Life Balance",
       description:
         "Flexible hours and a supportive environment that values your personal time.",
     },
     {
-      icon: <Users className="w-8 h-8" />,
+      icon: (
+        <img
+          src={Users}
+          alt="Family Culture"
+          className="w-10 h-10 font-extrabold"
+        />
+      ),
       title: "Family Culture",
       description:
         "A tight-knit team where everyone is valued, heard, and supported.",
     },
   ];
-
   return (
     <Layout>
-      {/* Hero Section */}
-      <section className="relative py-20 bg-gradient-to-br from-primary/10 via-accent/5 to-secondary/10 overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(120,119,198,0.15),transparent_50%)]"></div>
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-4xl max-h-4xl mx-auto text-center">
-            <Badge className="mb-6 animate-fade-in hover:scale-110 transition-transform duration-300">
-              Our Culture
-            </Badge><br />
-            <h1
-              className="text-5xl md:text-5xl font-bold  mb-8 animate-fade-in bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent  transition-transform duration-500 inline-block"
-              style={{ animationDelay: "0.1s" }}
-            >
-              More Than Just a Workplace
-            </h1>
-            <p
-              className="text-xl md:text-2xl text-muted-foreground leading-relaxed animate-fade-in"
-              style={{ animationDelay: "0.2s" }}
-            >
-              At WDPL, we believe in creating an environment where everyone can
-              thrive. From continuous learning to celebrations, we're committed
-              to your growth and happiness.
-            </p>
-          </div>
+      <section
+        className="relative py-20 bg-cover bg-center bg-no-repeat text-center flex items-center justify-center"
+        style={{
+          backgroundImage: `url(${Hero})`,
+        }}
+      >
+        <div className="absolute inset-0 bg-black/70"></div>
+
+        <div className="relative z-10 container mx-auto px-4">
+          <Badge className="mb-6 animate-fade-in hover:scale-110 transition-transform duration-300">
+            Our Culture
+          </Badge>
+          <h1
+            className="text-3xl font-raleway md:text-5xl font-bold mb-8 text-white animate-fade-in"
+            style={{ animationDelay: "0.1s" }}
+          >
+            More Than Just a Workplace
+          </h1>
+          <p
+            className="text-xl md:text-xl text-gray-200 leading-relaxed max-w-3xl mx-auto animate-fade-in"
+            style={{ animationDelay: "0.2s" }}
+          >
+            At WDPL, we believe in creating an environment where everyone can
+            thrive. From continuous learning to celebrations, we're committed to
+            your growth and happiness.
+          </p>
         </div>
       </section>
 
@@ -102,7 +128,7 @@ const Culture = () => {
             {perks.map((perk, index) => (
               <Card
                 key={index}
-                className="hover:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.3)] hover:-translate-y-2 transition-all duration-500 border-2 hover:border-primary/50 animate-fade-in bg-gradient-to-br from-background to-secondary/20"
+                className="hover:shadow-lg hover:-translate-y-2 transition-all duration-500 border-2 hover:border-primary/50 animate-fade-in bg-gradient-to-br from-background to-secondary/20"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
                 <CardContent className="p-8">

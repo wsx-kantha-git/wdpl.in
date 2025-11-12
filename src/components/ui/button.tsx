@@ -9,7 +9,7 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm hover:shadow-md transition-all",
+        default: "font-raleway bg-primary text-primary-foreground hover:bg-primary/90 shadow-sm hover:shadow-md transition-all",
         destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90",
         outline: "border-2 border-primary bg-transparent text-primary hover:bg-primary hover:text-primary-foreground transition-all",
         secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
@@ -17,7 +17,7 @@ const buttonVariants = cva(
         link: "text-primary underline-offset-4 hover:underline",
         
         brand:
-  "bg-gradient-to-r from-primary to-primary/90 text-primary-foreground font-semibold duration-300 hover:bg-[#333] hover:from-[#333] hover:to-[#333] hover:text-white hover:shadow-lg hover:scale-105",
+  "font-raleway bg-gradient-to-r from-primary to-primary/90 text-primary-foreground font-semibold duration-300 hover:bg-[#333] hover:from-[#333] hover:to-[#333] hover:text-white hover:shadow-lg hover:scale-105",
         orangeBrand: "bg-[#f79727] text-white font-semibold transition-all duration-300 hover:bg-[#333] hover:text-white hover:shadow-lg",
 
       },
