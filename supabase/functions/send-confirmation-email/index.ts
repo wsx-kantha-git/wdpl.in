@@ -8,7 +8,7 @@ const ADMIN_EMAIL = Deno.env.get("ADMIN_EMAIL") || "esakkiraj@webstix.com";
 const resend = new Resend(RESEND_API_KEY);
 
 // Allowed origins
-const allowedOrigins = ["https://wdpl.in", "http://localhost:8080"];
+const allowedOrigins = ["https://wdpl.in", "http://localhost:8080", "https://wsx-kantha-git.github.io/wdpl.in/" ];
 
 serve(async (req) => {
   const origin = req.headers.get("Origin") || "";

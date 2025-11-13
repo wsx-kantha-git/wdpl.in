@@ -275,7 +275,7 @@ const Home = () => {
         size="lg"
         className="border-white text-white hover:bg-white hover:text-black font-raleway font-semibold"
       >
-        <Link to="/team">MEET THE TEAM</Link>
+        <Link to="/team">MEET OUR TEAM</Link>
       </Button>
     </div>
   </div>
