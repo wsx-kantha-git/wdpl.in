@@ -21,7 +21,7 @@ export default function AdminLogin() {
     const checkSession = async () => {
       const { data } = await supabase.auth.getSession();
       const isAdmin = localStorage.getItem("isAdminAuthenticated") === "true";
-      if (data.session && isAdmin) navigate("/admin/dashboard");
+      if (data.session && isAdmin) navigate("/admin/summary");
     };
     checkSession();
   }, [navigate]);
@@ -67,7 +67,7 @@ export default function AdminLogin() {
       });
 
       //  Step 4: Navigate to dashboard
-      setTimeout(() => navigate("/admin/dashboard"), 1500);
+      setTimeout(() => navigate("/admin/summary"), 1500);
     } catch (error) {
       const message =
         error instanceof Error ? error.message : "An unexpected error occurred";

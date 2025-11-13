@@ -24,6 +24,7 @@ import ScrollToTop from "./components/ui/ScrollToTop";
 import TermsAndConditions from "./pages/TermsAndConditions";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Sitemap from "./pages/Sitemap";
+import AdminSummaryPage from "./pages/admin/AdminSummaryPage";
 
 const queryClient = new QueryClient();
 
@@ -53,6 +54,14 @@ const App = () => (
 
           {/* Admin & Auth */}
           <Route path="/admin/login" element={<AdminLogin />} />
+          <Route
+            path="/admin/summary"
+            element={
+              <ProtectedRoute>
+                <AdminSummaryPage />
+              </ProtectedRoute>
+            }
+          />
           <Route
             path="/admin/dashboard"
             element={

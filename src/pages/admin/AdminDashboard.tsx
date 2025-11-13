@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Layout from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
+import { ChevronLeft } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -26,7 +26,7 @@ import { supabase } from "@/integrations/supabase/client";
 import AdminTestimonialsDashboard from "./AdminTestimonialsDashboard";
 import AdminContactDashboard from "./AdminContactDashboard";
 import GalleryAdminPage from "./GalleryAdminPage";
-
+import { useLocation } from "react-router-dom";
 // TYPES
 interface Skill {
   name: string;
@@ -95,6 +95,8 @@ interface Job {
 
 export default function AdminDashboard() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const defaultTab = location.state?.tab || "team";
   const [loading, setLoading] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
 
@@ -699,10 +701,17 @@ export default function AdminDashboard() {
   if (!isAdmin) return null;
 
   return (
-    <Layout>
-      <div className="min-h-screen bg-gradient-to-b from-background via-muted/10 to-background py-12">
-        <div className="container max-w-7xl">
-          <div className="flex justify-between items-center mb-8 animate-fade-in">
+    <div className="min-h-screen bg-gradient-to-b from-background via-muted/10 to-background py-12">
+      <div className="container max-w-7xl">
+        <div className="flex justify-between items-center mb-8 animate-fade-in">
+          <div className="flex items-center mb-8 gap-4">
+            <Button
+              variant="link"
+              onClick={() => navigate("/admin/summary")}
+              className="flex items-center gap-2"
+            >
+              <ChevronLeft className="h-4 w-4" /> Back to Dashboard
+            </Button>
             <div>
               <h1 className="text-4xl font-raleway font-bold">
                 Admin Dashboard
@@ -711,539 +720,528 @@ export default function AdminDashboard() {
                 Manage your team and job postings
               </p>
             </div>
-            <Button onClick={handleLogout} variant="outline" className="gap-2">
-              <LogOut className="h-4 w-4" /> Logout
-            </Button>
           </div>
+          <Button onClick={handleLogout} variant="outline" className="gap-2">
+            <LogOut className="h-4 w-4" /> Logout
+          </Button>
+        </div>
 
-          <Tabs defaultValue="team" className="animate-fade-in-up">
-            <TabsList className="flex flex-wrap md:grid md:grid-cols-5 gap-2 mb-4 overflow-x-auto scrollbar-hide">
-              {" "}
-              {/* 5 columns */}
-              <TabsTrigger value="team" className="gap-2 font-raleway">
-                <Users className="h-4 w-4" /> Team Management
-              </TabsTrigger>
-              <TabsTrigger value="jobs" className="gap-2 font-raleway">
-                <Briefcase className="h-4 w-4" /> Job Postings
-              </TabsTrigger>
-              <TabsTrigger value="contacts" className="gap-2 font-raleway">
-                <Users className="h-4 w-4" /> Contact Submissions
-              </TabsTrigger>
-              <TabsTrigger value="testimonials" className="gap-2 font-raleway">
-                <Users className="h-4 w-4" /> Testimonials
-              </TabsTrigger>
-              <TabsTrigger value="gallery" className="gap-2 font-raleway">
-                <Users className="h-4 w-4" /> Gallery
-              </TabsTrigger>
-            </TabsList>
+        <Tabs defaultValue={defaultTab} className="animate-fade-in-up">
+          <TabsList className="flex flex-wrap md:grid md:grid-cols-5 gap-2 mb-4 overflow-x-auto scrollbar-hide">
+            {" "}
+            {/* 5 columns */}
+            <TabsTrigger value="team" className="gap-2 font-raleway">
+              <Users className="h-4 w-4" /> Team Management
+            </TabsTrigger>
+            <TabsTrigger value="jobs" className="gap-2 font-raleway">
+              <Briefcase className="h-4 w-4" /> Job Postings
+            </TabsTrigger>
+            <TabsTrigger value="contacts" className="gap-2 font-raleway">
+              <Users className="h-4 w-4" /> Contact Submissions
+            </TabsTrigger>
+            <TabsTrigger value="testimonials" className="gap-2 font-raleway">
+              <Users className="h-4 w-4" /> Testimonials
+            </TabsTrigger>
+            <TabsTrigger value="gallery" className="gap-2 font-raleway">
+              <Users className="h-4 w-4" /> Gallery
+            </TabsTrigger>
+          </TabsList>
 
-            {/* ---------------- TEAM MANAGEMENT ---------------- */}
-            <TabsContent value="team">
-              <Card className="border-primary/20 shadow-lg animate-slide-in-up">
-                <CardHeader>
-                  <CardTitle className="font-raleway flex items-center gap-2">
-                    <Plus className="h-5 w-5" />{" "}
-                    {editingTeamId ? "Edit Team Member" : "Add New Team Member"}
-                  </CardTitle>
-                  <CardDescription className="font-source">
-                    Upload team member details with skills, photo, and LinkedIn
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  {/* TEAM FORM */}
-                  <form onSubmit={handleTeamSubmit} className="space-y-6">
-                    <div className="grid md:grid-cols-2 gap-6">
-                      <div>
-                        <Label>Full Name</Label>
-                        <Input
-                          required
-                          value={teamForm.name}
-                          onChange={(e) =>
-                            setTeamForm({ ...teamForm, name: e.target.value })
-                          }
-                        />
-                      </div>
-                      <div>
-                        <Label>Role</Label>
-                        <Input
-                          required
-                          value={teamForm.role}
-                          onChange={(e) =>
-                            setTeamForm({ ...teamForm, role: e.target.value })
-                          }
-                        />
-                      </div>
-                      <div>
-                        <Label>Department</Label>
-                        <Select
-                          value={teamForm.department_id?.toString() ?? ""}
-                          onValueChange={(val) =>
-                            setTeamForm({
-                              ...teamForm,
-                              department_id: Number(val),
-                            })
-                          }
-                        >
-                          <SelectTrigger>
-                            <SelectValue placeholder="Select department" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            {departments.map((d) => (
-                              <SelectItem key={d.id} value={d.id.toString()}>
-                                {d.name}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-                        <div className="flex mt-2 gap-2">
-                          <Input
-                            placeholder="Add new department"
-                            value={newDepartmentName}
-                            onChange={(e) =>
-                              setNewDepartmentName(e.target.value)
-                            }
-                          />
-                          <Button type="button" onClick={handleAddDepartment}>
-                            Add
-                          </Button>
-                        </div>
-                      </div>
-                      <div>
-                        <Label>Location</Label>
-                        <Select
-                          value={teamForm.location}
-                          onValueChange={(val) =>
-                            setTeamForm({ ...teamForm, location: val })
-                          }
-                        >
-                          <SelectTrigger>
-                            <SelectValue placeholder="Select location" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="chennai">Chennai</SelectItem>
-                            <SelectItem value="coimbatore">
-                              Coimbatore
-                            </SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-                      <div>
-                        <Label>LinkedIn URL</Label>
-                        <Input
-                          value={teamForm.linkedin_url}
-                          onChange={(e) =>
-                            setTeamForm({
-                              ...teamForm,
-                              linkedin_url: e.target.value,
-                            })
-                          }
-                        />
-                      </div>
-                      <div>
-                        <Label>Profile Image</Label>
-                        <Input
-                          type="file"
-                          accept="image/*"
-                          onChange={async (e) => {
-                            if (e.target.files?.[0]) {
-                              const url = await handleImageUpload(
-                                e.target.files[0]
-                              );
-                              setTeamForm({ ...teamForm, image_url: url });
-                            }
-                          }}
-                        />
-                      </div>
-                    </div>
-
-                    {/* SKILLS SECTION (inside same form) */}
+          {/* ---------------- TEAM MANAGEMENT ---------------- */}
+          <TabsContent value="team">
+            <Card className="border-primary/20 shadow-lg animate-slide-in-up">
+              <CardHeader>
+                <CardTitle className="font-raleway flex items-center gap-2">
+                  <Plus className="h-5 w-5" />{" "}
+                  {editingTeamId ? "Edit Team Member" : "Add New Team Member"}
+                </CardTitle>
+                <CardDescription className="font-source">
+                  Upload team member details with skills, photo, and LinkedIn
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                {/* TEAM FORM */}
+                <form onSubmit={handleTeamSubmit} className="space-y-6">
+                  <div className="grid md:grid-cols-2 gap-6">
                     <div>
-                      <Label>Skills</Label>
-                      <div className="flex gap-2 items-center mt-2">
-                        <Input
-                          placeholder="Skill name (e.g. React)"
-                          value={newSkillName}
-                          onChange={(e) => setNewSkillName(e.target.value)}
-                          className="flex-1"
-                        />
-                        <Input
-                          type="number"
-                          placeholder="%"
-                          value={newSkillPercentage}
-                          onChange={(e) =>
-                            setNewSkillPercentage(
-                              e.target.value === ""
-                                ? ""
-                                : Number(e.target.value)
-                            )
-                          }
-                          className="w-28"
-                          min={0}
-                          max={100}
-                        />
-                        <Button type="button" onClick={addSkillToForm}>
-                          + Add Skill
-                        </Button>
-                      </div>
-
-                      <div className="flex flex-wrap gap-2 mt-3">
-                        {teamForm.skills.map((skill, idx) => (
-                          <div
-                            key={idx}
-                            className="flex items-center gap-2 bg-primary/10 px-3 py-1 rounded-full"
-                          >
-                            <span className="font-medium">
-                              {skill.name} ({skill.percentage}%)
-                            </span>
-                            <button
-                              type="button"
-                              onClick={() => removeSkillFromForm(idx)}
-                              className="text-red-600 hover:text-red-800"
-                            >
-                              ✕
-                            </button>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-
-                    <div>
-                      <Label>Bio</Label>
-                      <Textarea
-                        required
-                        value={teamForm.bio}
-                        onChange={(e) =>
-                          setTeamForm({ ...teamForm, bio: e.target.value })
-                        }
-                      />
-                    </div>
-
-                    <Button type="submit" disabled={loading} className="w-full">
-                      {loading
-                        ? "Saving..."
-                        : editingTeamId
-                        ? "Update Member"
-                        : "Add Team Member"}
-                    </Button>
-                  </form>
-
-                  {/* TEAM MEMBER LIST */}
-                  <div className="mt-10">
-                    <h2 className="text-2xl font-raleway font-bold mb-4">
-                      Existing Team Members
-                    </h2>
-                    <div className="space-y-4">
-                      {teamMembers.map((member) => (
-                        <Card
-                          key={member.id}
-                          className="border-primary/20 shadow-md p-4 flex justify-between items-center"
-                        >
-                          <div className="flex items-center gap-4">
-                            {member.image_url && (
-                              <img
-                                src={member.image_url}
-                                alt={member.name}
-                                className="w-12 h-12 rounded-full object-cover"
-                              />
-                            )}
-                            <div>
-                              <h3 className="font-raleway font-semibold">
-                                {member.name}
-                              </h3>
-                              <p className="text-sm text-muted-foreground">
-                                {member.role} • {member.location}
-                              </p>
-                              {/* show skills preview */}
-                              <div className="mt-1 text-sm">
-                                {/* fetch skills from DB when rendering? we fetch on edit; show nothing if not loaded */}
-                              </div>
-                            </div>
-                          </div>
-                          <div className="flex items-center gap-3">
-                            <Button
-                              size="sm"
-                              onClick={() => handleEditTeamMember(member)}
-                            >
-                              <Edit className="h-4 w-4 mr-1" />
-                            </Button>
-                            <Button
-                              size="sm"
-                              variant="destructive"
-                              onClick={() => handleDeleteTeamMember(member.id)}
-                            >
-                              <Trash2 className="h-4 w-4 mr-1" />
-                            </Button>
-                            <label className="flex items-center gap-2 cursor-pointer">
-                              <span className="text-sm">
-                                {member.active ? "Active" : "Inactive"}
-                              </span>
-                              <input
-                                type="checkbox"
-                                checked={member.active}
-                                onChange={() =>
-                                  handleToggleTeamStatus(
-                                    member.id,
-                                    member.active
-                                  )
-                                }
-                                className="toggle toggle-primary"
-                              />
-                            </label>
-                          </div>
-                        </Card>
-                      ))}
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-
-            {/* ---------------- JOB POSTINGS ---------------- */}
-            {/* JOB FORM & LIST */}
-            <TabsContent value="jobs">
-              <Card className="border-primary/20 shadow-lg animate-slide-in-right">
-                <CardHeader>
-                  <CardTitle className="font-raleway flex items-center gap-2">
-                    <Plus className="h-5 w-5" />{" "}
-                    {editingJobId
-                      ? "Edit Job Posting"
-                      : "Create New Job Posting"}
-                  </CardTitle>
-                  <CardDescription className="font-source">
-                    Add or edit a position
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <form onSubmit={handleJobSubmit} className="space-y-6">
-                    <div className="grid md:grid-cols-2 gap-6">
-                      <div>
-                        <Label>Job Title</Label>
-                        <Input
-                          required
-                          value={jobForm.title}
-                          onChange={(e) =>
-                            setJobForm({ ...jobForm, title: e.target.value })
-                          }
-                        />
-                      </div>
-                      <div>
-                        <Label>Department</Label>
-                        <Input
-                          required
-                          value={jobForm.department}
-                          onChange={(e) =>
-                            setJobForm({
-                              ...jobForm,
-                              department: e.target.value,
-                            })
-                          }
-                        />
-                      </div>
-                      <div>
-                        <Label>Location</Label>
-                        <Input
-                          required
-                          value={jobForm.location}
-                          onChange={(e) =>
-                            setJobForm({ ...jobForm, location: e.target.value })
-                          }
-                        />
-                      </div>
-                      <div>
-                        <Label>Job Type</Label>
-                        <Input
-                          required
-                          value={jobForm.jobType}
-                          onChange={(e) =>
-                            setJobForm({ ...jobForm, jobType: e.target.value })
-                          }
-                        />
-                      </div>
-                      <div>
-                        <Label>Seniority Level</Label>
-                        <Input
-                          required
-                          value={jobForm.seniority_level}
-                          onChange={(e) =>
-                            setJobForm({
-                              ...jobForm,
-                              seniority_level: e.target.value,
-                            })
-                          }
-                        />
-                      </div>
-                    </div>
-                    <div>
-                      <Label>Linked Job Url</Label>
+                      <Label>Full Name</Label>
                       <Input
                         required
-                        value={jobForm.application_link}
+                        value={teamForm.name}
                         onChange={(e) =>
-                          setJobForm({
-                            ...jobForm,
-                            application_link: e.target.value,
-                          })
+                          setTeamForm({ ...teamForm, name: e.target.value })
                         }
                       />
                     </div>
-
                     <div>
-                      <Label>Description</Label>
-                      <Textarea
+                      <Label>Role</Label>
+                      <Input
                         required
-                        value={jobForm.description}
+                        value={teamForm.role}
                         onChange={(e) =>
-                          setJobForm({
-                            ...jobForm,
-                            description: e.target.value,
+                          setTeamForm({ ...teamForm, role: e.target.value })
+                        }
+                      />
+                    </div>
+                    <div>
+                      <Label>Department</Label>
+                      <Select
+                        value={teamForm.department_id?.toString() ?? ""}
+                        onValueChange={(val) =>
+                          setTeamForm({
+                            ...teamForm,
+                            department_id: Number(val),
+                          })
+                        }
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select department" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {departments.map((d) => (
+                            <SelectItem key={d.id} value={d.id.toString()}>
+                              {d.name}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      <div className="flex mt-2 gap-2">
+                        <Input
+                          placeholder="Add new department"
+                          value={newDepartmentName}
+                          onChange={(e) => setNewDepartmentName(e.target.value)}
+                        />
+                        <Button type="button" onClick={handleAddDepartment}>
+                          Add
+                        </Button>
+                      </div>
+                    </div>
+                    <div>
+                      <Label>Location</Label>
+                      <Select
+                        value={teamForm.location}
+                        onValueChange={(val) =>
+                          setTeamForm({ ...teamForm, location: val })
+                        }
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select location" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="chennai">Chennai</SelectItem>
+                          <SelectItem value="coimbatore">Coimbatore</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div>
+                      <Label>LinkedIn URL</Label>
+                      <Input
+                        value={teamForm.linkedin_url}
+                        onChange={(e) =>
+                          setTeamForm({
+                            ...teamForm,
+                            linkedin_url: e.target.value,
                           })
                         }
                       />
                     </div>
                     <div>
-                      <Label>Responsibilities (one per line)</Label>
-                      <Textarea
-                        value={jobForm.responsibilities}
-                        onChange={(e) =>
-                          setJobForm({
-                            ...jobForm,
-                            responsibilities: e.target.value,
-                          })
-                        }
+                      <Label>Profile Image</Label>
+                      <Input
+                        type="file"
+                        accept="image/*"
+                        onChange={async (e) => {
+                          if (e.target.files?.[0]) {
+                            const url = await handleImageUpload(
+                              e.target.files[0]
+                            );
+                            setTeamForm({ ...teamForm, image_url: url });
+                          }
+                        }}
                       />
                     </div>
-                    <div>
-                      <Label>Requirements (one per line)</Label>
-                      <Textarea
-                        value={jobForm.requirements}
-                        onChange={(e) =>
-                          setJobForm({
-                            ...jobForm,
-                            requirements: e.target.value,
-                          })
-                        }
+                  </div>
+
+                  {/* SKILLS SECTION (inside same form) */}
+                  <div>
+                    <Label>Skills</Label>
+                    <div className="flex gap-2 items-center mt-2">
+                      <Input
+                        placeholder="Skill name (e.g. React)"
+                        value={newSkillName}
+                        onChange={(e) => setNewSkillName(e.target.value)}
+                        className="flex-1"
                       />
-                    </div>
-                    <div>
-                      <Label>Perks (one per line)</Label>
-                      <Textarea
-                        value={jobForm.perks}
+                      <Input
+                        type="number"
+                        placeholder="%"
+                        value={newSkillPercentage}
                         onChange={(e) =>
-                          setJobForm({ ...jobForm, perks: e.target.value })
+                          setNewSkillPercentage(
+                            e.target.value === "" ? "" : Number(e.target.value)
+                          )
                         }
+                        className="w-28"
+                        min={0}
+                        max={100}
                       />
+                      <Button type="button" onClick={addSkillToForm}>
+                        + Add Skill
+                      </Button>
                     </div>
 
-                    <Button type="submit" disabled={loading} className="w-full">
-                      {loading
-                        ? "Saving..."
-                        : editingJobId
-                        ? "Update Job"
-                        : "Publish Job"}
-                    </Button>
-                  </form>
-
-                  {/* Job List */}
-                  <div className="mt-8">
-                    <h2 className="text-2xl font-raleway font-bold mb-4">
-                      Existing Job Postings
-                    </h2>
-                    <div className="space-y-4">
-                      {jobs.map((job) => (
-                        <Card
-                          key={job.id}
-                          className="border-primary/20 shadow-md p-4 flex justify-between items-center"
+                    <div className="flex flex-wrap gap-2 mt-3">
+                      {teamForm.skills.map((skill, idx) => (
+                        <div
+                          key={idx}
+                          className="flex items-center gap-2 bg-primary/10 px-3 py-1 rounded-full"
                         >
-                          <div>
-                            <h3 className="font-raleway font-semibold">
-                              {job.title}
-                            </h3>
-                            <p className="text-sm text-muted-foreground">
-                              {job.department} • {job.location}
-                            </p>
-                          </div>
-                          <div className="flex items-center gap-4">
-                            <Button
-                              size="icon"
-                              onClick={() => handleEditJob(job)}
-                            >
-                              <Edit size={16} />
-                            </Button>
-                            <Button
-                              size="sm"
-                              variant="destructive"
-                              onClick={() => handleDeleteJob(job.id)}
-                            >
-                              <Trash2 className="h-4 w-4 mr-1" />
-                            </Button>
-                            <label className="flex items-center gap-2 cursor-pointer">
-                              <span className="text-sm">
-                                {job.status === "open" ? "Open" : "Closed"}
-                              </span>
-                              <input
-                                type="checkbox"
-                                checked={job.status === "open"}
-                                onChange={() =>
-                                  handleToggleStatus(job.id, job.status)
-                                }
-                                className="toggle toggle-primary"
-                              />
-                            </label>
-                          </div>
-                        </Card>
+                          <span className="font-medium">
+                            {skill.name} ({skill.percentage}%)
+                          </span>
+                          <button
+                            type="button"
+                            onClick={() => removeSkillFromForm(idx)}
+                            className="text-red-600 hover:text-red-800"
+                          >
+                            ✕
+                          </button>
+                        </div>
                       ))}
                     </div>
                   </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
 
-            {/* CONTACT SUBMISSIONS */}
+                  <div>
+                    <Label>Bio</Label>
+                    <Textarea
+                      required
+                      value={teamForm.bio}
+                      onChange={(e) =>
+                        setTeamForm({ ...teamForm, bio: e.target.value })
+                      }
+                    />
+                  </div>
 
-            <TabsContent value="contacts">
-              <Card className="border-primary/20 shadow-lg animate-slide-in-up">
-                <AdminContactDashboard />
-              </Card>
-            </TabsContent>
+                  <Button type="submit" disabled={loading} className="w-full">
+                    {loading
+                      ? "Saving..."
+                      : editingTeamId
+                      ? "Update Member"
+                      : "Add Team Member"}
+                  </Button>
+                </form>
 
-            {/* TESTIMONIALS */}
-            <TabsContent value="testimonials">
-              <Card className="border-primary/20 shadow-lg animate-slide-in-up">
-                <CardHeader>
-                  <CardTitle className="font-raleway">
-                    Testimonials Management
-                  </CardTitle>
-                  <CardDescription className="font-source">
-                    Add, edit, and manage client testimonials
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  {/* Add form to create testimonial, list existing testimonials, edit/delete */}
-                  <AdminTestimonialsDashboard />
-                </CardContent>
-              </Card>
-            </TabsContent>
+                {/* TEAM MEMBER LIST */}
+                <div className="mt-10">
+                  <h2 className="text-2xl font-raleway font-bold mb-4">
+                    Existing Team Members
+                  </h2>
+                  <div className="space-y-4">
+                    {teamMembers.map((member) => (
+                      <Card
+                        key={member.id}
+                        className="border-primary/20 shadow-md p-4 flex justify-between items-center"
+                      >
+                        <div className="flex items-center gap-4">
+                          {member.image_url && (
+                            <img
+                              src={member.image_url}
+                              alt={member.name}
+                              className="w-12 h-12 rounded-full object-cover"
+                            />
+                          )}
+                          <div>
+                            <h3 className="font-raleway font-semibold">
+                              {member.name}
+                            </h3>
+                            <p className="text-sm text-muted-foreground">
+                              {member.role} • {member.location}
+                            </p>
+                            {/* show skills preview */}
+                            <div className="mt-1 text-sm">
+                              {/* fetch skills from DB when rendering? we fetch on edit; show nothing if not loaded */}
+                            </div>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <Button
+                            size="sm"
+                            onClick={() => handleEditTeamMember(member)}
+                          >
+                            <Edit className="h-4 w-4 mr-1" />
+                          </Button>
+                          <Button
+                            size="sm"
+                            variant="destructive"
+                            onClick={() => handleDeleteTeamMember(member.id)}
+                          >
+                            <Trash2 className="h-4 w-4 mr-1" />
+                          </Button>
+                          <label className="flex items-center gap-2 cursor-pointer">
+                            <span className="text-sm">
+                              {member.active ? "Active" : "Inactive"}
+                            </span>
+                            <input
+                              type="checkbox"
+                              checked={member.active}
+                              onChange={() =>
+                                handleToggleTeamStatus(member.id, member.active)
+                              }
+                              className="toggle toggle-primary"
+                            />
+                          </label>
+                        </div>
+                      </Card>
+                    ))}
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
 
-            {/* GALLERY */}
-            <TabsContent value="gallery">
-              <Card className="border-primary/20 shadow-lg animate-slide-in-up">
-                <CardHeader>
-                  <CardTitle className="font-raleway">
-                    Gallery Management
-                  </CardTitle>
-                  <CardDescription className="font-source">
-                    Upload, edit, and manage gallery images
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  {/* Add form to upload images, list existing images, delete/edit */}
-                  <GalleryAdminPage />
-                </CardContent>
-              </Card>
-            </TabsContent>
-          </Tabs>
-        </div>
+          {/* ---------------- JOB POSTINGS ---------------- */}
+          {/* JOB FORM & LIST */}
+          <TabsContent value="jobs">
+            <Card className="border-primary/20 shadow-lg animate-slide-in-right">
+              <CardHeader>
+                <CardTitle className="font-raleway flex items-center gap-2">
+                  <Plus className="h-5 w-5" />{" "}
+                  {editingJobId ? "Edit Job Posting" : "Create New Job Posting"}
+                </CardTitle>
+                <CardDescription className="font-source">
+                  Add or edit a position
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <form onSubmit={handleJobSubmit} className="space-y-6">
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div>
+                      <Label>Job Title</Label>
+                      <Input
+                        required
+                        value={jobForm.title}
+                        onChange={(e) =>
+                          setJobForm({ ...jobForm, title: e.target.value })
+                        }
+                      />
+                    </div>
+                    <div>
+                      <Label>Department</Label>
+                      <Input
+                        required
+                        value={jobForm.department}
+                        onChange={(e) =>
+                          setJobForm({
+                            ...jobForm,
+                            department: e.target.value,
+                          })
+                        }
+                      />
+                    </div>
+                    <div>
+                      <Label>Location</Label>
+                      <Input
+                        required
+                        value={jobForm.location}
+                        onChange={(e) =>
+                          setJobForm({ ...jobForm, location: e.target.value })
+                        }
+                      />
+                    </div>
+                    <div>
+                      <Label>Job Type</Label>
+                      <Input
+                        required
+                        value={jobForm.jobType}
+                        onChange={(e) =>
+                          setJobForm({ ...jobForm, jobType: e.target.value })
+                        }
+                      />
+                    </div>
+                    <div>
+                      <Label>Seniority Level</Label>
+                      <Input
+                        required
+                        value={jobForm.seniority_level}
+                        onChange={(e) =>
+                          setJobForm({
+                            ...jobForm,
+                            seniority_level: e.target.value,
+                          })
+                        }
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <Label>Linked Job Url</Label>
+                    <Input
+                      required
+                      value={jobForm.application_link}
+                      onChange={(e) =>
+                        setJobForm({
+                          ...jobForm,
+                          application_link: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
+
+                  <div>
+                    <Label>Description</Label>
+                    <Textarea
+                      required
+                      value={jobForm.description}
+                      onChange={(e) =>
+                        setJobForm({
+                          ...jobForm,
+                          description: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
+                  <div>
+                    <Label>Responsibilities (one per line)</Label>
+                    <Textarea
+                      value={jobForm.responsibilities}
+                      onChange={(e) =>
+                        setJobForm({
+                          ...jobForm,
+                          responsibilities: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
+                  <div>
+                    <Label>Requirements (one per line)</Label>
+                    <Textarea
+                      value={jobForm.requirements}
+                      onChange={(e) =>
+                        setJobForm({
+                          ...jobForm,
+                          requirements: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
+                  <div>
+                    <Label>Perks (one per line)</Label>
+                    <Textarea
+                      value={jobForm.perks}
+                      onChange={(e) =>
+                        setJobForm({ ...jobForm, perks: e.target.value })
+                      }
+                    />
+                  </div>
+
+                  <Button type="submit" disabled={loading} className="w-full">
+                    {loading
+                      ? "Saving..."
+                      : editingJobId
+                      ? "Update Job"
+                      : "Publish Job"}
+                  </Button>
+                </form>
+
+                {/* Job List */}
+                <div className="mt-8">
+                  <h2 className="text-2xl font-raleway font-bold mb-4">
+                    Existing Job Postings
+                  </h2>
+                  <div className="space-y-4">
+                    {jobs.map((job) => (
+                      <Card
+                        key={job.id}
+                        className="border-primary/20 shadow-md p-4 flex justify-between items-center"
+                      >
+                        <div>
+                          <h3 className="font-raleway font-semibold">
+                            {job.title}
+                          </h3>
+                          <p className="text-sm text-muted-foreground">
+                            {job.department} • {job.location}
+                          </p>
+                        </div>
+                        <div className="flex items-center gap-4">
+                          <Button
+                            size="icon"
+                            onClick={() => handleEditJob(job)}
+                          >
+                            <Edit size={16} />
+                          </Button>
+                          <Button
+                            size="sm"
+                            variant="destructive"
+                            onClick={() => handleDeleteJob(job.id)}
+                          >
+                            <Trash2 className="h-4 w-4 mr-1" />
+                          </Button>
+                          <label className="flex items-center gap-2 cursor-pointer">
+                            <span className="text-sm">
+                              {job.status === "open" ? "Open" : "Closed"}
+                            </span>
+                            <input
+                              type="checkbox"
+                              checked={job.status === "open"}
+                              onChange={() =>
+                                handleToggleStatus(job.id, job.status)
+                              }
+                              className="toggle toggle-primary"
+                            />
+                          </label>
+                        </div>
+                      </Card>
+                    ))}
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* CONTACT SUBMISSIONS */}
+
+          <TabsContent value="contacts">
+            <Card className="border-primary/20 shadow-lg animate-slide-in-up">
+              <AdminContactDashboard />
+            </Card>
+          </TabsContent>
+
+          {/* TESTIMONIALS */}
+          <TabsContent value="testimonials">
+            <Card className="border-primary/20 shadow-lg animate-slide-in-up">
+              <CardHeader>
+                <CardTitle className="font-raleway">
+                  Testimonials Management
+                </CardTitle>
+                <CardDescription className="font-source">
+                  Add, edit, and manage client testimonials
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                {/* Add form to create testimonial, list existing testimonials, edit/delete */}
+                <AdminTestimonialsDashboard />
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          {/* GALLERY */}
+          <TabsContent value="gallery">
+            <Card className="border-primary/20 shadow-lg animate-slide-in-up">
+              <CardHeader>
+                <CardTitle className="font-raleway">
+                  Gallery Management
+                </CardTitle>
+                <CardDescription className="font-source">
+                  Upload, edit, and manage gallery images
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                {/* Add form to upload images, list existing images, delete/edit */}
+                <GalleryAdminPage />
+              </CardContent>
+            </Card>
+          </TabsContent>
+        </Tabs>
       </div>
-    </Layout>
+    </div>
   );
 }
