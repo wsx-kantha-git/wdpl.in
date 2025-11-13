@@ -19,6 +19,7 @@ export default function AdminSummaryPage() {
   const [userEmail, setUserEmail] = useState("");
 
   // Fetch counts
+  useEffect(() => {
   const fetchSummary = async () => {
     try {
       const {
@@ -64,10 +65,8 @@ export default function AdminSummaryPage() {
       console.error(err);
     }
   };
-
-  useEffect(() => {
     fetchSummary();
-  }, []);
+}, [navigate]);
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
