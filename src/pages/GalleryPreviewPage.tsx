@@ -99,14 +99,14 @@ const GalleryPreview = () => {
           {/* Navigation Buttons */}
           <button
             onClick={prevSlide}
-            className="absolute left-6 sm:left-10 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/60 p-3 rounded-full text-white transition-all duration-300 z-20 backdrop-blur-md"
+            className="absolute left-[12px] sm:left-10 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/60 p-3 rounded-full text-white transition-all duration-300 z-20 backdrop-blur-md"
           >
             <ChevronLeft className="w-6 h-6" />
           </button>
 
           <button
             onClick={nextSlide}
-            className="absolute right-6 sm:right-10 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/60 p-3 rounded-full text-white transition-all duration-300 z-20 backdrop-blur-md"
+            className="absolute right-[12px] sm:right-10 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/60 p-3 rounded-full text-white transition-all duration-300 z-20 backdrop-blur-md"
           >
             <ChevronRight className="w-6 h-6" />
           </button>

@@ -103,7 +103,7 @@ const Header = () => {
               ))}
               <Button
                 asChild
-                variant="brand"
+                variant="orangeBrand"
                 size="lg"
                 className="mt-2 font-raleway"
               >

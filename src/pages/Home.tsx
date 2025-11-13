@@ -66,9 +66,9 @@ const Home = () => {
             >
               <Button
                 asChild
-                variant="brand"
+                variant="outline"
                 size="lg"
-                className="text-lg px-8 py-6 hover:scale-110 hover:shadow-2xl duration-300"
+                className="font-raleway text-white text-lg border-[#333] px-8 py-6 hover:scale-110 hover:bg-[#333]  hover:shadow-2xl duration-300"
               >
                 <Link to="/team">
                   SEE OUR TEAM{" "}
@@ -85,7 +85,7 @@ const Home = () => {
                 size="lg"
                 className="bg-background/10 backdrop-blur-sm border-2 border-background text-background hover:bg-background hover:text-foreground text-lg px-8 py-6 hover:scale-110 duration-300"
               >
-                <Link to="/culture">EXPLORE OUR CULTURE</Link>
+                <Link to="/culture">EXPLORE WORK CULTURE</Link>
               </Button>
             </div>
           </div>
@@ -246,7 +246,7 @@ const Home = () => {
 
       {/* CTA Section */}
 <section
-  className="relative w-full h-[300px] md:h-[300px] flex items-center justify-center bg-cover bg-center bg-no-repeat"
+  className="relative w-full h-[400px] md:h-[400px] flex items-center justify-center bg-cover bg-center bg-no-repeat"
   style={{ backgroundImage: `url(${CTA})` }}
 >
   {/* Overlay */}
