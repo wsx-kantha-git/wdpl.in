@@ -14,7 +14,7 @@ import Trainning from "@/assets/homepage/home-icons/trainning.svg";
 import Food from "@/assets/homepage/home-icons/food-and-beverage.svg";
 import Celebrate from "@/assets/homepage/home-icons/celebrate.svg";
 import Travel from "@/assets/homepage/home-icons/travel.svg";
-
+import CTA from "@/assets/homepage/group-team.jpg";
 const Home = () => {
   const perks = [
     {
@@ -126,7 +126,7 @@ const Home = () => {
                 className="p-8 text-center hover:shadow-lg hover:scale-110 hover:-translate-y-2 transition-all duration-500 group border-2 hover:border-primary/50 animate-fade-in bg-gradient-to-br from-background to-secondary/20"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
-                <div className="w-20 h-20 bg-gradient-to-br from-primary/20 to-accent/10 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-gradient-to-br group-hover:from-primary group-hover:to-accent group-hover:scale-125 group-hover:rotate-12 transition-all duration-500 shadow-lg">
+                <div className="w-20 h-20 bg-gradient-to-br from-primary/10 to-accent/10 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-gradient-to-br group-hover:from-primary group-hover:to-accent group-hover:scale-125 group-hover:rotate-12 transition-all duration-500 shadow-lg">
                   <img
                     src={perk.icon}
                     alt={perk.title}
@@ -245,35 +245,41 @@ const Home = () => {
       <TestimonialsCarousel />
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-primary to-primary/90">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-4xl md:text-5xl font-raleway font-bold text-primary-foreground mb-6">
-            Ready To Join Our Team?
-          </h2>
-          <p className="text-xl font-source text-primary-foreground/90 mb-8 max-w-2xl mx-auto">
-            Explore open positions and take the first step toward an exciting
-            career at WDPL
-          </p>
-          <div className="flex flex-wrap justify-center gap-4">
-            <Button
-              asChild
-              variant="outline"
-              size="lg"
-              className=" bg-background text-primary border-background hover:bg-background/90 hover:text-black font-raleway font-semibold"
-            >
-              <Link to="/careers">VIEW ALL ROLES</Link>
-            </Button>
-            <Button
-              asChild
-              variant="outline"
-              size="lg"
-              className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary font-raleway font-semibold"
-            >
-              <Link to="/team">MEET THE TEAM</Link>
-            </Button>
-          </div>
-        </div>
-      </section>
+<section
+  className="relative w-full h-[300px] md:h-[300px] flex items-center justify-center bg-cover bg-center bg-no-repeat"
+  style={{ backgroundImage: `url(${CTA})` }}
+>
+  {/* Overlay */}
+  <div className="absolute inset-0 bg-black/60"></div>
+
+  {/* Content */}
+  <div className="relative z-10 text-center px-4 max-w-4xl">
+    <h2 className="text-4xl md:text-5xl font-raleway font-bold text-white mb-6">
+      Ready To Join Our Team?
+    </h2>
+    <p className="text-xl font-source text-white/90 mb-8">
+      Explore open positions and take the first step toward an exciting career at WDPL
+    </p>
+    <div className="flex flex-wrap justify-center gap-4">
+      <Button
+        asChild
+        variant="outline"
+        size="lg"
+        className="bg-primary text-background border-background hover:bg-background/90 hover:text-black font-raleway font-semibold"
+      >
+        <Link to="/careers">VIEW ALL ROLES</Link>
+      </Button>
+      <Button
+        asChild
+        variant="outline"
+        size="lg"
+        className="border-white text-white hover:bg-white hover:text-black font-raleway font-semibold"
+      >
+        <Link to="/team">MEET THE TEAM</Link>
+      </Button>
+    </div>
+  </div>
+</section>
     </Layout>
   );
 };

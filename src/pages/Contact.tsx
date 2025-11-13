@@ -39,18 +39,18 @@ const Contact = () => {
       if (error) throw error;
 
       // 2️⃣ Call Supabase Edge Function to send emails
-      const response = await fetch(
-        "https://gnbhckhjgavvatbvkzne.functions.supabase.co/send-confirmation-email",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            name: formData.name,
-            email: formData.email,
-            message: formData.message,
-          }),
-        }
-      );
+const response = await fetch(
+  "https://gnbhckhjgavvatbvkzne.functions.supabase.co/send-confirmation-email",
+  {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      name: formData.name,
+      email: formData.email,
+      message: formData.message,
+    }),
+  }
+);
 
       const data = await response.json();
 

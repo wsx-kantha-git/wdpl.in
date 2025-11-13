@@ -99,7 +99,7 @@ const WorkCultureCarousel = () => {
                     <CardContent className="flex flex-col p-0 h-full">
                       <div className="relative h-48 overflow-hidden flex-shrink-0">
                         <div
-                          className={`absolute inset-0 bg-gradient-to-br ${value.color} opacity-80 z-10`}
+                          className={`absolute inset-0 `}
                         ></div>
                         <img
                           src={value.image}
