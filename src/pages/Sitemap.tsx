@@ -1,5 +1,6 @@
 import Layout from "@/components/layout/Layout";
 import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 import { Home, Users, Briefcase, Heart, Image, FileText, Mail, Shield, FileCheck } from "lucide-react";
 
 const Sitemap = () => {
@@ -106,13 +107,16 @@ const Sitemap = () => {
               <p className="font-source text-muted-foreground mb-6 leading-relaxed">
                 If you're having trouble finding what you're looking for, please don't hesitate to reach out to us. Our team is here to help you navigate our services and find the information you need.
               </p>
+              <Button asChild variant="brand" size="lg" className="rounded-full">
               <Link
                 to="/contact"
-                className="inline-flex items-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-lg font-source font-medium hover:bg-primary/90 transition-all duration-300 hover:translate-x-1"
+                className="flex items-center gap-2"
+                
               >
                 <Mail className="w-4 h-4" />
                 Contact Us
               </Link>
+              </Button>
             </div>
 
             {/* Office Locations */}
@@ -122,7 +126,8 @@ const Sitemap = () => {
                   Chennai Office
                 </h3>
                 <p className="font-source text-muted-foreground text-sm">
-                  286/1, Rajiv Gandhi Salai, Nehru Nagar, Perungudi, Chennai, 600096
+                  Prince Infocity 1, 8th Floor, 286/1, OMR, Kandhanchavadi, Chennai,
+                  <br />Tamil Nadu-600096, India.
                 </p>
               </div>
               <div className="bg-card border border-border rounded-lg p-6">
@@ -130,7 +135,8 @@ const Sitemap = () => {
                   Coimbatore Office
                 </h3>
                 <p className="font-source text-muted-foreground text-sm">
-                  2nd Floor, MAPA Center, Mikro Grafeio opposite LuLu Hypermarket, Coimbatore, 641045
+                  Mikro Grafeio, 1st Floor, 766, 767, Puliakulam Road,
+                  Coimbatore,<br /> Tamil Nadu-641037, India.
                 </p>
               </div>
             </div>

@@ -80,7 +80,7 @@ const response = await fetch(
   const offices = [
     {
       city: "Chennai",
-      address: "286/1, Rajiv Gandhi Salai, Nehru Nagar, Perungudi",
+      address: "Prince Infocity 1, 8th Floor, 286/1, OMR, Kandhanchavadi,",
       fullAddress: "Chennai, Tamil Nadu 600096, India",
       mapUrl:
         "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.0486000973997!2d80.24550057507643!3d12.968741987346368!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a525d6cbd3f3a21%3A0x4d9dcffff16b35d5!2sPrince%20Info%20City%20I%2C%20286%2F1%2C%20Rajiv%20Gandhi%20Salai%2C%20Nehru%20Nagar%2C%20Perungudi%2C%20Chennai%2C%20Tamil%20Nadu%20600096!5e0!3m2!1sen!2sin!4v1762409933735!5m2!1sen!2sin",
@@ -88,7 +88,7 @@ const response = await fetch(
     {
       city: "Coimbatore",
       address:
-        "2nd Floor, MAPA Center, Mikro Grafeio opposite LuLu Hypermarket",
+        "Mikro Grafeio, 1st Floor, 766, 767, Puliakulam Road,",
       fullAddress: "Papanaickenpalayam, Coimbatore, Tamil Nadu 641045, India",
       mapUrl:
         "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3916.3898421049676!2d76.9865162250453!3d11.009349389153908!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba85997d75fdd63%3A0x45702f5f5e148762!2sMikro%20Grafeio%20(Beyond%20Workspaces)!5e0!3m2!1sen!2sin!4v1762348760819!5m2!1sen!2sin",

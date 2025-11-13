@@ -179,7 +179,7 @@ const Home = () => {
                     Chennai
                   </h3>
                   <p className="text-background/90 text-sm">
-                    Kandhanchavadi, Prince Infocity-1
+                    Kandhanchavadi, Prince Infocity 1
                   </p>
                 </div>
               </div>

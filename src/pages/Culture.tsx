@@ -53,7 +53,7 @@ const Culture = () => {
       ),
       title: "Celebrations",
       description:
-        "Birthdays, festivals, project milestones — we celebrate every moment together.",
+        "Birthdays, festivals, project milestones - we celebrate every moment together.",
     },
     {
       icon: (

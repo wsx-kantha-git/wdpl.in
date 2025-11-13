@@ -159,8 +159,10 @@ const PrivacyPolicy = () => {
                 </p>
                 <div className="mt-4 space-y-2 text-muted-foreground">
                   <p>Webstix Design Private Limited</p>
-                  <p>Chennai Office: 286/1, Rajiv Gandhi Salai, Nehru Nagar, Perungudi, Chennai, 600096</p>
-                  <p>Coimbatore Office: 2nd Floor, MAPA Center, Mikro Grafeio opposite LuLu Hypermarket, Coimbatore, 641045</p>
+                  <p>Chennai Office: Prince Infocity 1, 8th Floor, 286/1, OMR, Kandhanchavadi, Chennai,
+                  Tamil Nadu-600096, India.</p>
+                  <p>Coimbatore Office: Mikro Grafeio, 1st Floor, 766, 767, Puliakulam Road,
+                  Coimbatore, Tamil Nadu-641037, India.</p>
                 </div>
               </div>
             </div>

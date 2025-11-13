@@ -73,7 +73,7 @@ const WorkCultureCarousel = () => {
             Our Work Culture
           </h2>
           <p className="text-xl text-muted-foreground font-source max-w-2xl mx-auto">
-            More than just a workplace — it's a community where innovation
+            More than just a workplace it's a community where innovation
             thrives and people grow
           </p>
         </div>
