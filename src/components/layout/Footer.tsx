@@ -80,7 +80,7 @@ const Footer = () => {
                   className="mt-1 shrink-0 transition-transform duration-300 "
                 />
                 <span>
-                  286/1, Rajiv Gandhi Salai, Nehru Nagar, Perungudi, Chennai,
+                  Prince Infocity 1, 8th Floor, 286/1, OMR, Kandhanchavadi, Chennai,
                   <br />
                   Tamil Nadu-600096, India.
                 </span>

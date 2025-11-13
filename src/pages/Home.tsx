@@ -179,13 +179,13 @@ const Home = () => {
                     Chennai
                   </h3>
                   <p className="text-background/90 text-sm">
-                    Perungudi, Prince Infocity-1
+                    Kandhanchavadi, Prince Infocity-1
                   </p>
                 </div>
               </div>
               <div className="p-6">
                 <p className="text-muted-foreground">
-                  286/1, Rajiv Gandhi Salai, Nehru Nagar, Perungudi, Chennai,
+                  Prince Infocity 1, 8th Floor, 286/1, OMR, Kandhanchavadi, Chennai,
                   Tamil Nadu 600096, India
                 </p>
                 <Button asChild variant="link" className="mt-4 p-0">
@@ -223,7 +223,7 @@ const Home = () => {
               <div className="p-6">
                 <p className="text-muted-foreground">
                   Mikro Grafeio, 1st Floor, 766, 767, Puliakulam Road,
-                  Coimbatore, Tamil Nadu 641037, India.
+                  Coimbatore,<br /> Tamil Nadu 641037, India.
                 </p>
                 <Button asChild variant="link" className="mt-4 p-0">
                   <a
