@@ -10,6 +10,7 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { MapPin } from "lucide-react";
 import Hero from "@/assets/wdpl-images/Contactus/contact.jpg";
+
 const Contact = () => {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -25,6 +26,7 @@ const Contact = () => {
     setIsSubmitting(true);
 
     try {
+      // 1️⃣ Save to Supabase table
       const { error } = await supabase.from("contact_submissions").insert([
         {
           name: formData.name,
@@ -36,6 +38,27 @@ const Contact = () => {
 
       if (error) throw error;
 
+      // 2️⃣ Call Supabase Edge Function to send emails
+      const response = await fetch(
+        "https://gnbhckhjgavvatbvkzne.functions.supabase.co/send-confirmation-email",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: formData.name,
+            email: formData.email,
+            message: formData.message,
+          }),
+        }
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        console.error("Email send failed:", data);
+        throw new Error("Failed to send confirmation email");
+      }
+
       toast({
         title: "Message sent!",
         description: "We'll get back to you soon.",
@@ -43,6 +66,7 @@ const Contact = () => {
 
       setFormData({ name: "", email: "", phone: "", message: "" });
     } catch (error) {
+      console.error(error);
       toast({
         title: "Error",
         description: "Failed to send message. Please try again.",
@@ -80,14 +104,10 @@ const Contact = () => {
           backgroundImage: `url(${Hero})`,
         }}
       >
-        {/* Overlay for readability */}
         <div className="absolute inset-0 bg-black/70"></div>
-
-        {/* Decorative gradients on top of overlay */}
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(120,119,198,0.2),transparent_50%),radial-gradient(ellipse_at_bottom,rgba(251,146,60,0.2),transparent_50%)] mix-blend-overlay"></div>
         <div className="absolute inset-0 bg-grid-pattern opacity-[0.03] animate-pulse"></div>
 
-        {/* Content */}
         <div className="relative z-10 container mx-auto px-4">
           <div className="mx-auto  max-w-max">
             <Badge className="mb-6 animate-fade-in hover:scale-110 transition-transform duration-300">
@@ -109,7 +129,7 @@ const Contact = () => {
       <section className="py-16 bg-background">
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
-            {/* Fixed Contact Form */}
+            {/* Contact Form */}
             <div className="lg:sticky lg:top-20 self-start h-fit">
               <Card>
                 <CardHeader>
@@ -184,7 +204,7 @@ const Contact = () => {
               </Card>
             </div>
 
-            {/* Scrollable Offices Section */}
+            {/* Offices */}
             <div className="space-y-8 overflow-y-auto max-h-[80vh] pr-2">
               <h2 className="text-2xl font-bold mb-4 text-foreground">
                 Our Offices
@@ -202,14 +222,8 @@ const Contact = () => {
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-muted-foreground mb-2">
-                      {office.address}
-                    </p>
-                    <p className="text-muted-foreground mb-4">
-                      {office.fullAddress}
-                    </p>
-
-                    {/* Direct Map Embed */}
+                    <p className="text-muted-foreground mb-2">{office.address}</p>
+                    <p className="text-muted-foreground mb-4">{office.fullAddress}</p>
                     <div className="aspect-video w-full overflow-hidden rounded-lg border">
                       <iframe
                         src={office.mapUrl}
