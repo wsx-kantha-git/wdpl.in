@@ -38,19 +38,23 @@ const Contact = () => {
 
       if (error) throw error;
 
-      // 2️⃣ Call Supabase Edge Function to send emails
-const response = await fetch(
-  "https://gnbhckhjgavvatbvkzne.functions.supabase.co/send-confirmation-email",
-  {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      name: formData.name,
-      email: formData.email,
-      message: formData.message,
-    }),
-  }
-);
+      // 2️⃣ Call Supabase Edge Function
+      const response = await fetch(
+        "https://gnbhckhjgavvatbvkzne.functions.supabase.co/send-confirmation-email",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`, // ✅ FIXED
+          },
+          body: JSON.stringify({
+            name: formData.name,
+            email: formData.email,
+            phone: formData.phone,
+            message: formData.message,
+          }),
+        }
+      );
 
       const data = await response.json();
 
@@ -91,7 +95,7 @@ const response = await fetch(
         "Mikro Grafeio, 1st Floor, 766, 767, Puliakulam Road,",
       fullAddress: "Papanaickenpalayam, Coimbatore, Tamil Nadu 641045, India",
       mapUrl:
-        "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3916.3898421049676!2d76.9865162250453!3d11.009349389153908!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba85997d75fdd63%3A0x45702f5f5e148762!2sMikro%20Grafeio%20(Beyond%20Workspaces)!5e0!3m2!1sen!2sin!4v1762348760819!5m2!1sen!2sin",
+        "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15665.458234179274!2d76.9705903!3d11.0112505!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba859007a077ca9%3A0x6aec3a46715fa03!2sMAPA%20CENTRE!5e0!3m2!1sen!2sin!4v1763121103453!5m2!1sen!2sin",
     },
   ];
 
@@ -129,6 +133,7 @@ const response = await fetch(
       <section className="py-16 bg-background">
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
+            
             {/* Contact Form */}
             <div className="lg:sticky lg:top-20 self-start h-fit">
               <Card>
@@ -238,6 +243,7 @@ const response = await fetch(
                 </Card>
               ))}
             </div>
+
           </div>
         </div>
       </section>

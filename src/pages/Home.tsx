@@ -15,94 +15,110 @@ import Food from "@/assets/homepage/home-icons/food-and-beverage.svg";
 import Celebrate from "@/assets/homepage/home-icons/celebrate.svg";
 import Travel from "@/assets/homepage/home-icons/travel.svg";
 import CTA from "@/assets/homepage/group-team.jpg";
+import Heart from "@/assets/wdpl-images/Culture/work-life-balance.svg";
+import Users from "@/assets/wdpl-images/Culture/family-culture.svg";
 const Home = () => {
   const perks = [
-    {
-      icon: Trainning,
-      title: "Training Programs",
-      description: "Continuous learning & skill development",
-    },
-    {
-      icon: Food,
-      title: "Inclusive Food & Beverages",
-      description: "Complimentary meals & beverages",
-    },
-    {
-      icon: Travel,
-      title: "Company Trips",
-      description: "Annual team outings & retreats",
-    },
-    {
+     {
       icon: Celebrate,
       title: "Celebrations",
       description: "Regular events & recognition",
+    },
+    {
+      icon: Heart,
+      title: "Work-Life Balance",
+      description: "Flexible hours and a supportive environment that values your personal time.",
+    },
+    {
+      icon: Users,
+      title: "Family Culture",
+      description:
+        "A tight-knit team where everyone is valued, heard, and supported.",
+    },
+
+        {
+      icon: Trainning,
+      title: "Training Programs",
+      description: "Continuous learning & skill development",
     },
   ];
 
   return (
     <Layout>
       {/* Hero Section */}
-      <section
-        className="relative min-h-[95vh] flex items-center justify-center bg-cover bg-center overflow-hidden"
-        style={{ backgroundImage: `url(${HeroImage})` }}
+<section
+  className="relative h-[640px] md:h-[640px] sm:h-auto flex items-center bg-cover bg-center overflow-hidden"
+  style={{ backgroundImage: `url(${HeroImage})` }}
+>
+  <div className="container mx-auto px-4 relative z-10 flex flex-col md:flex-row items-center justify-between gap-10 py-10 md:py-0">
+
+    {/* Left Text Section */}
+    <div className="px-2 sm:px-4 max-w-3xl text-center md:text-left">
+      <h1 className="
+        text-[62px]  
+        sm:text-[62px]  
+        md:text-7xl 
+        lg:text-7xl  
+        font-raleway font-bold 
+        text-background 
+        mb-6 
+        leading-tight
+      ">
+        Design, Build & Grow
+      </h1>
+
+      <p
+        className="text-lg sm:text-xl md:text-2xl font-source text-background/95 mb-8 leading-relaxed"
       >
-        <div className="container mx-auto px-4 relative z-10 flex flex-col md:flex-row items-center justify-between gap-10">
-          {/* Left Text Section */}
-          <div className="px-6 max-w-3xl text-center md:text-left">
-            <h1 className="text-[62px] md:text-5xl lg:text-7xl font-raleway font-bold text-background mb-8 leading-tight">
-              Design, Build & Grow
-            </h1>
-            <p
-              className="text-xl md:text-2xl font-source text-background/95 mb-10 animate-fade-in leading-relaxed"
-              style={{ animationDelay: "0.1s" }}
-            >
-              Join WDPL in Chennai & Coimbatore. Family-first,
-              growth-focused-training, food, trips, celebrations.
-            </p>
+        Join WDPL in Chennai & Coimbatore. Family-first, growth-focused training,
+        food, trips, celebrations.
+      </p>
 
-            <div
-              className="flex flex-wrap gap-5 animate-fade-in justify-center md:justify-start"
-              style={{ animationDelay: "0.2s" }}
-            >
-              <Button
-                asChild
-                variant="outline"
-                size="lg"
-                className="font-raleway text-white text-lg border-[#333] px-8 py-6 hover:scale-110 hover:bg-[#333]  hover:shadow-2xl duration-300"
-              >
-                <Link to="/team">
-                  SEE OUR TEAM{" "}
-                  <ArrowRight
-                    className="ml-2 group-hover:translate-x-1 transition-transform"
-                    size={24}
-                  />
-                </Link>
-              </Button>
+      <div className="flex flex-wrap gap-4 justify-center md:justify-start">
+        <Button
+          asChild
+          variant="orangeBrand"
+          size="lg"
+          className="font-raleway text-[#333] bg-white text-base sm:text-lg border-[#333] px-6 py-4 hover:scale-110 hover:bg-[#333] duration-300"
+        >
+          <Link to="/team">
+            SEE OUR TEAM
+            <ArrowRight className="ml-2" size={20} />
+          </Link>
+        </Button>
 
-              <Button
-                asChild
-                variant="outline"
-                size="lg"
-                className="bg-background/10 backdrop-blur-sm border-2 border-background text-background hover:bg-background hover:text-foreground text-lg px-8 py-6 hover:scale-110 duration-300"
-              >
-                <Link to="/culture">EXPLORE WORK CULTURE</Link>
-              </Button>
-            </div>
-          </div>
+        <Button
+          asChild
+          variant="outline"
+          size="lg"
+          className="bg-background/10 backdrop-blur-sm border-2 border-background text-background hover:bg-background hover:text-foreground text-base sm:text-lg px-6 py-4 hover:scale-110 duration-300"
+        >
+          <Link to="/culture">EXPLORE WORK CULTURE</Link>
+        </Button>
+      </div>
+    </div>
 
-          {/* Right SVG Section */}
-          <div
-            className="w-full md:w-1/2 flex justify-center md:justify-end animate-fade-in"
-            style={{ animationDelay: "0.3s" }}
-          >
-            <img
-              src={HeroIllustration}
-              alt="Team Illustration"
-              className="w-[95%] md:w-[110%] lg:w-[130%] max-w-2xl drop-shadow-2xl hover:scale-110 transition-transform duration-500"
-            />
-          </div>
-        </div>
-      </section>
+    {/* Right Illustration */}
+    <div className="w-full md:w-1/2 flex justify-center md:justify-end">
+      <img
+        src={HeroIllustration}
+        alt="Team Illustration"
+        className="
+          w-[80%] 
+          sm:w-[90%] 
+          md:w-[110%] 
+          lg:w-[130%] 
+          max-w-[450px] 
+          drop-shadow-2xl 
+          transition-transform 
+          duration-500
+        "
+      />
+    </div>
+
+  </div>
+</section>
+
 
       {/* Work Culture Carousel */}
       <WorkCultureCarousel />
@@ -190,7 +206,7 @@ const Home = () => {
                 </p>
                 <Button asChild variant="link" className="mt-4 p-0">
                   <a
-                    href="https://maps.google.com/?q=286/1,+Rajiv+Gandhi+Salai,+Nehru+Nagar,+Perungudi,+Chennai,+600096"
+                    href="https://maps.app.goo.gl/EX9UxqibjSaH8Mei6"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -216,7 +232,7 @@ const Home = () => {
                     Coimbatore
                   </h3>
                   <p className="text-background/90 text-sm">
-                    Papanaickenpalayam
+                    Puliakulam Road
                   </p>
                 </div>
               </div>
@@ -227,7 +243,7 @@ const Home = () => {
                 </p>
                 <Button asChild variant="link" className="mt-4 p-0">
                   <a
-                    href="https://maps.google.com/maps/place/Mikro+Grafeio+(Beyond+Workspaces)/@11.0156305,76.9415592,13z/data=!4m10!1m2!2m1!1sMikro+Grafeio,+1st+Floor,+766,+767,+Puliakulam+Road,+++++++++++++++++++Coimbatore,+Tamil+Nadu+641037,+India."
+                    href="https://maps.app.goo.gl/JtXBgWZf2aDxMULU9"
                     target="_blank"
                     rel="noopener noreferrer"
                   >

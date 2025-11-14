@@ -101,15 +101,15 @@ export default function AdminSummaryPage() {
   return (
     <div className="flex min-h-screen bg-gray-50">
       {/* Sidebar */}
-      <div className="w-64 bg-gray-900 text-white flex flex-col">
+      <div className="w-64 bg-foreground text-white flex flex-col">
         <div className="flex items-center justify-center py-6 border-b border-gray-700">
-          <img src={wdplLogo} alt="Logo" className="h-16" />
+          <img src={wdplLogo} alt="Logo" className="h-16 mr-5" />
         </div>
         <nav className="flex flex-col mt-4">
           {tabs.map((t) => (
             <button
               key={t.label}
-              className="flex items-center gap-2 p-4 hover:bg-gray-700 text-left font-medium"
+              className="flex items-center gap-2 p-4 hover:bg-primary text-left font-medium"
               onClick={() => handleNavigate(t.tab)}
             >
               {t.icon} {t.label}

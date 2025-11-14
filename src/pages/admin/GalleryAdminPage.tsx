@@ -295,7 +295,7 @@ const GalleryAdminPage = () => {
   return (
     <section className="py-12 container mx-auto px-4">
       <Tabs defaultValue="categories" className="w-full">
-        <TabsList className="flex justify-center mb-8 flex-wrap gap-2">
+        <TabsList className="flex bg-foreground text-white justify-center mb-8 flex-wrap gap-2">
           <TabsTrigger value="categories">Categories</TabsTrigger>
           <TabsTrigger value="events">Events</TabsTrigger>
           <TabsTrigger value="images">Images</TabsTrigger>

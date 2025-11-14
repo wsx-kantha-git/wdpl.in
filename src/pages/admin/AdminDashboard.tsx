@@ -27,6 +27,14 @@ import AdminTestimonialsDashboard from "./AdminTestimonialsDashboard";
 import AdminContactDashboard from "./AdminContactDashboard";
 import GalleryAdminPage from "./GalleryAdminPage";
 import { useLocation } from "react-router-dom";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "@/components/ui/dialog";
+
 // TYPES
 interface Skill {
   name: string;
@@ -103,10 +111,13 @@ export default function AdminDashboard() {
   // Job states
   const [jobs, setJobs] = useState<Job[]>([]);
   const [editingJobId, setEditingJobId] = useState<number | null>(null);
+  const [openJobModal, setOpenJobModal] = useState(false);
+
 
   // Team states
   const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
   const [editingTeamId, setEditingTeamId] = useState<number | null>(null);
+  const [openEditModal, setOpenEditModal] = useState(false);
 
   const [departments, setDepartments] = useState<
     { id: number; name: string }[]
@@ -445,6 +456,7 @@ export default function AdminDashboard() {
   //  Edit Team Member (fetch skills too)
   const handleEditTeamMember = async (member: TeamMember) => {
     setEditingTeamId(member.id);
+
     // populate basic fields
     setTeamForm({
       name: member.name,
@@ -479,7 +491,11 @@ export default function AdminDashboard() {
         percentage: s.percentage ?? 0,
       })
     );
+
     setTeamForm((prev) => ({ ...prev, skills: fetchedSkills }));
+
+    // 👉 OPEN THE MODAL HERE
+    setOpenEditModal(true);
   };
 
   //  Toggle Team Member Active/Inactive
@@ -641,6 +657,7 @@ export default function AdminDashboard() {
       requirements: job.requirements.join("\n"),
       perks: job.perks.join("\n"),
     });
+    setOpenJobModal(true);
 
     document
       .querySelector('[data-value="jobs"]')
@@ -721,13 +738,13 @@ export default function AdminDashboard() {
               </p>
             </div>
           </div>
-          <Button onClick={handleLogout} variant="outline" className="gap-2">
+          <Button onClick={handleLogout} variant="brand" className="gap-2">
             <LogOut className="h-4 w-4" /> Logout
           </Button>
         </div>
 
         <Tabs defaultValue={defaultTab} className="animate-fade-in-up">
-          <TabsList className="flex flex-wrap md:grid md:grid-cols-5 gap-2 mb-4 overflow-x-auto scrollbar-hide">
+          <TabsList className="flex flex-wrap bg-primary text-white md:grid md:grid-cols-5 gap-2 mb-4 overflow-x-auto scrollbar-hide">
             {" "}
             {/* 5 columns */}
             <TabsTrigger value="team" className="gap-2 font-raleway">
@@ -995,6 +1012,183 @@ export default function AdminDashboard() {
                     ))}
                   </div>
                 </div>
+                <Dialog open={openEditModal} onOpenChange={setOpenEditModal}>
+                  <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+                    <DialogHeader>
+                      <DialogTitle>Edit Team Member</DialogTitle>
+                    </DialogHeader>
+
+                    <form
+                      onSubmit={async (e) => {
+                        await handleTeamSubmit(e);
+                        setOpenEditModal(false);
+                      }}
+                      className="space-y-4"
+                    >
+                      <div className="grid grid-cols-2 gap-4">
+                        {/* Name */}
+                        <div>
+                          <Label>Full Name</Label>
+                          <Input
+                            value={teamForm.name}
+                            onChange={(e) =>
+                              setTeamForm({ ...teamForm, name: e.target.value })
+                            }
+                          />
+                        </div>
+
+                        {/* Role */}
+                        <div>
+                          <Label>Role</Label>
+                          <Input
+                            value={teamForm.role}
+                            onChange={(e) =>
+                              setTeamForm({ ...teamForm, role: e.target.value })
+                            }
+                          />
+                        </div>
+
+                        {/* Department */}
+                        <div>
+                          <Label>Department</Label>
+                          <Select
+                            value={teamForm.department_id?.toString()}
+                            onValueChange={(val) =>
+                              setTeamForm({
+                                ...teamForm,
+                                department_id: Number(val),
+                              })
+                            }
+                          >
+                            <SelectTrigger>
+                              <SelectValue placeholder="Select Department" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              {departments.map((d) => (
+                                <SelectItem key={d.id} value={String(d.id)}>
+                                  {d.name}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </div>
+
+                        {/* Location */}
+                        <div>
+                          <Label>Location</Label>
+                          <Select
+                            value={teamForm.location}
+                            onValueChange={(val) =>
+                              setTeamForm({ ...teamForm, location: val })
+                            }
+                          >
+                            <SelectTrigger>
+                              <SelectValue placeholder="Select Location" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="chennai">Chennai</SelectItem>
+                              <SelectItem value="coimbatore">
+                                Coimbatore
+                              </SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+
+                        {/* Image Upload */}
+                        <div className="col-span-2">
+                          <Label>Profile Image</Label>
+
+                          {teamForm.image_url && (
+                            <img
+                              src={teamForm.image_url}
+                              alt="Preview"
+                              className="w-24 h-24 rounded-md object-cover mb-2"
+                            />
+                          )}
+
+                          <Input
+                            type="file"
+                            accept="image/*"
+                            onChange={async (e) => {
+                              const file = e.target.files?.[0];
+                              if (!file) return;
+                              const url = await uploadImageAndGetUrl(file);
+                              setTeamForm({ ...teamForm, image_url: url });
+                            }}
+                          />
+                        </div>
+                      </div>
+
+                      {/* Bio */}
+                      <div>
+                        <Label>Bio</Label>
+                        <Textarea
+                          rows={4}
+                          value={teamForm.bio}
+                          onChange={(e) =>
+                            setTeamForm({ ...teamForm, bio: e.target.value })
+                          }
+                        />
+                      </div>
+
+                      {/* Skills */}
+                      <div>
+                        <Label>Skills</Label>
+                        <div className="flex items-center gap-2 mt-2">
+                          <Input
+                            placeholder="Skill"
+                            value={newSkillName}
+                            onChange={(e) => setNewSkillName(e.target.value)}
+                          />
+                          <Input
+                            type="number"
+                            placeholder="%"
+                            value={newSkillPercentage}
+                            onChange={(e) =>
+                              setNewSkillPercentage(
+                                e.target.value === ""
+                                  ? ""
+                                  : Number(e.target.value)
+                              )
+                            }
+                            className="w-20"
+                          />
+                          <Button type="button" onClick={addSkillToForm}>
+                            Add
+                          </Button>
+                        </div>
+
+                        <div className="mt-3 flex flex-wrap gap-2">
+                          {teamForm.skills.map((skill, idx) => (
+                            <div
+                              key={idx}
+                              className="px-3 py-1 rounded-full bg-primary/10 flex items-center gap-2"
+                            >
+                              {skill.name} ({skill.percentage}%)
+                              <button
+                                className="text-red-600"
+                                onClick={() => removeSkillFromForm(idx)}
+                              >
+                                ✕
+                              </button>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+
+                      <DialogFooter>
+                        <Button
+                          type="button"
+                          variant="outline"
+                          onClick={() => setOpenEditModal(false)}
+                        >
+                          Cancel
+                        </Button>
+                        <Button type="submit">Save Changes</Button>
+                      </DialogFooter>
+                    </form>
+                  </DialogContent>
+                </Dialog>
               </CardContent>
             </Card>
           </TabsContent>
@@ -1002,6 +1196,176 @@ export default function AdminDashboard() {
           {/* ---------------- JOB POSTINGS ---------------- */}
           {/* JOB FORM & LIST */}
           <TabsContent value="jobs">
+            <Dialog open={openJobModal} onOpenChange={setOpenJobModal}>
+  <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+    <DialogHeader>
+      <DialogTitle>Edit Job Posting</DialogTitle>
+    </DialogHeader>
+
+    <form
+      onSubmit={async (e) => {
+        await handleJobSubmit(e);
+        setOpenJobModal(false);
+      }}
+      className="space-y-6"
+    >
+      <div className="grid md:grid-cols-2 gap-6">
+        <div>
+          <Label>Job Title</Label>
+          <Input
+            required
+            value={jobForm.title}
+            onChange={(e) =>
+              setJobForm({ ...jobForm, title: e.target.value })
+            }
+          />
+        </div>
+        <div>
+                      <Label>Department</Label>
+                      <Select
+                        value={jobForm.department_id?.toString() ?? ""}
+                        onValueChange={(val) =>
+                          setJobForm({
+                            ...jobForm,
+                            department_id: Number(val),
+                          })
+                        }
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select department" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {departments.map((d) => (
+                            <SelectItem key={d.id} value={d.id.toString()}>
+                              {d.name}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      <div className="flex mt-2 gap-2">
+                        <Input
+                          placeholder="Add new department"
+                          value={newDepartmentName}
+                          onChange={(e) => setNewDepartmentName(e.target.value)}
+                        />
+                        <Button type="button" onClick={handleAddDepartment}>
+                          Add
+                        </Button>
+                      </div>
+                    </div>
+
+        <div>
+          <Label>Location</Label>
+          <Input
+            required
+            value={jobForm.location}
+            onChange={(e) =>
+              setJobForm({ ...jobForm, location: e.target.value })
+            }
+          />
+        </div>
+
+        <div>
+          <Label>Job Type</Label>
+          <Input
+            required
+            value={jobForm.jobType}
+            onChange={(e) =>
+              setJobForm({ ...jobForm, jobType: e.target.value })
+            }
+          />
+        </div>
+
+        <div>
+          <Label>Seniority Level</Label>
+          <Input
+            required
+            value={jobForm.seniority_level}
+            onChange={(e) =>
+              setJobForm({ ...jobForm, seniority_level: e.target.value })
+            }
+          />
+        </div>
+      </div>
+
+      <div>
+        <Label>Application URL</Label>
+        <Input
+          required
+          value={jobForm.application_link}
+          onChange={(e) =>
+            setJobForm({
+              ...jobForm,
+              application_link: e.target.value,
+            })
+          }
+        />
+      </div>
+
+      <div>
+        <Label>Description</Label>
+        <Textarea
+          required
+          value={jobForm.description}
+          onChange={(e) =>
+            setJobForm({
+              ...jobForm,
+              description: e.target.value,
+            })
+          }
+        />
+      </div>
+
+      <div>
+        <Label>Responsibilities (one per line)</Label>
+        <Textarea
+          value={jobForm.responsibilities}
+          onChange={(e) =>
+            setJobForm({
+              ...jobForm,
+              responsibilities: e.target.value,
+            })
+          }
+        />
+      </div>
+
+      <div>
+        <Label>Requirements (one per line)</Label>
+        <Textarea
+          value={jobForm.requirements}
+          onChange={(e) =>
+            setJobForm({
+              ...jobForm,
+              requirements: e.target.value,
+            })
+          }
+        />
+      </div>
+
+      <div>
+        <Label>Perks (one per line)</Label>
+        <Textarea
+          value={jobForm.perks}
+          onChange={(e) =>
+            setJobForm({ ...jobForm, perks: e.target.value })
+          }
+        />
+      </div>
+
+      <DialogFooter>
+        <Button
+          type="button"
+          variant="outline"
+          onClick={() => setOpenJobModal(false)}
+        >
+          Cancel
+        </Button>
+        <Button type="submit">Save Changes</Button>
+      </DialogFooter>
+    </form>
+  </DialogContent>
+</Dialog>
+
             <Card className="border-primary/20 shadow-lg animate-slide-in-right">
               <CardHeader>
                 <CardTitle className="font-raleway flex items-center gap-2">
@@ -1027,16 +1391,36 @@ export default function AdminDashboard() {
                     </div>
                     <div>
                       <Label>Department</Label>
-                      <Input
-                        required
-                        value={jobForm.department}
-                        onChange={(e) =>
+                      <Select
+                        value={jobForm.department_id?.toString() ?? ""}
+                        onValueChange={(val) =>
                           setJobForm({
                             ...jobForm,
-                            department: e.target.value,
+                            department_id: Number(val),
                           })
                         }
-                      />
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select department" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {departments.map((d) => (
+                            <SelectItem key={d.id} value={d.id.toString()}>
+                              {d.name}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      <div className="flex mt-2 gap-2">
+                        <Input
+                          placeholder="Add new department"
+                          value={newDepartmentName}
+                          onChange={(e) => setNewDepartmentName(e.target.value)}
+                        />
+                        <Button type="button" onClick={handleAddDepartment}>
+                          Add
+                        </Button>
+                      </div>
                     </div>
                     <div>
                       <Label>Location</Label>

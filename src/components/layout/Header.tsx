@@ -46,7 +46,7 @@ const Header = () => {
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden lg:flex items-center gap-[10px]">
+        <nav className="hidden lg:flex items-center gap-[10px] justify-center">
           {navLinks.map((link) => (
             <Link
               key={link.path}
@@ -61,18 +61,6 @@ const Header = () => {
             </Link>
           ))}
         </nav>
-
-        {/* CTA Button */}
-        <div className="hidden lg:block">
-          <Button
-            asChild
-            variant="orangeBrand"
-            size="lg"
-            className="font-raleway rounded-full"
-          >
-            <Link to="/careers">VIEW ALL ROLES</Link>
-          </Button>
-        </div>
 
         {/* Mobile Menu Button */}
         <button
@@ -101,16 +89,6 @@ const Header = () => {
                   {link.label}
                 </Link>
               ))}
-              <Button
-                asChild
-                variant="orangeBrand"
-                size="lg"
-                className="mt-2 font-raleway"
-              >
-                <Link to="/careers" onClick={() => setIsMobileMenuOpen(false)}>
-                  VIEW ALL ROLES
-                </Link>
-              </Button>
             </nav>
           </div>
         )}

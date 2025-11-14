@@ -128,7 +128,7 @@ const Footer = () => {
                 className="text-secondary text-[16px] font-medium underline-offset-8 hover:underline decoration-primary transition-all duration-300"
               >
                 <a
-                  href="https://maps.google.com/maps/place/Mikro+Grafeio+(Beyond+Workspaces)/@11.0156305,76.9415592,13z/data=!4m10!1m2!2m1!1sMikro+Grafeio,+1st+Floor,+766,+767,+Puliakulam+Road,Coimbatore,+Tamil+Nadu+641037,+India."
+                  href="https://maps.app.goo.gl/JtXBgWZf2aDxMULU9"
                   target="_blank"
                   rel="noopener noreferrer"
                 >

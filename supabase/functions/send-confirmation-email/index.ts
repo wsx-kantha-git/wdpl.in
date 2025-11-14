@@ -1,4 +1,3 @@
-// supabase/functions/send-confirmation-email/index.ts
 import { serve } from "std/server";
 import { Resend } from "resend";
 
@@ -7,64 +6,90 @@ const ADMIN_EMAIL = Deno.env.get("ADMIN_EMAIL") || "esakkiraj@webstix.com";
 
 const resend = new Resend(RESEND_API_KEY);
 
-// Allowed origins
-const allowedOrigins = ["https://wdpl.in", "http://localhost:8080", "https://wsx-kantha-git.github.io/wdpl.in/" ];
+const allowedOrigins = [
+  "https://wdpl.in",
+  "http://localhost:8080",
+  "http://localhost:8080/wdpl.in/",  // FIXED
+  "http://localhost:5173"           // Vite
+];
 
 serve(async (req) => {
   const origin = req.headers.get("Origin") || "";
+  const isAllowedOrigin = allowedOrigins.some((o) => origin.startsWith(o));
 
-  // Handle preflight OPTIONS request
   if (req.method === "OPTIONS") {
     return new Response(null, {
       headers: {
-        "Access-Control-Allow-Origin": allowedOrigins.includes(origin) ? origin : "",
+        "Access-Control-Allow-Origin": isAllowedOrigin ? origin : "",
         "Access-Control-Allow-Methods": "POST, OPTIONS",
-        "Access-Control-Allow-Headers": "Content-Type",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
       },
     });
   }
 
   try {
-    const { name, email, message } = await req.json();
+    const { name, phone, email, message } = await req.json();
+    const submissionDate = new Date().toLocaleDateString("en-US");
+
 
     if (!name || !email || !message) {
-      return new Response(JSON.stringify({ error: "Missing required fields" }), { status: 400 });
+      return new Response(JSON.stringify({ error: "Missing fields" }), {
+        status: 400,
+      });
     }
 
-    //  Send email to Admin
+    // ADMIN EMAIL
     await resend.emails.send({
       from: "WDPL Contact Form <onboarding@resend.dev>",
       to: [ADMIN_EMAIL],
-      subject: `New Contact Form Submission from ${name}`,
+      subject: `Contact-Us Form - ${submissionDate} - ${name}`,
       html: `
-        <h2>New Message from Website Contact Form</h2>
-        <p><strong>Name:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Message:</strong><br/>${message}</p>
+        <h2>New Contact Form Submission</h2>
+
+        <p><strong>Name</strong></p>
+        <div style="border:1px solid #ccc; padding:10px; margin-bottom:12px;">
+          ${name}
+        </div>
+
+        <p><strong>Email</strong></p>
+        <div style="border:1px solid #ccc; padding:10px; margin-bottom:12px;">
+          ${email}
+        </div>
+
+        <p><strong>Phone</strong></p>
+        <div style="border:1px solid #ccc; padding:10px; margin-bottom:12px;">
+          ${phone}
+        </div>
+
+        <p><strong>Message</strong></p>
+        <div style="border:1px solid #ccc; padding:10px; margin-bottom:20px; white-space:pre-line;">
+          ${message}
+        </div>
       `,
     });
 
-    //  Send confirmation email to user
+    // USER EMAIL
     await resend.emails.send({
       from: "WDPL Team <onboarding@resend.dev>",
       to: [email],
-      subject: "Thanks for contacting WDPL!",
+      subject: "Contact Us - Thank You!",
       html: `
         <h2>Hi ${name},</h2>
-        <p>Thank you for reaching out! We’ve received your message and our team will get back to you soon.</p>
-        <p><em>- WDPL Team</em></p>
+        <p>Thanks for contacting us! We will get in touch with you shortly.</p>
+        <p>Regards,<br/><strong> -Team WDPL</strong></p>
       `,
     });
 
-    return new Response(JSON.stringify({ status: "Emails sent successfully" }), {
+    return new Response(JSON.stringify({ status: "OK" }), {
       status: 200,
       headers: {
         "Content-Type": "application/json",
-        "Access-Control-Allow-Origin": allowedOrigins.includes(origin) ? origin : "",
+        "Access-Control-Allow-Origin": isAllowedOrigin ? origin : "",
       },
     });
   } catch (err) {
-    console.error("Error sending email:", err);
-    return new Response(JSON.stringify({ error: "Failed to send emails" }), { status: 500 });
+    return new Response(JSON.stringify({ error: "Server error" }), {
+      status: 500,
+    });
   }
 });
