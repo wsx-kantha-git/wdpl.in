@@ -184,7 +184,7 @@ export default function AdminLogin() {
                 disabled={loading}
                 className="w-full text-lg py-6 font-raleway font-semibold hover:scale-105 transition-all shadow-lg"
               >
-                {loading ? "Signing In..." : "Sign In"}
+                {loading ? "Loging In..." : "Log In"}
               </Button>
             </form>
           ) : (

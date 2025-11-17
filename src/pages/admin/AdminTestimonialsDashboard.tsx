@@ -222,7 +222,7 @@ const AdminTestimonialsDashboard = () => {
 
               <div className="flex gap-2 mt-3">
                 <Button size="sm" onClick={() => handleEdit(t)}>
-                  <Edit className="h-4 w-4 mr-1" /> Edit
+                  <Edit className="h-4 w-4 mr-1" />
                 </Button>
 
                 <Button
@@ -230,7 +230,7 @@ const AdminTestimonialsDashboard = () => {
                   variant="destructive"
                   onClick={() => handleDelete(t.id)}
                 >
-                  <Trash2 className="h-4 w-4 mr-1" /> Delete
+                  <Trash2 className="h-4 w-4 mr-1" />
                 </Button>
               </div>
             </div>

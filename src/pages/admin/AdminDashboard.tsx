@@ -1093,6 +1093,18 @@ export default function AdminDashboard() {
                             </SelectContent>
                           </Select>
                         </div>
+                        <div>
+                      <Label>LinkedIn URL</Label>
+                      <Input
+                        value={teamForm.linkedin_url}
+                        onChange={(e) =>
+                          setTeamForm({
+                            ...teamForm,
+                            linkedin_url: e.target.value,
+                          })
+                        }
+                      />
+                    </div>
 
                         {/* Image Upload */}
                         <div className="col-span-2">

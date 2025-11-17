@@ -55,8 +55,8 @@ const Home = () => {
     {/* Left Text Section */}
     <div className="px-2 sm:px-4 max-w-3xl text-center md:text-left">
       <h1 className="
-        text-[62px]  
-        sm:text-[62px]  
+        text-[42px]  
+        sm:text-[42px]  
         md:text-7xl 
         lg:text-7xl  
         font-raleway font-bold 

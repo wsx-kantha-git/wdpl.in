@@ -18,7 +18,7 @@ const GalleryPreview = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const navigate = useNavigate();
 
-  // ✅ Fetch latest images
+  //  Fetch latest images
   useEffect(() => {
     const fetchGalleryPreview = async () => {
       const { data, error } = await supabase
@@ -32,12 +32,12 @@ const GalleryPreview = () => {
     fetchGalleryPreview();
   }, []);
 
-  // ✅ Next / Prev
+  //  Next / Prev
   const nextSlide = () => setCurrentIndex((prev) => (prev + 1) % images.length);
   const prevSlide = () =>
     setCurrentIndex((prev) => (prev - 1 + images.length) % images.length);
 
-  // ✅ Auto carousel
+  //  Auto carousel
   useEffect(() => {
     if (images.length === 0) return;
     const interval = setInterval(() => {

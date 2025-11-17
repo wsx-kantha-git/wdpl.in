@@ -77,9 +77,11 @@ export default function AdminSummaryPage() {
     navigate("/admin/dashboard", { state: { tab } });
   };
 
-  const handleVisitSite = () => {
-    window.open("/", "_blank");
-  };
+const handleVisitSite = () => {
+  const baseUrl = window.location.origin; 
+  window.open(baseUrl, "_blank");
+};
+
 
   const tabs = [
     { label: "Team", tab: "team", icon: <Users className="h-5 w-5" /> },

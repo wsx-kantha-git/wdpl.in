@@ -90,7 +90,7 @@ const WorkCultureCarousel = () => {
               <CarouselItem key={value.id} className="md:basis-1/2 lg:basis-1/3">
                 <div className="p-4 h-full">
                   <Card
-                    className="flex flex-col h-full border-primary/20 hover:border-primary/40 transition-all duration-500 overflow-hidden group hover:shadow-lg animate-bounce-in"
+                    className="flex flex-col h-full border-primary/20 hover:border-primary/40 transition-all duration-500 overflow-hidden group hover:shadow-lg animate-fade-in"
                     style={{
                       animationDelay: `${index * 0.15}s`,
                       animationFillMode: "both",
