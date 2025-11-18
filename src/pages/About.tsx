@@ -6,6 +6,7 @@ import icon1 from "@/assets/wdpl-images/aboutus/creative.svg";
 import icon2 from "@/assets/wdpl-images/aboutus/family.svg";
 import icon3 from "@/assets/wdpl-images/aboutus/integrity.svg";
 import icon4 from "@/assets/wdpl-images/aboutus/star.svg";
+
 const About = () => {
   const values = [
     {
@@ -87,10 +88,9 @@ const About = () => {
     <Layout>
       {/* Hero Section */}
       <section
-        className="relative py-24  bg-center bg-cover bg-no-repeat overflow-hidden"
+        className="relative py-24 bg-center bg-cover bg-no-repeat overflow-hidden"
         style={{ backgroundImage: `url(${Hero})` }}
       >
-        {/* Optional overlay for readability */}
         <div className="absolute inset-0 bg-black/70"></div>
 
         <div className="container mx-auto px-4 relative z-10 text-center">
@@ -128,6 +128,7 @@ const About = () => {
                 supported.
               </p>
             </Card>
+
             <Card
               className="p-10 hover:shadow-lg hover:-translate-y-2 transition-all duration-500 border-2 hover:border-primary/50 animate-fade-in bg-gradient-to-br from-background to-accent/5"
               style={{ animationDelay: "0.2s" }}
@@ -147,34 +148,44 @@ const About = () => {
 
       {/* Company Timeline */}
       <section className="py-20 bg-secondary">
-        <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold text-center text-foreground mb-12">
-            Our Journey
-          </h2>
-          <div className="max-w-4xl mx-auto">
-            <div className="space-y-8">
-              {timeline.map((item, index) => (
-                <div key={index} className="flex gap-6 group">
-                  <div className="flex flex-col items-center">
-                    <div className="w-16 h-16 rounded-full bg-primary flex items-center justify-center text-primary-foreground font-bold text-lg group-hover:scale-110 transition-transform shrink-0">
-                      {item.year}
-                    </div>
-                    {index < timeline.length - 1 && (
-                      <div className="w-[2px] h-full bg-primary/20 mt-4"></div>
-                    )}
-                  </div>
-                  <Card className="p-6 flex-1 group-hover:shadow-lg transition-all">
-                    <h3 className="text-xl font-semibold text-foreground mb-2">
-                      {item.title}
-                    </h3>
-                    <p className="text-muted-foreground">{item.description}</p>
-                  </Card>
-                </div>
-              ))}
+  <div className="container mx-auto px-4">
+    <h2 className="text-4xl font-bold text-center text-foreground mb-12">
+      Our Journey
+    </h2>
+
+    <div className="max-w-4xl mx-auto relative">
+
+      {/* Continuous line that stops above the last year */}
+      <div className="absolute left-8 top-[60px] bottom-[60px] w-[2px] bg-primary/20"></div>
+
+      <div className="space-y-14">
+        {timeline.map((item, index) => (
+          <div key={index} className="flex gap-6 group relative">
+
+            {/* Year Circle */}
+            <div className="flex flex-col items-center justify-center relative z-10">
+              <div className="w-16 h-16 rounded-full bg-primary text-primary-foreground 
+                flex items-center justify-center font-bold text-lg group-hover:scale-110 
+                transition-transform">
+                {item.year}
+              </div>
             </div>
+
+            {/* Card */}
+            <Card className="p-6 flex-1 group-hover:shadow-xl transition-all">
+              <h3 className="text-xl font-semibold text-foreground mb-2">
+                {item.title}
+              </h3>
+              <p className="text-muted-foreground">{item.description}</p>
+            </Card>
+
           </div>
-        </div>
-      </section>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
 
       {/* Core Values */}
       <section className="py-20">
@@ -199,7 +210,7 @@ const About = () => {
                 <h3 className="text-xl font-semibold text-foreground mb-2">
                   {value.title}
                 </h3>
-                <p className="text-muted-foreground text-sm">
+                <p className="text-muted-foreground text-lg">
                   {value.description}
                 </p>
               </Card>
@@ -213,7 +224,6 @@ const About = () => {
         className="relative py-24 bg-center bg-cover bg-no-repeat overflow-hidden"
         style={{ backgroundImage: `url(${Bottom})` }}
       >
-        {/* Overlay for readability */}
         <div className="absolute inset-0 bg-black/50"></div>
 
         <div className="relative z-10 container mx-auto px-4 flex justify-start">
@@ -221,7 +231,7 @@ const About = () => {
             <h2 className="text-4xl font-bold text-white mb-4">
               Global Reach, Local Values
             </h2>
-            <p className="text-lg md:text-xl text-white/90 leading-relaxed">
+            <p className="text-lg md:text-2xl  text-white/90 leading-relaxed">
               Proudly partnered with US Mid-West-Family Company, we combine
               international standards with Indian warmth and hospitality. This
               collaboration brings global opportunities while maintaining our

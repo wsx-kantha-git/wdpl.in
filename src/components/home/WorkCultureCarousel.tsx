@@ -69,10 +69,11 @@ const WorkCultureCarousel = () => {
     <section className="py-20 bg-gradient-to-b from-background to-muted/30 overflow-hidden">
       <div className="container">
         <div className="text-center mb-8 animate-fade-in">
-          <h2 className="text-4xl md:text-5xl font-raleway font-bold mb-4">
+         
+            <h2 className="text-3xl md:text-6xl font-raleway font-bold  mb-6 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
             Our Work Culture
           </h2>
-          <p className="text-xl text-muted-foreground font-source max-w-2xl mx-auto">
+          <p className="text-xl text-muted-foreground font-source max-w-auto mx-auto">
             More than just a workplace it's a community where innovation
             thrives and people grow
           </p>

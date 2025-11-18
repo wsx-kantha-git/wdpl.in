@@ -188,7 +188,7 @@ const Gallery = () => {
                 setSelectedEvent(null);
                 setImages([]);
               }}
-              className="capitalize rounded-full hover:scale-110 transition-all duration-300"
+              className="capitalize rounded-full text-sm transition-all duration-300"
             >
               All
             </Button>
@@ -202,7 +202,7 @@ const Gallery = () => {
                   setSelectedEvent(null);
                   setImages([]);
                 }}
-                className="capitalize rounded-full hover:scale-110 transition-all duration-300"
+                className="capitalize rounded-full text-sm  transition-all duration-300"
               >
                 {cat.name}
               </Button>
@@ -220,7 +220,7 @@ const Gallery = () => {
                 {events.map((event, index) => (
                   <div
                     key={event.id}
-                    className="group relative overflow-hidden rounded-xl cursor-pointer hover:shadow-[0_25px_70px_-15px_rgba(0,0,0,0.4)] transition-all duration-700 hover:-translate-y-3 animate-fade-in border-2 border-transparent hover:border-primary/40"
+                    className="group relative overflow-hidden rounded-xl cursor-pointer hover:shadow-lg transition-all duration-700 hover:-translate-y-3 animate-fade-in border-2 border-transparent hover:border-primary/40"
                     onClick={() => handleEventClick(event)}
                     style={{ animationDelay: `${index * 0.05}s` }}
                   >
@@ -281,7 +281,7 @@ const Gallery = () => {
                 {images.map((img) => (
                   <div
                     key={img.id}
-                    className="group relative overflow-hidden rounded-xl cursor-pointer hover:shadow-xl transition-all duration-500"
+                    className="group relative overflow-hidden rounded-xl cursor-pointer hover:shadow-lg transition-all duration-500"
                     onClick={() => setSelectedImage(img)}
                   >
                     <img

@@ -118,8 +118,8 @@ const Culture = () => {
             <h2 className="text-3xl font-bold text-foreground mb-4">
               Why Work With Us?
             </h2>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              We offer more than just a job; We provide an environment where you
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+              We offer more than just a job, we provide an environment where you
               can learn, grow, and enjoy your work every day.
             </p>
           </div>
@@ -138,7 +138,7 @@ const Culture = () => {
                   <h3 className="text-xl font-semibold text-foreground mb-2">
                     {perk.title}
                   </h3>
-                  <p className="text-muted-foreground">{perk.description}</p>
+                  <p className="text-muted-foreground text-[16px]">{perk.description}</p>
                 </CardContent>
               </Card>
             ))}
@@ -153,7 +153,7 @@ const Culture = () => {
             <h2 className="text-3xl font-bold text-foreground mb-4">
               Life at WDPL
             </h2>
-            <p className="text-muted-foreground">
+            <p className="text-muted-foreground text-lg">
               A glimpse into our culture, training sessions, celebrations, and
               team adventures.
             </p>

@@ -110,7 +110,7 @@ window.open("https://wsx-kantha-git.github.io/wdpl.in/", "_blank");
           {tabs.map((t) => (
             <button
               key={t.label}
-              className="flex items-center gap-2 p-4 hover:bg-primary text-left font-medium"
+              className="flex items-center gap-2 p-4 hover:bg-white hover:text-foreground text-left font-medium"
               onClick={() => handleNavigate(t.tab)}
             >
               {t.icon} {t.label}

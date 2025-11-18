@@ -21,14 +21,14 @@ const TestimonialsCarousel = () => {
     const fetchTestimonials = async () => {
       setLoading(true);
       const { data, error } = await supabase
-        .from("testimonials") // exact table name
+        .from("testimonials")
         .select("*")
         .order("created_at", { ascending: false });
 
       if (error) {
         console.error(error.message);
       } else if (data) {
-        setTestimonials(data); 
+        setTestimonials(data);
       }
 
       setLoading(false);
@@ -46,35 +46,36 @@ const TestimonialsCarousel = () => {
     <section className="py-20 bg-gradient-to-b from-muted/30 to-background">
       <div className="container">
         <div className="text-center mb-12 animate-fade-in">
-          <h2 className="text-4xl md:text-5xl font-raleway font-bold mb-4">
+          <h2 className=" p-[20px] text-3xl md:text-6xl font-raleway font-bold bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
             What Our Team Say
           </h2>
-          <p className="text-xl text-muted-foreground font-source max-w-2xl mx-auto">
-            Don't just take our word for it hear from the companies we've helped
-            succeed
+          <p className="text-xl text-muted-foreground font-source max-w-4xl mx-auto">
+            Don't just take our word for it hear from the companies we've helped succeed
+
+
           </p>
         </div>
 
         <Carousel
           opts={{ align: "start", loop: true }}
-          className="w-full max-w-5xl mx-auto animate-fade-in-up"
+          className="w-full max-w-5xl mx-auto md:px-10"
         >
           <CarouselContent>
             {testimonials.map((testimonial, index) => (
               <CarouselItem
                 key={testimonial.id}
-                className="md:basis-1/2 lg:basis-1/2"
+                className="md:basis-1/2 lg:basis-1/2 md:px-4"
               >
-                <div className="p-4">
+                <div className="p-4 h-full">
                   <Card
-                    className="border-primary/20 hover:border-primary/40 transition-all duration-500 hover:shadow-lg hover:scale-105 bg-card/50 backdrop-blur-sm animate-scale-in"
+                    className="h-full flex flex-col border-primary/20 hover:border-primary/40 transition-all duration-500 hover:shadow-lg hover:scale-105 bg-card/50 backdrop-blur-sm animate-scale-in"
                     style={{
                       animationDelay: `${index * 0.1}s`,
                       animationFillMode: "both",
                     }}
                   >
-                    <CardContent className="p-8 relative">
-                      <Quote className="absolute top-4 right-4 h-12 w-12 text-primary/10 animate-none" />
+                    <CardContent className="p-8 relative flex flex-col h-full">
+                      <Quote className="absolute top-4 right-4 h-12 w-12 text-primary/10" />
 
                       <div className="flex items-center gap-4 mb-6">
                         <div className="relative">
@@ -85,6 +86,7 @@ const TestimonialsCarousel = () => {
                             className="w-16 h-16 rounded-full object-cover border-2 border-primary/30 relative z-10"
                           />
                         </div>
+
                         <div>
                           <h4 className="font-raleway font-bold text-lg">
                             {testimonial.name}
@@ -107,7 +109,7 @@ const TestimonialsCarousel = () => {
                         )}
                       </div>
 
-                      <p className="text-foreground/90 font-source leading-relaxed italic">
+                      <p className="text-foreground/90 font-source leading-relaxed italic flex-grow">
                         "{testimonial.content}"
                       </p>
                     </CardContent>
@@ -116,8 +118,28 @@ const TestimonialsCarousel = () => {
               </CarouselItem>
             ))}
           </CarouselContent>
-          <CarouselPrevious className="hover:scale-110 transition-transform absolute -left-5 top-1/2 -translate-y-1/2 md:-left-6 z-20 bg-background/80 backdrop-blur-sm border border-primary/30 shadow-md rounded-full p-2" />
-          <CarouselNext className="hover:scale-110 transition-transform absolute -right-5 top-1/2 -translate-y-1/2 md:-right-6 z-20 bg-background/80 backdrop-blur-sm border border-primary/30 shadow-md rounded-full p-2" />
+
+          <CarouselPrevious
+            className="
+              hover:scale-110 transition-transform 
+              absolute 
+              -left-6 md:-left-6
+              top-1/2 -translate-y-1/2 
+              z-20 bg-background/80 backdrop-blur-sm 
+              border border-primary/30 shadow-md rounded-full p-2
+            "
+          />
+
+          <CarouselNext
+            className="
+              hover:scale-110 transition-transform 
+              absolute 
+              -right-6 md:-right-6
+              top-1/2 -translate-y-1/2 
+              z-20 bg-background/80 backdrop-blur-sm 
+              border border-primary/30 shadow-md rounded-full p-2
+            "
+          />
         </Carousel>
       </div>
     </section>

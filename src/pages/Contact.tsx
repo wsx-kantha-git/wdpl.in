@@ -26,7 +26,6 @@ const Contact = () => {
     setIsSubmitting(true);
 
     try {
-      // 1️⃣ Save to Supabase table
       const { error } = await supabase.from("contact_submissions").insert([
         {
           name: formData.name,
@@ -38,14 +37,13 @@ const Contact = () => {
 
       if (error) throw error;
 
-      // 2️⃣ Call Supabase Edge Function
       const response = await fetch(
         "https://gnbhckhjgavvatbvkzne.functions.supabase.co/send-confirmation-email",
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`, // ✅ FIXED
+            Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
           },
           body: JSON.stringify({
             name: formData.name,
@@ -91,9 +89,9 @@ const Contact = () => {
     },
     {
       city: "Coimbatore",
-      address:
-        "Mikro Grafeio, 1st Floor, 766, 767, Puliakulam Road,",
-      fullAddress: "Papanaickenpalayam, Coimbatore, Tamil Nadu 641045, India",
+      address: "Mikro Grafeio, 1st Floor, 766, 767, Puliakulam Road,",
+      fullAddress:
+        "Papanaickenpalayam, Coimbatore, Tamil Nadu 641045, India",
       mapUrl:
         "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15665.458234179274!2d76.9705903!3d11.0112505!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba859007a077ca9%3A0x6aec3a46715fa03!2sMAPA%20CENTRE!5e0!3m2!1sen!2sin!4v1763121103453!5m2!1sen!2sin",
     },
@@ -104,16 +102,14 @@ const Contact = () => {
       {/* Hero Section */}
       <section
         className="relative py-24 bg-cover bg-right bg-no-repeat text-center flex items-center justify-center overflow-hidden"
-        style={{
-          backgroundImage: `url(${Hero})`,
-        }}
+        style={{ backgroundImage: `url(${Hero})` }}
       >
         <div className="absolute inset-0 bg-black/70"></div>
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(120,119,198,0.2),transparent_50%),radial-gradient(ellipse_at_bottom,rgba(251,146,60,0.2),transparent_50%)] mix-blend-overlay"></div>
         <div className="absolute inset-0 bg-grid-pattern opacity-[0.03] animate-pulse"></div>
 
         <div className="relative z-10 container mx-auto px-4">
-          <div className="mx-auto  max-w-max">
+          <div className="mx-auto max-w-max">
             <Badge className="mb-6 animate-fade-in hover:scale-110 transition-transform duration-300">
               Contact Us
             </Badge>
@@ -142,6 +138,7 @@ const Contact = () => {
                 </CardHeader>
                 <CardContent>
                   <form onSubmit={handleSubmit} className="space-y-6">
+                    
                     <div>
                       <Label htmlFor="name">Name *</Label>
                       <Input
@@ -152,6 +149,7 @@ const Contact = () => {
                           setFormData({ ...formData, name: e.target.value })
                         }
                         placeholder="Your full name"
+                        className="focus-visible:ring-0 focus-visible:ring-offset-0 focus:border-primary"
                       />
                     </div>
 
@@ -166,6 +164,7 @@ const Contact = () => {
                           setFormData({ ...formData, email: e.target.value })
                         }
                         placeholder="your.email@example.com"
+                        className="focus-visible:ring-0 focus-visible:ring-offset-0 focus:border-primary"
                       />
                     </div>
 
@@ -179,6 +178,7 @@ const Contact = () => {
                           setFormData({ ...formData, phone: e.target.value })
                         }
                         placeholder="eg. +91 98765 43210"
+                        className="focus-visible:ring-0 focus-visible:ring-offset-0 focus:border-primary"
                       />
                     </div>
 
@@ -193,12 +193,13 @@ const Contact = () => {
                         }
                         placeholder="Tell us what you'd like to discuss..."
                         rows={5}
+                        className="focus-visible:ring-0 focus-visible:ring-offset-0 focus:border-primary"
                       />
                     </div>
 
                     <Button
                       type="submit"
-                      variant="brand"
+                      variant="brandlite"
                       className="w-full"
                       disabled={isSubmitting}
                     >

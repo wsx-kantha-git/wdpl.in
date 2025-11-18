@@ -53,10 +53,10 @@ const GalleryPreview = () => {
       <div className="container mx-auto px-3 sm:px-6 text-center">
         {/* Header */}
         <div className="flex flex-col items-center justify-center mb-8 sm:mb-2">
-          <h2 className="font-raleway text-3xl sm:text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
+          <h2 className="font-raleway text-3xl sm:text-4xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
             Glimpses of WDPL Moments
           </h2>
-          <p className="font-sans text-muted-foreground max-w-2xl mx-auto text-sm sm:text-base mb-6 sm:mb-8">
+          <p className="font-sans text-muted-foreground max-w-2xl mx-auto text-lg sm:text-xl mb-6 sm:mb-8">
             A sneak peek into our events, celebrations, and team experiences.
           </p>
         </div>
@@ -97,19 +97,42 @@ const GalleryPreview = () => {
           })}
 
           {/* Navigation Buttons */}
-          <button
-            onClick={prevSlide}
-            className="absolute left-[12px] sm:left-10 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/60 p-3 rounded-full text-white transition-all duration-300 z-20 backdrop-blur-md"
-          >
-            <ChevronLeft className="w-6 h-6" />
-          </button>
+{/* Prev Button */}
+<button
+  onClick={prevSlide}
+  className="
+    absolute 
+    left-2 sm:left-10 
+    top-1/2 -translate-y-1/2 
+    bg-black/40 hover:bg-black/60 
+    p-2 sm:p-3 
+    rounded-xl sm:rounded-full 
+    text-white 
+    transition-all duration-300 
+    z-20 backdrop-blur-md
+  "
+>
+  <ChevronLeft className="w-4 h-4 sm:w-6 sm:h-6" />
+</button>
 
-          <button
-            onClick={nextSlide}
-            className="absolute right-[12px] sm:right-10 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/60 p-3 rounded-full text-white transition-all duration-300 z-20 backdrop-blur-md"
-          >
-            <ChevronRight className="w-6 h-6" />
-          </button>
+{/* Next Button */}
+<button
+  onClick={nextSlide}
+  className="
+    absolute 
+    right-2 sm:right-10 
+    top-1/2 -translate-y-1/2 
+    bg-black/40 hover:bg-black/60 
+    p-2 sm:p-3 
+    rounded-xl sm:rounded-full
+    text-white 
+    transition-all duration-300 
+    z-20 backdrop-blur-md
+  "
+>
+  <ChevronRight className="w-4 h-4 sm:w-6 sm:h-6" />
+</button>
+
         </div>
 
         {/* View Full Gallery */}
@@ -118,9 +141,9 @@ const GalleryPreview = () => {
             size="lg"
             variant="brand"
             onClick={() => navigate("/gallery")}
-            className="px-6 sm:px-8 py-2 sm:py-3 rounded-full text-base font-raleway sm:text-lg font-semibold"
+            className="px-6 sm:px-8 py-2 sm:py-3 rounded-full text-base font-raleway sm:text-base font-semibold"
           >
-            View Full Gallery
+            VIEW FULL GALLERY
           </Button>
         </div>
       </div>

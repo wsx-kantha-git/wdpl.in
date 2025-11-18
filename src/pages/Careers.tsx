@@ -151,7 +151,7 @@ const Careers = () => {
                       <Button
                         asChild
                         variant="brand"
-                        className="hover:scale-110 hover:shadow-xl transition-all duration-300 self-start"
+                        className=" hover:shadow-xl transition-all duration-300 self-start"
                       >
                         <a
                           href={job.application_link || "#"}

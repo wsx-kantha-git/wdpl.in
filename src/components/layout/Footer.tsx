@@ -2,24 +2,27 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { ChevronRight } from "lucide-react";
-import { Mail, Phone, MapPin, Linkedin } from "lucide-react";
+import { MapPin } from "lucide-react";
 import logo from "@/assets/wdpl-logo-white.svg";
 import LinkedIn from "@/assets/linkedin.svg";
-import TermsAndConditions from "@/pages/TermsAndConditions";
 
 const Footer = () => {
   return (
     <footer className="bg-foreground text-background py-12">
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-8">
+
+        {/* Updated GRID for reduced 1st column */}
+        <div className="grid grid-cols-1 md:grid-cols-2 
+        lg:grid-cols-[0.8fr_1fr_1fr_1fr] gap-10 mb-8">
+
           {/* Company Info */}
           <div>
             <Link to="/" className="inline-block mb-4 group">
-              <img src={logo} alt="WDPL Logo" className="h-20 w-auto " />
+              <img src={logo} alt="WDPL Logo" className="h-20 w-auto" />
             </Link>
 
-            <div className=" mt-4 flex items-center gap-2 text-background/80">
-              <span className="text-lg">Follow Us:</span>
+            <div className="mt-4 flex items-center gap-2 text-background/80">
+              <span className="text-lg">Follow Us On:</span>
               <a
                 href="https://www.linkedin.com/company/webstix-design-private-limited/"
                 target="_blank"
@@ -55,10 +58,7 @@ const Footer = () => {
                     to={link.to}
                     className="group inline-flex items-center gap-1 text-background/80 text-[16px] relative transition-all duration-300"
                   >
-                    {/* Chevron always visible */}
                     <ChevronRight className="w-4 h-4 flex-shrink-0" />
-
-                    {/* Text with underline on hover */}
                     <span className="relative after:content-[''] after:absolute after:left-0 after:bottom-0 after:h-[2px] after:w-full after:bg-primary after:opacity-0 group-hover:after:opacity-100 after:transition-opacity after:duration-300">
                       {link.name}
                     </span>
@@ -69,16 +69,13 @@ const Footer = () => {
           </div>
 
           {/* Chennai Office */}
-          <div className="group ">
+          <div className="group">
             <h3 className="text-lg font-semibold text-background mb-4">
               Chennai Office
             </h3>
             <div className="space-y-4">
               <div className="flex items-start gap-2 text-background/80 text-[16px]">
-                <MapPin
-                  size={16}
-                  className="mt-1 shrink-0 transition-transform duration-300 "
-                />
+                <MapPin size={16} className="mt-1 shrink-0" />
                 <span>
                   Prince Infocity 1, 8th Floor, 286/1, OMR, Kandhanchavadi, Chennai,
                   <br />
@@ -86,11 +83,10 @@ const Footer = () => {
                 </span>
               </div>
 
-              {/* Map Button */}
               <Button
                 asChild
                 variant="link"
-                className="text-secondary text-[16px] font-medium underline-offset-8 hover:underline decoration-primary transition-all duration-300"
+                className="text-secondary text-[16px] font-medium underline-offset-8 hover:underline decoration-primary"
               >
                 <a
                   href="https://maps.google.com/?q=286/1,+Rajiv+Gandhi+Salai,+Nehru+Nagar,+Perungudi,+Chennai,+600096"
@@ -110,22 +106,18 @@ const Footer = () => {
             </h3>
             <div className="space-y-4">
               <div className="flex items-start gap-2 text-background/80 text-[16px]">
-                <MapPin
-                  size={16}
-                  className="mt-1 shrink-0 transition-transform duration-300 "
-                />
+                <MapPin size={16} className="mt-1 shrink-0" />
                 <span>
-                  Mikro Grafeio, 1st Floor, 766, 767, Puliakulam Road,
-                  Coimbatore,
-                  <br /> Tamil Nadu-641037, India.
+                  Mikro Grafeio, 1st Floor, 766, 767, Puliakulam Road, Coimbatore,
+                  <br />
+                  Tamil Nadu-641037, India.
                 </span>
               </div>
 
-              {/* Map Button */}
               <Button
                 asChild
                 variant="link"
-                className="text-secondary text-[16px] font-medium underline-offset-8 hover:underline decoration-primary transition-all duration-300"
+                className="text-secondary text-[16px] font-medium underline-offset-8 hover:underline decoration-primary"
               >
                 <a
                   href="https://maps.app.goo.gl/JtXBgWZf2aDxMULU9"
@@ -143,34 +135,34 @@ const Footer = () => {
         <div className="pt-4 border-t border-background/20">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-background/60 text-sm text-center md:text-left">
-              © {new Date().getFullYear()} Webstix Design Private Limited. All
-              Rights Reserved.
+              © {new Date().getFullYear()} Webstix Design Private Limited. All Rights Reserved.
             </p>
 
             <div className="mx-20 flex items-center gap-2 text-sm">
               <Link
                 to="/terms"
-                className="text-background/60 underline-offset-4 hover:underline decoration-secondary transition-all duration-300"
+                className="text-background/60 underline-offset-4 hover:underline decoration-secondary"
               >
                 Terms & Conditions
               </Link>
               <span className="text-background/40">|</span>
               <Link
                 to="/privacy"
-                className="text-background/60 underline-offset-4 hover:underline decoration-secondary transition-all duration-300"
+                className="text-background/60 underline-offset-4 hover:underline decoration-secondary"
               >
                 Privacy Policy
               </Link>
               <span className="text-background/40">|</span>
               <Link
                 to="/sitemap"
-                className="text-background/60 underline-offset-4 hover:underline decoration-secondary transition-all duration-300"
+                className="text-background/60 underline-offset-4 hover:underline decoration-secondary"
               >
                 Site Map
               </Link>
             </div>
           </div>
         </div>
+
       </div>
     </footer>
   );

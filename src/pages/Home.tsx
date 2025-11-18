@@ -79,7 +79,7 @@ const Home = () => {
           asChild
           variant="orangeBrand"
           size="lg"
-          className="font-raleway text-[#333] bg-white text-base sm:text-lg border-[#333] px-6 py-4 hover:scale-110 hover:bg-[#333] duration-300"
+          className="font-raleway text-[#333] bg-white text-base sm:text-lg border-[#333] px-6 py-4  hover:bg-[#333] duration-300"
         >
           <Link to="/team">
             SEE OUR TEAM
@@ -91,7 +91,7 @@ const Home = () => {
           asChild
           variant="outline"
           size="lg"
-          className="bg-background/10 backdrop-blur-sm border-2 border-background text-background hover:bg-background hover:text-foreground text-base sm:text-lg px-6 py-4 hover:scale-110 duration-300"
+          className="bg-background/10 backdrop-blur-sm border-2 border-background text-background hover:bg-background hover:text-foreground text-base sm:text-lg px-6 py-4  duration-300"
         >
           <Link to="/culture">EXPLORE WORK CULTURE</Link>
         </Button>
@@ -127,7 +127,7 @@ const Home = () => {
       <section className="py-20 bg-gradient-to-b from-background via-primary/5 to-background">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16 animate-fade-in">
-            <h2 className="text-5xl md:text-6xl font-raleway font-bold mb-6 md:leading-[1.2] bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
+            <h2 className="text-3xl md:text-6xl font-raleway font-bold mb-6 md:leading-[1.2] bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
               Why Join WDPL?
             </h2>
             <p className="text-xl font-source text-muted-foreground max-w-3xl mx-auto leading-relaxed">
@@ -153,14 +153,14 @@ const Home = () => {
                 <h3 className="text-xl font-semibold text-foreground mb-2">
                   {perk.title}
                 </h3>
-                <p className="text-muted-foreground text-sm">
+                <p className="text-muted-foreground text-lg">
                   {perk.description}
                 </p>
               </Card>
             ))}
           </div>
           <div className="text-center mt-12 rounded-full">
-            <Button asChild variant="brand" size="lg" className="rounded-full">
+            <Button asChild variant="brand" size="lg" className="rounded-full text-[16px]">
               <Link to="/culture">LEARN MORE ABOUT OUR CULTURE</Link>
             </Button>
           </div>
@@ -171,7 +171,7 @@ const Home = () => {
       <section className="py-20 bg-gradient-to-b from-secondary/50 via-background to-secondary/50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16 animate-fade-in">
-            <h2 className="text-5xl md:text-6xl font-raleway font-bold  mb-6 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
+            <h2 className="text-3xl md:text-6xl font-raleway font-bold  mb-6 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
               Our Offices
             </h2>
             <p className="text-xl font-source text-muted-foreground max-w-3xl mx-auto leading-relaxed">
@@ -194,7 +194,7 @@ const Home = () => {
                   <h3 className="text-2xl font-bold text-background mb-2">
                     Chennai
                   </h3>
-                  <p className="text-background/90 text-sm">
+                  <p className="text-background/90 text-lg">
                     Kandhanchavadi, Prince Infocity 1
                   </p>
                 </div>
@@ -231,7 +231,7 @@ const Home = () => {
                   <h3 className="text-2xl font-bold text-background mb-2">
                     Coimbatore
                   </h3>
-                  <p className="text-background/90 text-sm">
+                  <p className="text-background/90 text-lg">
                     Puliakulam Road
                   </p>
                 </div>
@@ -270,30 +270,44 @@ const Home = () => {
 
   {/* Content */}
   <div className="relative z-10 text-center px-4 max-w-4xl">
-    <h2 className="text-4xl md:text-5xl font-raleway font-bold text-white mb-6">
+    <h2 className="text-3xl md:text-5xl font-raleway font-bold text-white mb-6">
       Ready To Join Our Team?
     </h2>
     <p className="text-xl font-source text-white/90 mb-8">
       Explore open positions and take the first step toward an exciting career at WDPL
     </p>
     <div className="flex flex-wrap justify-center gap-4">
-      <Button
-        asChild
-        variant="outline"
-        size="lg"
-        className="bg-primary text-background border-background hover:bg-background/90 hover:text-black font-raleway font-semibold"
-      >
-        <Link to="/careers">VIEW ALL ROLES</Link>
-      </Button>
-      <Button
-        asChild
-        variant="outline"
-        size="lg"
-        className="border-white text-white hover:bg-white hover:text-black font-raleway font-semibold"
-      >
-        <Link to="/team">MEET OUR TEAM</Link>
-      </Button>
-    </div>
+
+  {/* Button 1 → White bg / Black text → Hover transparent */}
+  <Button
+    asChild
+    variant="outline"
+    size="lg"
+    className=" text-[18px]
+      bg-white text-black border-white
+      hover:bg-transparent hover:text-white hover:border-white
+      font-raleway font-semibold 
+    "
+  >
+    <Link to="/careers">VIEW ALL ROLES</Link>
+  </Button>
+
+  {/* Button 2 → Transparent bg / White text → Hover white bg */}
+  <Button
+    asChild
+    variant="outline"
+    size="lg"
+    className=" text-[18px]
+      bg-transparent text-white border-white
+      hover:bg-white hover:text-black hover:border-white
+      font-raleway font-semibold 
+    "
+  >
+    <Link to="/team">MEET OUR TEAM</Link>
+  </Button>
+
+</div>
+
   </div>
 </section>
     </Layout>

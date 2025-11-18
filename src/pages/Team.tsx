@@ -37,7 +37,7 @@ const Team = () => {
     else setDepartments(["all", ...(data?.map((d) => d.name) || [])]);
   };
 
-  // Fetch team members + their skills + department name (ordered by id ascending)
+  // Fetch team members + skills + department name (ordered by id asc)
   const fetchTeamMembers = async () => {
     const { data, error } = await supabase
       .from("team_members")
@@ -49,7 +49,7 @@ const Team = () => {
       `
       )
       .eq("active", true)
-      .order("id", { ascending: true }); // Order by id ascending (oldest first)
+      .order("id", { ascending: true });
 
     if (error) {
       console.error(error);
@@ -89,22 +89,21 @@ const Team = () => {
 
   return (
     <Layout>
-      {/* Hero Section */}
+      {/* Hero */}
       <section
         className="relative py-28 bg-cover bg-center bg-no-repeat text-center flex items-center justify-center"
         style={{
           backgroundImage: `url(${Hero})`,
         }}
       >
-        {/* Overlay for readability */}
         <div className="absolute inset-0 bg-black/70"></div>
 
         <div className="container mx-auto px-4 relative z-10 text-center">
           <div className="max-w-4xl mx-auto">
-            <h1 className="font-raleway text-5xl md:text-6xl font-bold mb-8 animate-fade-in bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-white inline-block">
+            <h1 className="font-raleway text-5xl md:text-6xl font-bold mb-8 bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-white inline-block">
               Meet Our Team
             </h1>
-            <p className="text-xl md:text-2xl text-white max-w-3xl mx-auto animate-fade-in leading-relaxed">
+            <p className="text-xl md:text-2xl text-white max-w-3xl mx-auto leading-relaxed">
               The talented individuals who make WDPL a great place to work
             </p>
           </div>
@@ -120,7 +119,7 @@ const Team = () => {
                 key={dept}
                 variant={selectedDepartment === dept ? "brand" : "outline"}
                 onClick={() => setSelectedDepartment(dept)}
-                className="capitalize rounded-full"
+                className="capitalize rounded-full text-sm"
               >
                 {dept}
               </Button>
@@ -133,7 +132,7 @@ const Team = () => {
       <section className="py-20 bg-gradient-to-b from-background via-secondary/20 to-background">
         <div className="container mx-auto px-4">
           {filteredMembers.length === 0 ? (
-            <div className="text-center py-20 animate-fade-in">
+            <div className="text-center py-20">
               <p className="text-muted-foreground text-lg">
                 No team members found in this department.
               </p>
@@ -143,16 +142,16 @@ const Team = () => {
               {filteredMembers.map((member, index) => (
                 <Card
                   key={member.id}
-                  className="overflow-hidden group hover:shadow-lg transition-all duration-700 hover:-translate-y-3 hover:rotate-0 animate-fade-in border-2 hover:border-primary/50"
+                  className="overflow-hidden group hover:shadow-lg transition-all duration-700 hover:-translate-y-3 border-2 hover:border-primary/50 h-full flex flex-col"
                   style={{ animationDelay: `${index * 0.08}s` }}
                 >
                   {/* Image */}
-                  <div className="w-full h-64 relative overflow-hidden bg-secondary">
+                  <div className="w-full h-64 relative overflow-hidden bg-secondary shrink-0">
                     {member.photo_url ? (
                       <img
                         src={member.photo_url}
                         alt={member.name}
-                        className="w-full h-full object-cover group-hover:scale-100 group-hover:rotate-0 transition-all duration-700"
+                        className="w-full h-full object-cover transition-all duration-700"
                       />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-primary/20 via-accent/10 to-primary/5">
@@ -164,13 +163,14 @@ const Team = () => {
                   </div>
 
                   {/* Info */}
-                  <div className="p-6">
+                  <div className="p-6 flex flex-col flex-grow">
                     <h3 className="text-lg font-semibold text-foreground mb-2">
                       {member.name}
                     </h3>
                     <p className="text-primary text-sm font-medium mb-3">
                       {member.role}
                     </p>
+
                     <div className="flex items-center gap-2 mb-4">
                       <Badge variant="secondary" className="capitalize">
                         {member.department_name}
@@ -181,12 +181,14 @@ const Team = () => {
                       </div>
                     </div>
 
+                    {/* Full Description */}
                     {member.description && (
-                      <p className="text-muted-foreground text-sm mb-4 line-clamp-2">
+                      <p className="text-muted-foreground text-base mb-4">
                         {member.description}
                       </p>
                     )}
 
+                    {/* Skills */}
                     {member.skills && member.skills.length > 0 && (
                       <div className="space-y-2 mb-4">
                         {member.skills.slice(0, 3).map((skill) => (
@@ -208,20 +210,23 @@ const Team = () => {
                       </div>
                     )}
 
-                    {member.linkedin_url && (
-                      <a
-                        href={member.linkedin_url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 text-primary hover:underline text-sm"
-                      >
-                        <img
-                          src={LinkedIn}
-                          alt="LinkedIn"
-                          className="w-6 h-6 transition-transform duration-300 group-hover:-translate-y-1 group-hover:brightness-100"
-                        />
-                      </a>
-                    )}
+                    {/* LinkedIn — Always sticks to bottom */}
+                    <div className="mt-auto">
+                      {member.linkedin_url && (
+                        <a
+                          href={member.linkedin_url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 text-primary hover:underline text-sm"
+                        >
+                          <img
+                            src={LinkedIn}
+                            alt="LinkedIn"
+                            className="w-6 h-6 transition-transform duration-300 group-hover:-translate-y-1"
+                          />
+                        </a>
+                      )}
+                    </div>
                   </div>
                 </Card>
               ))}
