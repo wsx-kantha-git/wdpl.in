@@ -208,7 +208,7 @@ const Contact = () => {
             </div>
 
             {/* Offices */}
-            <div className="space-y-8 overflow-y-auto max-h-[80vh] pr-2">
+            <div className="space-y-8 md:overflow-y-auto md:max-h-[80vh] pr-2">
               <h2 className="text-2xl font-bold mb-4 text-foreground">
                 Our Offices
               </h2>

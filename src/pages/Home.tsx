@@ -137,7 +137,7 @@ const Home = () => {
             {perks.map((perk, index) => (
               <Card
                 key={index}
-                className="p-8 text-center hover:shadow-lg hover:scale-110 hover:-translate-y-2 transition-all duration-500 group border-2 hover:border-primary/50 animate-fade-in bg-gradient-to-br from-background to-secondary/20"
+                className="p-8 text-center hover:shadow-lg  hover:-translate-y-2 transition-all duration-500 group border-2 hover:border-primary/50 animate-fade-in bg-gradient-to-br from-background to-secondary/20"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
                 <div className="w-20 h-20 bg-gradient-to-br from-primary/10 to-accent/10 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-gradient-to-br group-hover:from-primary group-hover:to-accent group-hover:scale-125 group-hover:rotate-12 transition-all duration-500 shadow-lg">
