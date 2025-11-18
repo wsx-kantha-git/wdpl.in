@@ -3,7 +3,13 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { toast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { Lock, Mail } from "lucide-react";
@@ -39,7 +45,8 @@ export default function AdminLogin() {
       });
 
       if (error) throw error;
-      if (!data.session) throw new Error("Session not found. Please try again.");
+      if (!data.session)
+        throw new Error("Session not found. Please try again.");
 
       // Step 2: Check if user exists in `admins` table
       const { data: adminData, error: adminError } = await supabase
@@ -117,20 +124,21 @@ export default function AdminLogin() {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-primary/5 to-background p-4 relative overflow-hidden">
       <Card className="w-full max-w-md border-primary/30 shadow-2xl backdrop-blur-md bg-card/90 animate-scale-in relative z-10">
         <CardHeader className="text-center pb-8">
-<div className="inline-flex items-center justify-center w-28 h-28  mx-auto mb-2">
-  <img
-    src={Logo}
-    alt="Admin Logo"
-    className="w-auto h-auto object-contain"
-  />
-</div>
-
+          <div className="inline-flex items-center justify-center w-28 h-28  mx-auto mb-2">
+            <img
+              src={Logo}
+              alt="Admin Logo"
+              className="w-auto h-auto object-contain"
+            />
+          </div>
 
           <CardTitle className="text-4xl font-raleway font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
             Admin Portal
           </CardTitle>
           <CardDescription className="text-lg font-source mt-2">
-            {forgotMode ? "Reset your password" : "Sign in to manage your website"}
+            {forgotMode
+              ? "Reset your password"
+              : "Sign in to manage your website"}
           </CardDescription>
         </CardHeader>
 
@@ -138,7 +146,10 @@ export default function AdminLogin() {
           {!forgotMode ? (
             <form onSubmit={handleLogin} className="space-y-6">
               <div className="space-y-2">
-                <Label htmlFor="email" className="font-raleway font-semibold flex items-center gap-2">
+                <Label
+                  htmlFor="email"
+                  className="font-raleway font-semibold flex items-center gap-2"
+                >
                   <Mail className="h-4 w-4 text-primary" />
                   Email Address
                 </Label>
@@ -154,7 +165,10 @@ export default function AdminLogin() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="password" className="font-raleway font-semibold flex items-center gap-2">
+                <Label
+                  htmlFor="password"
+                  className="font-raleway font-semibold flex items-center gap-2"
+                >
                   <Lock className="h-4 w-4 text-primary" />
                   Password
                 </Label>
@@ -190,7 +204,10 @@ export default function AdminLogin() {
           ) : (
             <form onSubmit={handleForgotPassword} className="space-y-6">
               <div className="space-y-2">
-                <Label htmlFor="resetEmail" className="font-raleway font-semibold flex items-center gap-2">
+                <Label
+                  htmlFor="resetEmail"
+                  className="font-raleway font-semibold flex items-center gap-2"
+                >
                   <Mail className="h-4 w-4 text-primary" />
                   Enter your email
                 </Label>
@@ -205,7 +222,11 @@ export default function AdminLogin() {
                 />
               </div>
 
-              <Button type="submit" disabled={loading} className="w-full text-lg py-6 font-raleway font-semibold">
+              <Button
+                type="submit"
+                disabled={loading}
+                className="w-full text-lg py-6 font-raleway font-semibold"
+              >
                 {loading ? "Sending..." : "Send Reset Link"}
               </Button>
 

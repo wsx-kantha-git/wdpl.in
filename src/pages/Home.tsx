@@ -19,7 +19,7 @@ import Heart from "@/assets/wdpl-images/Culture/work-life-balance.svg";
 import Users from "@/assets/wdpl-images/Culture/family-culture.svg";
 const Home = () => {
   const perks = [
-     {
+    {
       icon: Celebrate,
       title: "Celebrations",
       description: "Regular events & recognition",
@@ -27,7 +27,8 @@ const Home = () => {
     {
       icon: Heart,
       title: "Work-Life Balance",
-      description: "Flexible hours and a supportive environment that values your personal time.",
+      description:
+        "Flexible hours and a supportive environment that values your personal time.",
     },
     {
       icon: Users,
@@ -36,7 +37,7 @@ const Home = () => {
         "A tight-knit team where everyone is valued, heard, and supported.",
     },
 
-        {
+    {
       icon: Trainning,
       title: "Training Programs",
       description: "Continuous learning & skill development",
@@ -46,15 +47,15 @@ const Home = () => {
   return (
     <Layout>
       {/* Hero Section */}
-<section
-  className="relative h-[640px] md:h-[640px] sm:h-auto flex items-center bg-cover bg-center overflow-hidden"
-  style={{ backgroundImage: `url(${HeroImage})` }}
->
-  <div className="container mx-auto px-4 relative z-10 flex flex-col md:flex-row items-center justify-between gap-10 py-10 md:py-0">
-
-    {/* Left Text Section */}
-    <div className="px-2 sm:px-4 max-w-3xl text-center md:text-left">
-      <h1 className="
+      <section
+        className="relative h-[640px] md:h-[640px] sm:h-auto flex items-center bg-cover bg-center overflow-hidden"
+        style={{ backgroundImage: `url(${HeroImage})` }}
+      >
+        <div className="container mx-auto px-4 relative z-10 flex flex-col md:flex-row items-center justify-between gap-10 py-10 md:py-0">
+          {/* Left Text Section */}
+          <div className="px-2 sm:px-4 max-w-3xl text-center md:text-left">
+            <h1
+              className="
         text-[42px]  
         sm:text-[42px]  
         md:text-7xl 
@@ -63,47 +64,46 @@ const Home = () => {
         text-background 
         mb-6 
         leading-tight
-      ">
-        Design, Build & Grow
-      </h1>
+      "
+            >
+              Design, Build & Grow
+            </h1>
 
-      <p
-        className="text-lg sm:text-xl md:text-2xl font-source text-background/95 mb-8 leading-relaxed"
-      >
-        Join WDPL in Chennai & Coimbatore. Family-first, growth-focused training,
-        food, trips, celebrations.
-      </p>
+            <p className="text-lg sm:text-xl md:text-2xl font-source text-background/95 mb-8 leading-relaxed">
+              Join WDPL in Chennai & Coimbatore. Family-first, growth-focused
+              training, food, trips, celebrations.
+            </p>
 
-      <div className="flex flex-wrap gap-4 justify-center md:justify-start">
-        <Button
-          asChild
-          variant="orangeBrand"
-          size="lg"
-          className="font-raleway text-[#333] bg-white text-base sm:text-lg border-[#333] px-6 py-4  hover:bg-[#333] duration-300"
-        >
-          <Link to="/team">
-            SEE OUR TEAM
-            <ArrowRight className="ml-2" size={20} />
-          </Link>
-        </Button>
+            <div className="flex flex-wrap gap-4 justify-center md:justify-start">
+              <Button
+                asChild
+                variant="orangeBrand"
+                size="lg"
+                className="font-raleway text-[#333] bg-white text-base sm:text-lg border-[#333] px-6 py-4  hover:bg-[#333] duration-300"
+              >
+                <Link to="/team">
+                  SEE OUR TEAM
+                  <ArrowRight className="ml-2" size={20} />
+                </Link>
+              </Button>
 
-        <Button
-          asChild
-          variant="outline"
-          size="lg"
-          className="bg-background/10 backdrop-blur-sm border-2 border-background text-background hover:bg-background hover:text-foreground text-base sm:text-lg px-6 py-4  duration-300"
-        >
-          <Link to="/culture">EXPLORE WORK CULTURE</Link>
-        </Button>
-      </div>
-    </div>
+              <Button
+                asChild
+                variant="outline"
+                size="lg"
+                className="bg-background/10 backdrop-blur-sm border-2 border-background text-background hover:bg-background hover:text-foreground text-base sm:text-lg px-6 py-4  duration-300"
+              >
+                <Link to="/culture">EXPLORE WORK CULTURE</Link>
+              </Button>
+            </div>
+          </div>
 
-    {/* Right Illustration */}
-    <div className="w-full md:w-1/2 flex justify-center md:justify-end">
-      <img
-        src={HeroIllustration}
-        alt="Team Illustration"
-        className="
+          {/* Right Illustration */}
+          <div className="w-full md:w-1/2 flex justify-center md:justify-end">
+            <img
+              src={HeroIllustration}
+              alt="Team Illustration"
+              className="
           w-[80%] 
           sm:w-[90%] 
           md:w-[110%] 
@@ -113,12 +113,10 @@ const Home = () => {
           transition-transform 
           duration-500
         "
-      />
-    </div>
-
-  </div>
-</section>
-
+            />
+          </div>
+        </div>
+      </section>
 
       {/* Work Culture Carousel */}
       <WorkCultureCarousel />
@@ -160,7 +158,12 @@ const Home = () => {
             ))}
           </div>
           <div className="text-center mt-12 rounded-full">
-            <Button asChild variant="brand" size="lg" className="rounded-full text-[16px]">
+            <Button
+              asChild
+              variant="brand"
+              size="lg"
+              className="rounded-full text-[16px]"
+            >
               <Link to="/culture">LEARN MORE ABOUT OUR CULTURE</Link>
             </Button>
           </div>
@@ -201,8 +204,8 @@ const Home = () => {
               </div>
               <div className="p-6">
                 <p className="text-muted-foreground">
-                  Prince Infocity 1, 8th Floor, 286/1, OMR, Kandhanchavadi, Chennai,
-                  Tamil Nadu 600096, India
+                  Prince Infocity 1, 8th Floor, 286/1, OMR, Kandhanchavadi,
+                  Chennai, Tamil Nadu 600096, India
                 </p>
                 <Button asChild variant="link" className="mt-4 p-0">
                   <a
@@ -231,15 +234,14 @@ const Home = () => {
                   <h3 className="text-2xl font-bold text-background mb-2">
                     Coimbatore
                   </h3>
-                  <p className="text-background/90 text-lg">
-                    Puliakulam Road
-                  </p>
+                  <p className="text-background/90 text-lg">Puliakulam Road</p>
                 </div>
               </div>
               <div className="p-6">
                 <p className="text-muted-foreground">
                   Mikro Grafeio, 1st Floor, 766, 767, Puliakulam Road,
-                  Coimbatore,<br /> Tamil Nadu 641037, India.
+                  Coimbatore,
+                  <br /> Tamil Nadu 641037, India.
                 </p>
                 <Button asChild variant="link" className="mt-4 p-0">
                   <a
@@ -261,55 +263,49 @@ const Home = () => {
       <TestimonialsCarousel />
 
       {/* CTA Section */}
-<section
-  className="relative w-full h-[400px] md:h-[400px] flex items-center justify-center bg-cover bg-center bg-no-repeat"
-  style={{ backgroundImage: `url(${CTA})` }}
->
-  {/* Overlay */}
-  <div className="absolute inset-0 bg-black/60"></div>
+      <section
+        className="relative w-full h-[400px] md:h-[400px] flex items-center justify-center bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: `url(${CTA})` }}
+      >
+        {/* Overlay */}
+        <div className="absolute inset-0 bg-black/60"></div>
 
-  {/* Content */}
-  <div className="relative z-10 text-center px-4 max-w-4xl">
-    <h2 className="text-3xl md:text-5xl font-raleway font-bold text-white mb-6">
-      Ready To Join Our Team?
-    </h2>
-    <p className="text-xl font-source text-white/90 mb-8">
-      Explore open positions and take the first step toward an exciting career at WDPL
-    </p>
-    <div className="flex flex-wrap justify-center gap-4">
-
-  {/* Button 1 → White bg / Black text → Hover transparent */}
-  <Button
-    asChild
-    variant="outline"
-    size="lg"
-    className=" text-[18px]
+        {/* Content */}
+        <div className="relative z-10 text-center px-4 max-w-4xl">
+          <h2 className="text-3xl md:text-5xl font-raleway font-bold text-white mb-6">
+            Ready To Join Our Team?
+          </h2>
+          <p className="text-xl font-source text-white/90 mb-8">
+            Explore open positions and take the first step toward an exciting
+            career at WDPL
+          </p>
+          <div className="flex flex-wrap justify-center gap-4">
+            {/* Button 1 → White bg / Black text → Hover transparent */}
+            <Button
+              asChild
+              variant="outline"
+              size="lg"
+              className=" text-[18px]
       bg-white text-black border-white
       hover:bg-transparent hover:text-white hover:border-white
-      font-raleway font-semibold 
-    "
-  >
-    <Link to="/careers">VIEW ALL ROLES</Link>
-  </Button>
+      font-raleway font-semibold ">
+              <Link to="/careers">VIEW ALL ROLES</Link>
+            </Button>
 
-  {/* Button 2 → Transparent bg / White text → Hover white bg */}
-  <Button
-    asChild
-    variant="outline"
-    size="lg"
-    className=" text-[18px]
+            {/* Button 2 → Transparent bg / White text → Hover white bg */}
+            <Button
+              asChild
+              variant="outline"
+              size="lg"
+              className=" text-[18px]
       bg-transparent text-white border-white
       hover:bg-white hover:text-black hover:border-white
-      font-raleway font-semibold 
-    "
-  >
-    <Link to="/team">MEET OUR TEAM</Link>
-  </Button>
-
-</div>
-
-  </div>
-</section>
+      font-raleway font-semibold ">
+              <Link to="/team">MEET OUR TEAM</Link>
+            </Button>
+          </div>
+        </div>
+      </section>
     </Layout>
   );
 };

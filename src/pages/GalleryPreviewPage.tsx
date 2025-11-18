@@ -97,10 +97,10 @@ const GalleryPreview = () => {
           })}
 
           {/* Navigation Buttons */}
-{/* Prev Button */}
-<button
-  onClick={prevSlide}
-  className="
+          {/* Prev Button */}
+          <button
+            onClick={prevSlide}
+            className="
     absolute 
     left-2 sm:left-10 
     top-1/2 -translate-y-1/2 
@@ -111,14 +111,14 @@ const GalleryPreview = () => {
     transition-all duration-300 
     z-20 backdrop-blur-md
   "
->
-  <ChevronLeft className="w-4 h-4 sm:w-6 sm:h-6" />
-</button>
+          >
+            <ChevronLeft className="w-4 h-4 sm:w-6 sm:h-6" />
+          </button>
 
-{/* Next Button */}
-<button
-  onClick={nextSlide}
-  className="
+          {/* Next Button */}
+          <button
+            onClick={nextSlide}
+            className="
     absolute 
     right-2 sm:right-10 
     top-1/2 -translate-y-1/2 
@@ -129,10 +129,9 @@ const GalleryPreview = () => {
     transition-all duration-300 
     z-20 backdrop-blur-md
   "
->
-  <ChevronRight className="w-4 h-4 sm:w-6 sm:h-6" />
-</button>
-
+          >
+            <ChevronRight className="w-4 h-4 sm:w-6 sm:h-6" />
+          </button>
         </div>
 
         {/* View Full Gallery */}

@@ -90,8 +90,7 @@ const Contact = () => {
     {
       city: "Coimbatore",
       address: "Mikro Grafeio, 1st Floor, 766, 767, Puliakulam Road,",
-      fullAddress:
-        "Papanaickenpalayam, Coimbatore, Tamil Nadu 641045, India",
+      fullAddress: "Papanaickenpalayam, Coimbatore, Tamil Nadu 641045, India",
       mapUrl:
         "https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15665.458234179274!2d76.9705903!3d11.0112505!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ba859007a077ca9%3A0x6aec3a46715fa03!2sMAPA%20CENTRE!5e0!3m2!1sen!2sin!4v1763121103453!5m2!1sen!2sin",
     },
@@ -129,7 +128,6 @@ const Contact = () => {
       <section className="py-16 bg-background">
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
-            
             {/* Contact Form */}
             <div className="lg:sticky lg:top-20 self-start h-fit">
               <Card>
@@ -138,7 +136,6 @@ const Contact = () => {
                 </CardHeader>
                 <CardContent>
                   <form onSubmit={handleSubmit} className="space-y-6">
-                    
                     <div>
                       <Label htmlFor="name">Name *</Label>
                       <Input
@@ -200,7 +197,7 @@ const Contact = () => {
                     <Button
                       type="submit"
                       variant="brandlite"
-                      className="w-full"
+                      className="w-full text-base"
                       disabled={isSubmitting}
                     >
                       {isSubmitting ? "Sending..." : "Send Message"}
@@ -228,8 +225,12 @@ const Contact = () => {
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <p className="text-muted-foreground mb-2">{office.address}</p>
-                    <p className="text-muted-foreground mb-4">{office.fullAddress}</p>
+                    <p className="text-muted-foreground mb-2">
+                      {office.address}
+                    </p>
+                    <p className="text-muted-foreground mb-4">
+                      {office.fullAddress}
+                    </p>
                     <div className="aspect-video w-full overflow-hidden rounded-lg border">
                       <iframe
                         src={office.mapUrl}
@@ -244,7 +245,6 @@ const Contact = () => {
                 </Card>
               ))}
             </div>
-
           </div>
         </div>
       </section>

@@ -113,7 +113,6 @@ export default function AdminDashboard() {
   const [editingJobId, setEditingJobId] = useState<number | null>(null);
   const [openJobModal, setOpenJobModal] = useState(false);
 
-
   // Team states
   const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
   const [editingTeamId, setEditingTeamId] = useState<number | null>(null);
@@ -1094,17 +1093,17 @@ export default function AdminDashboard() {
                           </Select>
                         </div>
                         <div>
-                      <Label>LinkedIn URL</Label>
-                      <Input
-                        value={teamForm.linkedin_url}
-                        onChange={(e) =>
-                          setTeamForm({
-                            ...teamForm,
-                            linkedin_url: e.target.value,
-                          })
-                        }
-                      />
-                    </div>
+                          <Label>LinkedIn URL</Label>
+                          <Input
+                            value={teamForm.linkedin_url}
+                            onChange={(e) =>
+                              setTeamForm({
+                                ...teamForm,
+                                linkedin_url: e.target.value,
+                              })
+                            }
+                          />
+                        </div>
 
                         {/* Image Upload */}
                         <div className="col-span-2">
@@ -1209,30 +1208,30 @@ export default function AdminDashboard() {
           {/* JOB FORM & LIST */}
           <TabsContent value="jobs">
             <Dialog open={openJobModal} onOpenChange={setOpenJobModal}>
-  <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
-    <DialogHeader>
-      <DialogTitle>Edit Job Posting</DialogTitle>
-    </DialogHeader>
+              <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+                <DialogHeader>
+                  <DialogTitle>Edit Job Posting</DialogTitle>
+                </DialogHeader>
 
-    <form
-      onSubmit={async (e) => {
-        await handleJobSubmit(e);
-        setOpenJobModal(false);
-      }}
-      className="space-y-6"
-    >
-      <div className="grid md:grid-cols-2 gap-6">
-        <div>
-          <Label>Job Title</Label>
-          <Input
-            required
-            value={jobForm.title}
-            onChange={(e) =>
-              setJobForm({ ...jobForm, title: e.target.value })
-            }
-          />
-        </div>
-        <div>
+                <form
+                  onSubmit={async (e) => {
+                    await handleJobSubmit(e);
+                    setOpenJobModal(false);
+                  }}
+                  className="space-y-6"
+                >
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div>
+                      <Label>Job Title</Label>
+                      <Input
+                        required
+                        value={jobForm.title}
+                        onChange={(e) =>
+                          setJobForm({ ...jobForm, title: e.target.value })
+                        }
+                      />
+                    </div>
+                    <div>
                       <Label>Department</Label>
                       <Select
                         value={jobForm.department_id?.toString() ?? ""}
@@ -1266,117 +1265,120 @@ export default function AdminDashboard() {
                       </div>
                     </div>
 
-        <div>
-          <Label>Location</Label>
-          <Input
-            required
-            value={jobForm.location}
-            onChange={(e) =>
-              setJobForm({ ...jobForm, location: e.target.value })
-            }
-          />
-        </div>
+                    <div>
+                      <Label>Location</Label>
+                      <Input
+                        required
+                        value={jobForm.location}
+                        onChange={(e) =>
+                          setJobForm({ ...jobForm, location: e.target.value })
+                        }
+                      />
+                    </div>
 
-        <div>
-          <Label>Job Type</Label>
-          <Input
-            required
-            value={jobForm.jobType}
-            onChange={(e) =>
-              setJobForm({ ...jobForm, jobType: e.target.value })
-            }
-          />
-        </div>
+                    <div>
+                      <Label>Job Type</Label>
+                      <Input
+                        required
+                        value={jobForm.jobType}
+                        onChange={(e) =>
+                          setJobForm({ ...jobForm, jobType: e.target.value })
+                        }
+                      />
+                    </div>
 
-        <div>
-          <Label>Seniority Level</Label>
-          <Input
-            required
-            value={jobForm.seniority_level}
-            onChange={(e) =>
-              setJobForm({ ...jobForm, seniority_level: e.target.value })
-            }
-          />
-        </div>
-      </div>
+                    <div>
+                      <Label>Seniority Level</Label>
+                      <Input
+                        required
+                        value={jobForm.seniority_level}
+                        onChange={(e) =>
+                          setJobForm({
+                            ...jobForm,
+                            seniority_level: e.target.value,
+                          })
+                        }
+                      />
+                    </div>
+                  </div>
 
-      <div>
-        <Label>Application URL</Label>
-        <Input
-          required
-          value={jobForm.application_link}
-          onChange={(e) =>
-            setJobForm({
-              ...jobForm,
-              application_link: e.target.value,
-            })
-          }
-        />
-      </div>
+                  <div>
+                    <Label>Application URL</Label>
+                    <Input
+                      required
+                      value={jobForm.application_link}
+                      onChange={(e) =>
+                        setJobForm({
+                          ...jobForm,
+                          application_link: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
 
-      <div>
-        <Label>Description</Label>
-        <Textarea
-          required
-          value={jobForm.description}
-          onChange={(e) =>
-            setJobForm({
-              ...jobForm,
-              description: e.target.value,
-            })
-          }
-        />
-      </div>
+                  <div>
+                    <Label>Description</Label>
+                    <Textarea
+                      required
+                      value={jobForm.description}
+                      onChange={(e) =>
+                        setJobForm({
+                          ...jobForm,
+                          description: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
 
-      <div>
-        <Label>Responsibilities (one per line)</Label>
-        <Textarea
-          value={jobForm.responsibilities}
-          onChange={(e) =>
-            setJobForm({
-              ...jobForm,
-              responsibilities: e.target.value,
-            })
-          }
-        />
-      </div>
+                  <div>
+                    <Label>Responsibilities (one per line)</Label>
+                    <Textarea
+                      value={jobForm.responsibilities}
+                      onChange={(e) =>
+                        setJobForm({
+                          ...jobForm,
+                          responsibilities: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
 
-      <div>
-        <Label>Requirements (one per line)</Label>
-        <Textarea
-          value={jobForm.requirements}
-          onChange={(e) =>
-            setJobForm({
-              ...jobForm,
-              requirements: e.target.value,
-            })
-          }
-        />
-      </div>
+                  <div>
+                    <Label>Requirements (one per line)</Label>
+                    <Textarea
+                      value={jobForm.requirements}
+                      onChange={(e) =>
+                        setJobForm({
+                          ...jobForm,
+                          requirements: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
 
-      <div>
-        <Label>Perks (one per line)</Label>
-        <Textarea
-          value={jobForm.perks}
-          onChange={(e) =>
-            setJobForm({ ...jobForm, perks: e.target.value })
-          }
-        />
-      </div>
+                  <div>
+                    <Label>Perks (one per line)</Label>
+                    <Textarea
+                      value={jobForm.perks}
+                      onChange={(e) =>
+                        setJobForm({ ...jobForm, perks: e.target.value })
+                      }
+                    />
+                  </div>
 
-      <DialogFooter>
-        <Button
-          type="button"
-          variant="outline"
-          onClick={() => setOpenJobModal(false)}
-        >
-          Cancel
-        </Button>
-        <Button type="submit">Save Changes</Button>
-      </DialogFooter>
-    </form>
-  </DialogContent>
-</Dialog>
+                  <DialogFooter>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={() => setOpenJobModal(false)}
+                    >
+                      Cancel
+                    </Button>
+                    <Button type="submit">Save Changes</Button>
+                  </DialogFooter>
+                </form>
+              </DialogContent>
+            </Dialog>
 
             <Card className="border-primary/20 shadow-lg animate-slide-in-right">
               <CardHeader>

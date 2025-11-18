@@ -138,7 +138,9 @@ const Culture = () => {
                   <h3 className="text-xl font-semibold text-foreground mb-2">
                     {perk.title}
                   </h3>
-                  <p className="text-muted-foreground text-[16px]">{perk.description}</p>
+                  <p className="text-muted-foreground text-[16px]">
+                    {perk.description}
+                  </p>
                 </CardContent>
               </Card>
             ))}

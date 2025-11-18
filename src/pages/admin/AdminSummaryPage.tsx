@@ -2,7 +2,15 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Card } from "@/components/ui/card";
-import { Users, Briefcase, MessageCircle, Star, Image, LogOut, ExternalLink } from "lucide-react";
+import {
+  Users,
+  Briefcase,
+  MessageCircle,
+  Star,
+  Image,
+  LogOut,
+  ExternalLink,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import wdplLogo from "@/assets/wdpl-logo-white.svg";
 
@@ -20,53 +28,57 @@ export default function AdminSummaryPage() {
 
   // Fetch counts
   useEffect(() => {
-  const fetchSummary = async () => {
-    try {
-      const {
-        data: { session },
-      } = await supabase.auth.getSession();
+    const fetchSummary = async () => {
+      try {
+        const {
+          data: { session },
+        } = await supabase.auth.getSession();
 
-      if (!session) {
-        navigate("/admin/login");
-        return;
+        if (!session) {
+          navigate("/admin/login");
+          return;
+        }
+
+        setUserEmail(session.user.email);
+
+        const { count: teamCount } = await supabase
+          .from("team_members")
+          .select("*", { count: "exact", head: true });
+
+        const { data: jobsData } = await supabase
+          .from("job_postings")
+          .select("*");
+        const jobsOpen =
+          jobsData?.filter((j) => j.status === "open").length || 0;
+        const jobsClosed =
+          jobsData?.filter((j) => j.status === "closed").length || 0;
+
+        const { count: testimonialsCount } = await supabase
+          .from("testimonials")
+          .select("*", { count: "exact", head: true });
+
+        const { count: contactsCount } = await supabase
+          .from("contact_submissions")
+          .select("*", { count: "exact", head: true });
+
+        const { count: galleryCount } = await supabase
+          .from("gallery_images")
+          .select("*", { count: "exact", head: true });
+
+        setSummary({
+          teamMembers: teamCount || 0,
+          jobsOpen,
+          jobsClosed,
+          testimonials: testimonialsCount || 0,
+          contacts: contactsCount || 0,
+          gallery: galleryCount || 0,
+        });
+      } catch (err) {
+        console.error(err);
       }
-
-      setUserEmail(session.user.email);
-
-      const { count: teamCount } = await supabase
-        .from("team_members")
-        .select("*", { count: "exact", head: true });
-
-      const { data: jobsData } = await supabase.from("job_postings").select("*");
-      const jobsOpen = jobsData?.filter((j) => j.status === "open").length || 0;
-      const jobsClosed = jobsData?.filter((j) => j.status === "closed").length || 0;
-
-      const { count: testimonialsCount } = await supabase
-        .from("testimonials")
-        .select("*", { count: "exact", head: true });
-
-      const { count: contactsCount } = await supabase
-        .from("contact_submissions")
-        .select("*", { count: "exact", head: true });
-
-      const { count: galleryCount } = await supabase
-        .from("gallery_images")
-        .select("*", { count: "exact", head: true });
-
-      setSummary({
-        teamMembers: teamCount || 0,
-        jobsOpen,
-        jobsClosed,
-        testimonials: testimonialsCount || 0,
-        contacts: contactsCount || 0,
-        gallery: galleryCount || 0,
-      });
-    } catch (err) {
-      console.error(err);
-    }
-  };
+    };
     fetchSummary();
-}, [navigate]);
+  }, [navigate]);
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
@@ -78,25 +90,62 @@ export default function AdminSummaryPage() {
   };
 
   const handleVisitSite = () => {
-window.open("https://wsx-kantha-git.github.io/wdpl.in/", "_blank");
-
+    window.open("https://wsx-kantha-git.github.io/wdpl.in/", "_blank");
   };
 
   const tabs = [
     { label: "Team", tab: "team", icon: <Users className="h-5 w-5" /> },
     { label: "Jobs", tab: "jobs", icon: <Briefcase className="h-5 w-5" /> },
-    { label: "Testimonials", tab: "testimonials", icon: <Star className="h-5 w-5" /> },
-    { label: "Contacts", tab: "contacts", icon: <MessageCircle className="h-5 w-5" /> },
+    {
+      label: "Testimonials",
+      tab: "testimonials",
+      icon: <Star className="h-5 w-5" />,
+    },
+    {
+      label: "Contacts",
+      tab: "contacts",
+      icon: <MessageCircle className="h-5 w-5" />,
+    },
     { label: "Gallery", tab: "gallery", icon: <Image className="h-5 w-5" /> },
   ];
 
   const cards = [
-    { label: "Team Members", count: summary.teamMembers, tab: "team", icon: <Users className="h-6 w-6" /> },
-    { label: "Open Jobs", count: summary.jobsOpen, tab: "jobs", icon: <Briefcase className="h-6 w-6" /> },
-    { label: "Closed Jobs", count: summary.jobsClosed, tab: "jobs", icon: <Briefcase className="h-6 w-6" /> },
-    { label: "Testimonials", count: summary.testimonials, tab: "testimonials", icon: <Star className="h-6 w-6" /> },
-    { label: "Contacts", count: summary.contacts, tab: "contacts", icon: <MessageCircle className="h-6 w-6" /> },
-    { label: "Gallery", count: summary.gallery, tab: "gallery", icon: <Image className="h-6 w-6" /> },
+    {
+      label: "Team Members",
+      count: summary.teamMembers,
+      tab: "team",
+      icon: <Users className="h-6 w-6" />,
+    },
+    {
+      label: "Open Jobs",
+      count: summary.jobsOpen,
+      tab: "jobs",
+      icon: <Briefcase className="h-6 w-6" />,
+    },
+    {
+      label: "Closed Jobs",
+      count: summary.jobsClosed,
+      tab: "jobs",
+      icon: <Briefcase className="h-6 w-6" />,
+    },
+    {
+      label: "Testimonials",
+      count: summary.testimonials,
+      tab: "testimonials",
+      icon: <Star className="h-6 w-6" />,
+    },
+    {
+      label: "Contacts",
+      count: summary.contacts,
+      tab: "contacts",
+      icon: <MessageCircle className="h-6 w-6" />,
+    },
+    {
+      label: "Gallery",
+      count: summary.gallery,
+      tab: "gallery",
+      icon: <Image className="h-6 w-6" />,
+    },
   ];
 
   return (

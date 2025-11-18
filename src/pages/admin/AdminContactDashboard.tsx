@@ -1,7 +1,14 @@
 import { useEffect, useState, useCallback } from "react";
 import Layout from "@/components/layout/Layout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
@@ -35,7 +42,11 @@ const AdminContactDashboard = () => {
       .order("created_at", { ascending: false });
 
     if (error) {
-      toast({ title: "Error", description: "Failed to fetch entries", variant: "destructive" });
+      toast({
+        title: "Error",
+        description: "Failed to fetch entries",
+        variant: "destructive",
+      });
     } else {
       // Type assertion to ContactEntry[]
       setEntries((data as ContactEntry[]) || []);
@@ -53,7 +64,11 @@ const AdminContactDashboard = () => {
       .eq("id", id);
 
     if (error) {
-      toast({ title: "Error", description: "Failed to delete entry", variant: "destructive" });
+      toast({
+        title: "Error",
+        description: "Failed to delete entry",
+        variant: "destructive",
+      });
     } else {
       toast({ title: "Deleted", description: "Entry deleted successfully." });
       setEntries((prev) => prev.filter((entry) => entry.id !== id));
@@ -73,71 +88,76 @@ const AdminContactDashboard = () => {
   );
 
   return (
+    <section className="py-12 container mx-auto px-4">
+      <h1 className="text-3xl font-bold mb-6">Contact Form Submissions</h1>
 
-      <section className="py-12 container mx-auto px-4">
-        <h1 className="text-3xl font-bold mb-6">Contact Form Submissions</h1>
+      <Input
+        placeholder="Search by name, email, phone, or message..."
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        className="mb-4 max-w-md"
+      />
 
-        <Input
-          placeholder="Search by name, email, phone, or message..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="mb-4 max-w-md"
-        />
-
-        <Card>
-          <CardHeader>
-            <CardTitle>Entries</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <Table>
-              <TableHeader>
+      <Card>
+        <CardHeader>
+          <CardTitle>Entries</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Name</TableHead>
+                <TableHead>Email</TableHead>
+                <TableHead>Phone</TableHead>
+                <TableHead>Message</TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead>Submitted At</TableHead>
+                <TableHead>Actions</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {loading ? (
                 <TableRow>
-                  <TableHead>Name</TableHead>
-                  <TableHead>Email</TableHead>
-                  <TableHead>Phone</TableHead>
-                  <TableHead>Message</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead>Submitted At</TableHead>
-                  <TableHead>Actions</TableHead>
+                  <TableCell colSpan={7} className="text-center">
+                    Loading...
+                  </TableCell>
                 </TableRow>
-              </TableHeader>
-              <TableBody>
-                {loading ? (
-                  <TableRow>
-                    <TableCell colSpan={7} className="text-center">
-                      Loading...
+              ) : filteredEntries.length === 0 ? (
+                <TableRow>
+                  <TableCell colSpan={7} className="text-center">
+                    No entries found.
+                  </TableCell>
+                </TableRow>
+              ) : (
+                filteredEntries.map((entry) => (
+                  <TableRow key={entry.id}>
+                    <TableCell>{entry.name}</TableCell>
+                    <TableCell>{entry.email}</TableCell>
+                    <TableCell>{entry.phone || "-"}</TableCell>
+                    <TableCell>{entry.message}</TableCell>
+                    <TableCell>{entry.status || "new"}</TableCell>
+                    <TableCell>
+                      {entry.created_at
+                        ? new Date(entry.created_at).toLocaleString()
+                        : "-"}
+                    </TableCell>
+                    <TableCell>
+                      <Button
+                        variant="destructive"
+                        size="sm"
+                        onClick={() => deleteEntry(entry.id)}
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </Button>
                     </TableCell>
                   </TableRow>
-                ) : filteredEntries.length === 0 ? (
-                  <TableRow>
-                    <TableCell colSpan={7} className="text-center">
-                      No entries found.
-                    </TableCell>
-                  </TableRow>
-                ) : (
-                  filteredEntries.map((entry) => (
-                    <TableRow key={entry.id}>
-                      <TableCell>{entry.name}</TableCell>
-                      <TableCell>{entry.email}</TableCell>
-                      <TableCell>{entry.phone || "-"}</TableCell>
-                      <TableCell>{entry.message}</TableCell>
-                      <TableCell>{entry.status || "new"}</TableCell>
-                      <TableCell>
-                        {entry.created_at ? new Date(entry.created_at).toLocaleString() : "-"}
-                      </TableCell>
-                      <TableCell>
-                        <Button variant="destructive" size="sm" onClick={() => deleteEntry(entry.id)}>
-                          <Trash2 className="w-4 h-4" />
-                        </Button>
-                      </TableCell>
-                    </TableRow>
-                  ))
-                )}
-              </TableBody>
-            </Table>
-          </CardContent>
-        </Card>
-      </section>
+                ))
+              )}
+            </TableBody>
+          </Table>
+        </CardContent>
+      </Card>
+    </section>
   );
 };
 

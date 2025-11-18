@@ -148,44 +148,49 @@ const About = () => {
 
       {/* Company Timeline */}
       <section className="py-20 bg-secondary">
-  <div className="container mx-auto px-4">
-    <h2 className="text-4xl font-bold text-center text-foreground mb-12">
-      Our Journey
-    </h2>
+        <div className="container mx-auto px-4">
+          <h2 className="text-4xl font-bold text-center text-foreground mb-12">
+            Our Journey
+          </h2>
 
-    <div className="max-w-4xl mx-auto relative">
+          <div className="max-w-4xl mx-auto relative">
+            {/* Continuous line that stops above the last year */}
+            <div
+              className="
+  absolute left-8 
+  top-[80px] bottom-[80px] 
+  md:top-[60px] md:bottom-[60px]
+  w-[2px] bg-primary/20
+"
+            ></div>
 
-      {/* Continuous line that stops above the last year */}
-      <div className="absolute left-8 top-[60px] bottom-[60px] w-[2px] bg-primary/20"></div>
-
-      <div className="space-y-14">
-        {timeline.map((item, index) => (
-          <div key={index} className="flex gap-6 group relative">
-
-            {/* Year Circle */}
-            <div className="flex flex-col items-center justify-center relative z-10">
-              <div className="w-16 h-16 rounded-full bg-primary text-primary-foreground 
+            <div className="space-y-14">
+              {timeline.map((item, index) => (
+                <div key={index} className="flex gap-6 group relative">
+                  {/* Year Circle */}
+                  <div className="flex flex-col items-center justify-center relative z-10">
+                    <div
+                      className="w-16 h-16 rounded-full bg-primary text-primary-foreground 
                 flex items-center justify-center font-bold text-lg group-hover:scale-110 
-                transition-transform">
-                {item.year}
-              </div>
+                transition-transform"
+                    >
+                      {item.year}
+                    </div>
+                  </div>
+
+                  {/* Card */}
+                  <Card className="p-6 flex-1 group-hover:shadow-xl transition-all">
+                    <h3 className="text-xl font-semibold text-foreground mb-2">
+                      {item.title}
+                    </h3>
+                    <p className="text-muted-foreground">{item.description}</p>
+                  </Card>
+                </div>
+              ))}
             </div>
-
-            {/* Card */}
-            <Card className="p-6 flex-1 group-hover:shadow-xl transition-all">
-              <h3 className="text-xl font-semibold text-foreground mb-2">
-                {item.title}
-              </h3>
-              <p className="text-muted-foreground">{item.description}</p>
-            </Card>
-
           </div>
-        ))}
-      </div>
-    </div>
-  </div>
-</section>
-
+        </div>
+      </section>
 
       {/* Core Values */}
       <section className="py-20">

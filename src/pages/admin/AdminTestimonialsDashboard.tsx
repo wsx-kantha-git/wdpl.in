@@ -179,7 +179,10 @@ const AdminTestimonialsDashboard = () => {
           placeholder="Rating"
           value={form.rating}
           onChange={(e) =>
-            setForm({ ...form, rating: Number(e.target.value) as 1 | 2 | 3 | 4 | 5 })
+            setForm({
+              ...form,
+              rating: Number(e.target.value) as 1 | 2 | 3 | 4 | 5,
+            })
           }
         />
 
@@ -251,17 +254,23 @@ const AdminTestimonialsDashboard = () => {
             <Input
               placeholder="Name"
               value={modalForm.name}
-              onChange={(e) => setModalForm({ ...modalForm, name: e.target.value })}
+              onChange={(e) =>
+                setModalForm({ ...modalForm, name: e.target.value })
+              }
             />
             <Input
               placeholder="Role"
               value={modalForm.role}
-              onChange={(e) => setModalForm({ ...modalForm, role: e.target.value })}
+              onChange={(e) =>
+                setModalForm({ ...modalForm, role: e.target.value })
+              }
             />
             <Textarea
               placeholder="Content"
               value={modalForm.content}
-              onChange={(e) => setModalForm({ ...modalForm, content: e.target.value })}
+              onChange={(e) =>
+                setModalForm({ ...modalForm, content: e.target.value })
+              }
               rows={4}
             />
             <Input
@@ -278,7 +287,9 @@ const AdminTestimonialsDashboard = () => {
               <input
                 type="file"
                 accept="image/*"
-                onChange={(e) => e.target.files && handleModalUpload(e.target.files[0])}
+                onChange={(e) =>
+                  e.target.files && handleModalUpload(e.target.files[0])
+                }
               />
               {modalUploading && <p>Uploading...</p>}
               {modalForm.image_url && (
