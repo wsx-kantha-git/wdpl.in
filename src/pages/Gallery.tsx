@@ -324,22 +324,39 @@ const Gallery = () => {
             />
 
             {/* Navigation Arrows */}
-            {images.length > 1 && (
-              <>
-                <button
-                  onClick={handlePrev}
-                  className="absolute left-[-60px] top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/30 rounded-full p-3 text-white transition"
-                >
-                  <ChevronLeft className="w-6 h-6" />
-                </button>
-                <button
-                  onClick={handleNext}
-                  className="absolute right-[-60px] top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/30 rounded-full p-3 text-white transition"
-                >
-                  <ChevronRight className="w-6 h-6" />
-                </button>
-              </>
-            )}
+{/* Navigation Arrows */}
+{images.length > 1 && (
+  <>
+    {/* Mobile: arrows at center-left & center-right INSIDE image */}
+    <button
+      onClick={handlePrev}
+      className="md:hidden absolute left-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/40 rounded-full p-3 text-white transition z-[1100]"
+    >
+      <ChevronLeft className="w-6 h-6" />
+    </button>
+
+    <button
+      onClick={handleNext}
+      className="md:hidden absolute right-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/40 rounded-full p-3 text-white transition z-[1100]"
+    >
+      <ChevronRight className="w-6 h-6" />
+    </button>
+
+    {/* Desktop: keep original outside arrows */}
+    <button
+      onClick={handlePrev}
+      className="hidden md:flex absolute left-[-60px] top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/30 rounded-full p-3 text-white transition"
+    >
+      <ChevronLeft className="w-6 h-6" />
+    </button>
+    <button
+      onClick={handleNext}
+      className="hidden md:flex absolute right-[-60px] top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/30 rounded-full p-3 text-white transition"
+    >
+      <ChevronRight className="w-6 h-6" />
+    </button>
+  </>
+)}
 
             {/* Zoom Controls */}
             <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-3 bg-white/10 rounded-full backdrop-blur-md px-4 py-2">
