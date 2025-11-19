@@ -10,10 +10,15 @@ import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { MapPin } from "lucide-react";
 import Hero from "@/assets/wdpl-images/Contactus/contact.jpg";
+import ReCAPTCHA from "react-google-recaptcha";
 
 const Contact = () => {
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+
+  const SITE_KEY = import.meta.env.VITE_RECAPTCHA_SITE_KEY;
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -23,6 +28,16 @@ const Contact = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!captchaToken) {
+      toast({
+        title: "Complete reCAPTCHA",
+        description: "Please verify you are not a robot.",
+        variant: "destructive",
+      });
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
@@ -32,6 +47,7 @@ const Contact = () => {
           email: formData.email,
           phone: formData.phone || null,
           message: formData.message,
+          
         },
       ]);
 
@@ -50,14 +66,15 @@ const Contact = () => {
             email: formData.email,
             phone: formData.phone,
             message: formData.message,
+            
           }),
         }
       );
 
-      const data = await response.json();
+      const result = await response.json();
 
       if (!response.ok) {
-        console.error("Email send failed:", data);
+        console.error("Email send failed:", result);
         throw new Error("Failed to send confirmation email");
       }
 
@@ -67,6 +84,7 @@ const Contact = () => {
       });
 
       setFormData({ name: "", email: "", phone: "", message: "" });
+      setCaptchaToken(null);
     } catch (error) {
       console.error(error);
       toast({
@@ -128,6 +146,7 @@ const Contact = () => {
       <section className="py-16 bg-background">
         <div className="container mx-auto px-4">
           <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
+
             {/* Contact Form */}
             <div className="lg:sticky lg:top-20 self-start h-fit">
               <Card>
@@ -136,6 +155,8 @@ const Contact = () => {
                 </CardHeader>
                 <CardContent>
                   <form onSubmit={handleSubmit} className="space-y-6">
+
+                    {/* Name */}
                     <div>
                       <Label htmlFor="name">Name *</Label>
                       <Input
@@ -146,10 +167,10 @@ const Contact = () => {
                           setFormData({ ...formData, name: e.target.value })
                         }
                         placeholder="Your full name"
-                        className="focus-visible:ring-0 focus-visible:ring-offset-0 focus:border-primary"
                       />
                     </div>
 
+                    {/* Email */}
                     <div>
                       <Label htmlFor="email">Email *</Label>
                       <Input
@@ -161,10 +182,10 @@ const Contact = () => {
                           setFormData({ ...formData, email: e.target.value })
                         }
                         placeholder="your.email@example.com"
-                        className="focus-visible:ring-0 focus-visible:ring-offset-0 focus:border-primary"
                       />
                     </div>
 
+                    {/* Phone */}
                     <div>
                       <Label htmlFor="phone">Phone</Label>
                       <Input
@@ -175,10 +196,10 @@ const Contact = () => {
                           setFormData({ ...formData, phone: e.target.value })
                         }
                         placeholder="eg. +91 98765 43210"
-                        className="focus-visible:ring-0 focus-visible:ring-offset-0 focus:border-primary"
                       />
                     </div>
 
+                    {/* Message */}
                     <div>
                       <Label htmlFor="message">Message *</Label>
                       <Textarea
@@ -190,18 +211,27 @@ const Contact = () => {
                         }
                         placeholder="Tell us what you'd like to discuss..."
                         rows={5}
-                        className="focus-visible:ring-0 focus-visible:ring-offset-0 focus:border-primary"
                       />
                     </div>
 
+                    {/* reCAPTCHA v2 checkbox */}
+                    <div className="flex justify-start">
+                      <ReCAPTCHA
+                        sitekey={SITE_KEY}
+                        onChange={(token) => setCaptchaToken(token)}
+                      />
+                    </div>
+
+                    {/* Button */}
                     <Button
                       type="submit"
                       variant="brandlite"
                       className="w-full text-base"
-                      disabled={isSubmitting}
+                      disabled={isSubmitting }
                     >
                       {isSubmitting ? "Sending..." : "Send Message"}
                     </Button>
+
                   </form>
                 </CardContent>
               </Card>
@@ -244,6 +274,7 @@ const Contact = () => {
                   </CardContent>
                 </Card>
               ))}
+
             </div>
           </div>
         </div>

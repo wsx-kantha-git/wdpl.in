@@ -3,20 +3,22 @@ import { Resend } from "resend";
 
 const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
 const ADMIN_EMAIL = Deno.env.get("ADMIN_EMAIL") || "esakkiraj@webstix.com";
+const RECAPTCHA_SECRET = Deno.env.get("RECAPTCHA_SECRET"); // ⬅ Added
 
 const resend = new Resend(RESEND_API_KEY);
 
 const allowedOrigins = [
   "https://wdpl.in",
   "http://localhost:8080",
-  "http://localhost:8080/wdpl.in/",  // FIXED
-  "http://localhost:5173"           // Vite
+  "http://localhost:8080/wdpl.in/",
+  "http://localhost:5173"
 ];
 
 serve(async (req) => {
   const origin = req.headers.get("Origin") || "";
   const isAllowedOrigin = allowedOrigins.some((o) => origin.startsWith(o));
 
+  // Preflight OPTIONS
   if (req.method === "OPTIONS") {
     return new Response(null, {
       headers: {
@@ -28,17 +30,41 @@ serve(async (req) => {
   }
 
   try {
-    const { name, phone, email, message } = await req.json();
+    const { name, phone, email, message, captcha } = await req.json();
     const submissionDate = new Date().toLocaleDateString("en-US");
 
-
-    if (!name || !email || !message) {
+    // Check required fields
+    if (!name || !email || !message || !captcha) {
       return new Response(JSON.stringify({ error: "Missing fields" }), {
         status: 400,
       });
     }
 
-    // ADMIN EMAIL
+    // -------------------------------------------------------
+    //  Step 1: Verify reCAPTCHA with Google
+    // -------------------------------------------------------
+    const captchaVerifyRes = await fetch(
+      "https://www.google.com/recaptcha/api/siteverify",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: `secret=${RECAPTCHA_SECRET}&response=${captcha}`,
+      }
+    );
+
+    const captchaData = await captchaVerifyRes.json();
+
+    if (!captchaData.success) {
+      return new Response(JSON.stringify({ error: "Invalid captcha" }), {
+        status: 400,
+      });
+    }
+
+    // -------------------------------------------------------
+    // ✔ Step 2: Send ADMIN EMAIL
+    // -------------------------------------------------------
     await resend.emails.send({
       from: "WDPL Contact Form <onboarding@resend.dev>",
       to: [ADMIN_EMAIL],
@@ -47,28 +73,22 @@ serve(async (req) => {
         <h2>New Contact Form Submission</h2>
 
         <p><strong>Name</strong></p>
-        <div style="border:1px solid #ccc; padding:10px; margin-bottom:12px;">
-          ${name}
-        </div>
+        <div style="border:1px solid #ccc; padding:10px; margin-bottom:12px;">${name}</div>
 
         <p><strong>Email</strong></p>
-        <div style="border:1px solid #ccc; padding:10px; margin-bottom:12px;">
-          ${email}
-        </div>
+        <div style="border:1px solid #ccc; padding:10px; margin-bottom:12px;">${email}</div>
 
         <p><strong>Phone</strong></p>
-        <div style="border:1px solid #ccc; padding:10px; margin-bottom:12px;">
-          ${phone}
-        </div>
+        <div style="border:1px solid #ccc; padding:10px; margin-bottom:12px;">${phone}</div>
 
         <p><strong>Message</strong></p>
-        <div style="border:1px solid #ccc; padding:10px; margin-bottom:20px; white-space:pre-line;">
-          ${message}
-        </div>
+        <div style="border:1px solid #ccc; padding:10px; margin-bottom:20px; white-space:pre-line;">${message}</div>
       `,
     });
 
-    // USER EMAIL
+    // -------------------------------------------------------
+    // ✔ Step 3: Send USER EMAIL
+    // -------------------------------------------------------
     await resend.emails.send({
       from: "WDPL Team <onboarding@resend.dev>",
       to: [email],
@@ -76,10 +96,13 @@ serve(async (req) => {
       html: `
         <h2>Hi ${name},</h2>
         <p>Thanks for contacting us! We will get in touch with you shortly.</p>
-        <p>Regards,<br/><strong> -Team WDPL</strong></p>
+        <p>Regards,<br/><strong>- Team WDPL</strong></p>
       `,
     });
 
+    // -------------------------------------------------------
+    // ✔ Step 4: Final response
+    // -------------------------------------------------------
     return new Response(JSON.stringify({ status: "OK" }), {
       status: 200,
       headers: {
@@ -87,7 +110,9 @@ serve(async (req) => {
         "Access-Control-Allow-Origin": isAllowedOrigin ? origin : "",
       },
     });
+
   } catch (err) {
+    console.error(err);
     return new Response(JSON.stringify({ error: "Server error" }), {
       status: 500,
     });
