@@ -138,7 +138,7 @@ const Footer = () => {
               © {new Date().getFullYear()} Webstix Design Private Limited. All Rights Reserved.
             </p>
 
-            <div className="mx-22 flex items-center gap-2 text-sm whitespace-nowrap">
+            <div className="mx-20 flex items-center gap-2 text-sm whitespace-nowrap">
               <Link
                 to="/terms"
                 className="text-background/60 underline-offset-4 hover:underline decoration-secondary"
