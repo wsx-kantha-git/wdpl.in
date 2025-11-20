@@ -158,7 +158,8 @@ const About = () => {
             <div
               className="
   absolute left-8 
-  top-[80px] bottom-[80px] 
+  top-[120px] bottom-[120px] 
+  sm:top-[60px] sm:bottom-[60px]
   md:top-[60px] md:bottom-[60px]
   w-[2px] bg-primary/20
 "

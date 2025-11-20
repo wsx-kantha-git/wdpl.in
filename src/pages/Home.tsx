@@ -162,7 +162,7 @@ const Home = () => {
               asChild
               variant="brand"
               size="lg"
-              className="rounded-full text-[16px]"
+              className="rounded-full text-[14px] px-4 md:text-[16px]"
             >
               <Link to="/culture">LEARN MORE ABOUT OUR CULTURE</Link>
             </Button>
