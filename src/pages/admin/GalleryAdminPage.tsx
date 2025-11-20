@@ -48,6 +48,12 @@ const GalleryAdminPage = () => {
   const [imageDialogOpen, setImageDialogOpen] = useState(false);
   const [filterEventId, setFilterEventId] = useState(""); // <-- for filtering
 
+  // Confirm delete modal state
+  const [confirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
+  const [deleteTarget, setDeleteTarget] = useState<
+    { type: "category" | "event" | "image"; id: string; name?: string } | null
+  >(null);
+
   // Edit states
   const [editingCategory, setEditingCategory] =
     useState<GalleryCategory | null>(null);
@@ -286,6 +292,75 @@ const GalleryAdminPage = () => {
     fetchImages();
   };
 
+  // Universal confirm-delete handler
+  const handleConfirmDelete = async () => {
+    if (!deleteTarget) return;
+
+    const { type, id } = deleteTarget;
+
+    try {
+      if (type === "category") {
+        const { error } = await supabase
+          .from("gallery_categories")
+          .delete()
+          .eq("id", id);
+        if (error) {
+          toast({ title: "Error deleting category", description: error.message });
+        } else {
+          toast({ title: "Category deleted successfully" });
+          fetchCategories();
+        }
+      }
+
+      if (type === "event") {
+        const { error } = await supabase.from("gallery_events").delete().eq("id", id);
+        if (error) {
+          toast({ title: "Error deleting event", description: error.message });
+        } else {
+          toast({ title: "Event deleted successfully" });
+          fetchEvents();
+          fetchImages();
+        }
+      }
+
+      if (type === "image") {
+        const image = images.find((img) => img.id === id);
+        if (!image) {
+          toast({ title: "Image not found" });
+        } else {
+          // Delete DB row
+          const { error } = await supabase.from("gallery_images").delete().eq("id", id);
+          if (error) {
+            toast({ title: "Error deleting image", description: error.message });
+          } else {
+            // Remove from storage if path exists
+            const filePath = image.image_url?.split("/gallery-images/")[1];
+            if (filePath) {
+              const { error: storageError } = await supabase
+                .storage
+                .from("gallery-images")
+                .remove([filePath]);
+              if (storageError) {
+                // storage removal failed but DB is deleted — notify
+                toast({
+                  title: "Image DB removed, but storage removal failed",
+                  description: storageError.message,
+                });
+              }
+            }
+            toast({ title: "Image deleted successfully" });
+            fetchImages();
+          }
+        }
+      }
+    } catch (err) {
+      toast({ title: "Delete failed", description: String(err) });
+    } finally {
+      setConfirmDeleteOpen(false);
+      setDeleteTarget(null);
+    }
+  };
+
   // ---------- FILTERED IMAGES ----------
   const filteredImages = filterEventId
     ? images.filter((img) => img.event_id === filterEventId)
@@ -355,7 +430,10 @@ const GalleryAdminPage = () => {
                           <Button
                             variant="destructive"
                             size="sm"
-                            onClick={() => deleteCategory(cat.id)}
+                            onClick={() => {
+                              setDeleteTarget({ type: "category", id: cat.id, name: cat.name });
+                              setConfirmDeleteOpen(true);
+                            }}
                           >
                             <Trash2 size={16} />
                           </Button>
@@ -472,7 +550,10 @@ const GalleryAdminPage = () => {
                           <Button
                             variant="destructive"
                             size="sm"
-                            onClick={() => deleteEvent(ev.id)}
+                            onClick={() => {
+                              setDeleteTarget({ type: "event", id: ev.id, name: ev.name });
+                              setConfirmDeleteOpen(true);
+                            }}
                           >
                             <Trash2 size={16} />
                           </Button>
@@ -596,7 +677,10 @@ const GalleryAdminPage = () => {
                             <Button
                               size="icon"
                               variant="destructive"
-                              onClick={() => deleteImage(img.id)}
+                              onClick={() => {
+                                setDeleteTarget({ type: "image", id: img.id, name: img.image_name || img.event?.name });
+                                setConfirmDeleteOpen(true);
+                              }}
                             >
                               <Trash2 size={16} />
                             </Button>
@@ -662,6 +746,40 @@ const GalleryAdminPage = () => {
           </div>
           <DialogFooter>
             <Button onClick={uploadImages}>Upload</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* ---------- CONFIRM DELETE DIALOG (GLOBAL) ---------- */}
+      <Dialog open={confirmDeleteOpen} onOpenChange={setConfirmDeleteOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Confirm Delete</DialogTitle>
+          </DialogHeader>
+
+          <p className="mb-4 text-sm text-muted-foreground">
+            Are you sure you want to delete this{" "}
+            <strong>{deleteTarget?.type}</strong>
+            {deleteTarget?.name ? ` — "${deleteTarget.name}"` : ""}? This action
+            cannot be undone.
+          </p>
+
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => {
+                setConfirmDeleteOpen(false);
+                setDeleteTarget(null);
+              }}
+            >
+              Cancel
+            </Button>
+            <Button
+              variant="destructive"
+              onClick={handleConfirmDelete}
+            >
+              Delete
+            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
