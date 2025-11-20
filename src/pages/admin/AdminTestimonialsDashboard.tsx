@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { Switch } from "@/components/ui/switch";
 import { supabase } from "@/integrations/supabase/client";
 import { Trash2, Edit } from "lucide-react";
 
@@ -28,6 +29,10 @@ const AdminTestimonialsDashboard = () => {
   // Modal controls for Edit
   const [showModal, setShowModal] = useState(false);
   const [editingId, setEditingId] = useState<number | null>(null);
+
+  // Toggle state for rating
+  const [ratingEnabled, setRatingEnabled] = useState(true);
+  const [modalRatingEnabled, setModalRatingEnabled] = useState(true);
 
   // Form states
   const [form, setForm] = useState<TablesInsert<"testimonials">>({
@@ -73,8 +78,20 @@ const AdminTestimonialsDashboard = () => {
     }
 
     try {
-      await supabase.from("testimonials").insert(form);
-      setForm({ name: "", role: "", content: "", rating: 5, image_url: "" });
+      await supabase.from("testimonials").insert({
+        ...form,
+        rating: ratingEnabled ? form.rating : null,
+      });
+
+      setForm({
+        name: "",
+        role: "",
+        content: "",
+        rating: 5,
+        image_url: "",
+      });
+      setRatingEnabled(true);
+
       fetchTestimonials();
     } catch (err) {
       alert(err instanceof Error ? err.message : String(err));
@@ -102,6 +119,7 @@ const AdminTestimonialsDashboard = () => {
   // ---------------------- EDIT MODAL ----------------------
   const handleEdit = (t: Testimonial) => {
     setEditingId(t.id);
+
     setModalForm({
       name: t.name,
       role: t.role,
@@ -109,6 +127,8 @@ const AdminTestimonialsDashboard = () => {
       rating: t.rating,
       image_url: t.image_url,
     });
+
+    setModalRatingEnabled(t.rating !== null);
     setShowModal(true);
   };
 
@@ -138,7 +158,10 @@ const AdminTestimonialsDashboard = () => {
 
     await supabase
       .from("testimonials")
-      .update(modalForm as TablesUpdate<"testimonials">)
+      .update({
+        ...modalForm,
+        rating: modalRatingEnabled ? modalForm.rating : null,
+      } as TablesUpdate<"testimonials">)
       .eq("id", editingId);
 
     setShowModal(false);
@@ -155,8 +178,8 @@ const AdminTestimonialsDashboard = () => {
 
   return (
     <div className="p-6">
-      {/* ----------------- ADD FORM (STAYS ON PAGE) ----------------- */}
-      <div className="mb-6 space-y-2">
+      {/* ----------------- ADD FORM ----------------- */}
+      <div className="mb-6 space-y-3">
         <Input
           placeholder="Name"
           value={form.name}
@@ -172,20 +195,37 @@ const AdminTestimonialsDashboard = () => {
           value={form.content}
           onChange={(e) => setForm({ ...form, content: e.target.value })}
         />
-        <Input
-          type="number"
-          min={1}
-          max={5}
-          placeholder="Rating"
-          value={form.rating}
-          onChange={(e) =>
-            setForm({
-              ...form,
-              rating: Number(e.target.value) as 1 | 2 | 3 | 4 | 5,
-            })
-          }
-        />
 
+        {/* Toggle Rating */}
+        <div className="flex items-center gap-3">
+          <Switch
+            checked={ratingEnabled}
+            onCheckedChange={(v) => {
+              setRatingEnabled(v);
+              if (!v) setForm({ ...form, rating: null });
+              else setForm({ ...form, rating: 5 });
+            }}
+          />
+          <span>{ratingEnabled ? "Rating Enabled" : "Rating Disabled"}</span>
+        </div>
+
+        {ratingEnabled && (
+          <Input
+            type="number"
+            min={1}
+            max={5}
+            placeholder="Rating"
+            value={form.rating ?? ""}
+            onChange={(e) =>
+              setForm({
+                ...form,
+                rating: Number(e.target.value) as 1 | 2 | 3 | 4 | 5,
+              })
+            }
+          />
+        )}
+
+        {/* Image Upload */}
         <div>
           <input
             type="file"
@@ -201,7 +241,7 @@ const AdminTestimonialsDashboard = () => {
           )}
         </div>
 
-        <Button onClick={handleSubmit}>{`Add Testimonial`}</Button>
+        <Button onClick={handleSubmit}>Add Testimonial</Button>
       </div>
 
       {/* ----------------- TESTIMONIALS GRID ----------------- */}
@@ -214,7 +254,7 @@ const AdminTestimonialsDashboard = () => {
               <h3 className="font-bold">{t.name}</h3>
               <p className="italic text-sm">{t.role}</p>
               <p className="mt-2">{t.content}</p>
-              <p className="mt-1">⭐ {t.rating}</p>
+              {t.rating !== null && <p className="mt-1">⭐ {t.rating}</p>}
 
               {t.image_url && (
                 <img
@@ -273,15 +313,38 @@ const AdminTestimonialsDashboard = () => {
               }
               rows={4}
             />
-            <Input
-              type="number"
-              min={1}
-              max={5}
-              value={modalForm.rating}
-              onChange={(e) =>
-                setModalForm({ ...modalForm, rating: Number(e.target.value) })
-              }
-            />
+
+            {/* Modal Rating Toggle */}
+            <div className="flex items-center gap-3">
+              <Switch
+                checked={modalRatingEnabled}
+                onCheckedChange={(v) => {
+                  setModalRatingEnabled(v);
+                  setModalForm({
+                    ...modalForm,
+                    rating: v ? modalForm.rating || 5 : null,
+                  });
+                }}
+              />
+              <span>
+                {modalRatingEnabled ? "Rating Enabled" : "Rating Disabled"}
+              </span>
+            </div>
+
+            {modalRatingEnabled && (
+              <Input
+                type="number"
+                min={1}
+                max={5}
+                value={modalForm.rating ?? ""}
+                onChange={(e) =>
+                  setModalForm({
+                    ...modalForm,
+                    rating: Number(e.target.value),
+                  })
+                }
+              />
+            )}
 
             <div>
               <input

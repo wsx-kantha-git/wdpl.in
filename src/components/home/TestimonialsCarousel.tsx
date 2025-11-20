@@ -97,17 +97,19 @@ const TestimonialsCarousel = () => {
                         </div>
                       </div>
 
-                      <div className="flex gap-1 mb-4">
-                        {Array.from({ length: testimonial.rating }).map(
-                          (_, i) => (
-                            <Star
-                              key={i}
-                              className="h-5 w-5 fill-primary text-primary animate-bounce-in"
-                              style={{ animationDelay: `${i * 0.1}s` }}
-                            />
-                          )
-                        )}
-                      </div>
+{/* Show stars ONLY if rating is enabled */}
+{testimonial.rating !== null && testimonial.rating > 0 && (
+  <div className="flex gap-1 mb-4">
+    {Array.from({ length: testimonial.rating }).map((_, i) => (
+      <Star
+        key={i}
+        className="h-5 w-5 fill-primary text-primary animate-bounce-in"
+        style={{ animationDelay: `${i * 0.1}s` }}
+      />
+    ))}
+  </div>
+)}
+
 
                       <p className="text-foreground/90 font-source leading-relaxed italic flex-grow">
                         "{testimonial.content}"
