@@ -134,11 +134,11 @@ const Footer = () => {
         {/* Bottom Bar */}
         <div className="pt-4 border-t border-background/20">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-background/60 text-sm text-center md:text-left">
+            <p className="text-background/60 text-[12px] md:text-sm text-center md:text-left">
               © {new Date().getFullYear()} Webstix Design Private Limited. All Rights Reserved.
             </p>
 
-            <div className="mx-20 flex items-center gap-2 text-sm whitespace-nowrap">
+            <div className="mx-20 flex items-center gap-2 text-[12px] md:text-sm whitespace-nowrap">
               <Link
                 to="/terms"
                 className="text-background/60 underline-offset-4 hover:underline decoration-secondary"
