@@ -23,7 +23,7 @@ const TestimonialsCarousel = () => {
       const { data, error } = await supabase
         .from("testimonials")
         .select("*")
-        .order("created_at", { ascending: false });
+        .order("created_at", { ascending: true });
 
       if (error) {
         console.error(error.message);
@@ -50,9 +50,8 @@ const TestimonialsCarousel = () => {
             What Our Team Say
           </h2>
           <p className="text-xl text-muted-foreground font-source max-w-4xl mx-auto">
-            Don't just take our word for it hear from the companies we've helped succeed
-
-
+            Don't just take our word for it hear from the companies we've helped
+            succeed
           </p>
         </div>
 
@@ -97,19 +96,21 @@ const TestimonialsCarousel = () => {
                         </div>
                       </div>
 
-{/* Show stars ONLY if rating is enabled */}
-{testimonial.rating !== null && testimonial.rating > 0 && (
-  <div className="flex gap-1 mb-4">
-    {Array.from({ length: testimonial.rating }).map((_, i) => (
-      <Star
-        key={i}
-        className="h-5 w-5 fill-primary text-primary animate-bounce-in"
-        style={{ animationDelay: `${i * 0.1}s` }}
-      />
-    ))}
-  </div>
-)}
-
+                      {/* Show stars ONLY if rating is enabled */}
+                      {testimonial.rating !== null &&
+                        testimonial.rating > 0 && (
+                          <div className="flex gap-1 mb-4">
+                            {Array.from({ length: testimonial.rating }).map(
+                              (_, i) => (
+                                <Star
+                                  key={i}
+                                  className="h-5 w-5 fill-primary text-primary animate-bounce-in"
+                                  style={{ animationDelay: `${i * 0.1}s` }}
+                                />
+                              )
+                            )}
+                          </div>
+                        )}
 
                       <p className="text-foreground/90 font-source leading-relaxed italic flex-grow">
                         "{testimonial.content}"
