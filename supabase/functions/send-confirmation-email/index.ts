@@ -2,7 +2,7 @@ import { serve } from "std/server";
 import { Resend } from "resend";
 
 const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
-const ADMIN_EMAIL = Deno.env.get("ADMIN_EMAIL") || "ram@webstix.com";
+const ADMIN_EMAIL = Deno.env.get("ADMIN_EMAIL") || "contact@webstix.com";
 const RECAPTCHA_SECRET = Deno.env.get("RECAPTCHA_SECRET"); // ⬅ Added
 
 const resend = new Resend(RESEND_API_KEY);
@@ -65,7 +65,7 @@ serve(async (req) => {
     // Step 2: Send ADMIN EMAIL
 
     await resend.emails.send({
-      from: "WDPL Contact Form <onboarding@resend.dev>",
+      from: "WDPL Contact Form <contact@Webstix.com>",
       to: [ADMIN_EMAIL],
       subject: `Contact-Us Form - ${submissionDate} - ${name}`,
       html: `
@@ -89,7 +89,7 @@ serve(async (req) => {
     // Step 3: Send USER EMAIL
 
     await resend.emails.send({
-      from: "WDPL Team <onboarding@resend.dev>",
+      from: "WDPL Team <contact@Webstix.com>",
       to: [email],
       subject: "Contact Us - Thank You!",
       html: `
