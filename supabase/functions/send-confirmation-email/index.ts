@@ -2,7 +2,7 @@ import { serve } from "std/server";
 import { Resend } from "resend";
 
 const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
-const ADMIN_EMAIL = Deno.env.get("ADMIN_EMAIL") || "esakkiraj@webstix.com";
+const ADMIN_EMAIL = Deno.env.get("ADMIN_EMAIL") || "ram@webstix.com";
 const RECAPTCHA_SECRET = Deno.env.get("RECAPTCHA_SECRET"); // ⬅ Added
 
 const resend = new Resend(RESEND_API_KEY);
@@ -40,9 +40,8 @@ serve(async (req) => {
       });
     }
 
-    // -------------------------------------------------------
     //  Step 1: Verify reCAPTCHA with Google
-    // -------------------------------------------------------
+
     const captchaVerifyRes = await fetch(
       "https://www.google.com/recaptcha/api/siteverify",
       {
@@ -62,9 +61,9 @@ serve(async (req) => {
       });
     }
 
-    // -------------------------------------------------------
-    // ✔ Step 2: Send ADMIN EMAIL
-    // -------------------------------------------------------
+
+    // Step 2: Send ADMIN EMAIL
+
     await resend.emails.send({
       from: "WDPL Contact Form <onboarding@resend.dev>",
       to: [ADMIN_EMAIL],
@@ -86,9 +85,9 @@ serve(async (req) => {
       `,
     });
 
-    // -------------------------------------------------------
-    // ✔ Step 3: Send USER EMAIL
-    // -------------------------------------------------------
+
+    // Step 3: Send USER EMAIL
+
     await resend.emails.send({
       from: "WDPL Team <onboarding@resend.dev>",
       to: [email],
@@ -100,9 +99,9 @@ serve(async (req) => {
       `,
     });
 
-    // -------------------------------------------------------
-    // ✔ Step 4: Final response
-    // -------------------------------------------------------
+
+    //  Step 4: Final response
+
     return new Response(JSON.stringify({ status: "OK" }), {
       status: 200,
       headers: {

@@ -10,6 +10,8 @@ import {
 } from "@/components/ui/carousel";
 import { Star, Quote } from "lucide-react";
 import type { Database } from "@/integrations/supabase/types";
+import Autoplay from "embla-carousel-autoplay";
+
 
 type Testimonial = Database["public"]["Tables"]["testimonials"]["Row"];
 
@@ -56,9 +58,17 @@ const TestimonialsCarousel = () => {
         </div>
 
         <Carousel
-          opts={{ align: "start", loop: true }}
-          className="w-full max-w-5xl mx-auto md:px-10"
-        >
+  opts={{ align: "start", loop: true }}
+  plugins={[
+    Autoplay({
+      delay: 10000,
+      stopOnInteraction: false,
+      stopOnMouseEnter: true,
+    }),
+  ]}
+  className="w-full max-w-5xl mx-auto md:px-10"
+>
+
           <CarouselContent>
             {testimonials.map((testimonial, index) => (
               <CarouselItem
