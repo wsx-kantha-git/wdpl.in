@@ -8,7 +8,7 @@ import WorkCultureCarousel from "@/components/home/WorkCultureCarousel";
 import HeroImage from "@/assets/homepage/slideshow_new_bg.webp";
 import HeroIllustration from "@/assets/homepage/web-design.svg";
 import chennaiImage from "@/assets/homepage/webstix-chennai-office-interior.jpg";
-import coimbatoreImage from "@/assets/office-coimbatore.jpg";
+import coimbatoreImage from "@/assets/homepage/coimbatore-location.jpg";
 import GalleryPreview from "./GalleryPreviewPage";
 import Trainning from "@/assets/homepage/home-icons/trainning.svg";
 import Food from "@/assets/homepage/home-icons/food-and-beverage.svg";
